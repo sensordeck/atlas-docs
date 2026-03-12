@@ -14,7 +14,7 @@ export default function Home() {
         <div style={{ marginTop: '2rem' }}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/index">
+            to="/docs">
             Enter Documentation
           </Link>
         </div>
