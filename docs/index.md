@@ -7,7 +7,7 @@ title: Atlas Developer Documentation
 
 ### Deterministic Sensor Infrastructure for Robotics
 
-Atlas provides a unified hardware and software platform that standardizes sensor timing, telemetry, and integration across robotics compute platforms.
+Atlas establishes a deterministic sensor infrastructure between perception sensors and the robotics compute platform.
 
 ---
 
@@ -26,6 +26,66 @@ Atlas consists of two core layers:
 - ROS2 integration layer
 
 ---
+At the center of Atlas is Fusion V2 Reference Board, which serves as the system’s Timing Authority. Instead of each sensor operating on its own internal clock, Fusion ensures that all sensor data entering the compute platform shares a common deterministic time reference.
+
+Fusion V2 Reference Board aggregates UVC video streams and CDC sensor telemetry through a single USB connection to the robot compute platform, simplifying system wiring and sensor integration.
+
+Integrated regulated power rails support sensors, synchronization logic, and USB aggregation while isolating the compute platform from sensor-side electrical noise.
+
+**The Problem Atlas Solves**
+
+Modern robots integrate multiple sensors such as:
+- cameras
+- LiDAR
+- IMU
+- GNSS
+
+In most robotics systems today:
+- sensors operate on independent clocks
+- timestamp alignment is handled in software after data capture
+- sensor interface hardware is often rebuilt for every robot SKU
+
+This creates several common engineering challenges:
+- timestamp drift between sensors
+- unstable perception pipelines
+- repeated sensor interface board development
+- complex wiring harnesses
+- time-consuming debugging of asynchronous sensor systems
+
+**What Atlas Changes**
+
+Atlas introduces a deterministic timing authority before sensor data reaches the compute platform. Fusion V2 Reference Board distributes a unified timing reference to connected sensors while DSIL SDK aligns timestamps within the perception pipeline.
+
+This architecture transforms the integration workflow from:
+
+**post-processing timestamp correction**
+to
+**deterministic sensor timing control**
+
+**Cross-Platform Engineering Impact**
+Without Atlas, robotics companies often integrate sensors **per product SKU**.
+
+Typical architecture today:
+
+Sensors → Custom interface board → SBC → Custom middleware
+
+Each new robot platform often requires:
+- new sensor interface wiring
+- new timestamp handling logic
+- new ROS driver configuration
+- new synchronization debugging
+
+Atlas converts sensor integration from custom engineering work into a reusable infrastructure layer.
+
+Sensors → Atlas (Fusion Timing Backbone) → SBC → Application Software
+
+This allows robotics companies to standardize the sensor-compute boundary across multiple robots and product lines.
+
+Benefits include:
+- faster development of new robot SKUs
+- reduced synchronization bugs
+- simpler sensor upgrades
+- more engineering focus on perception and autonomy
 
 ## Documentation
 
