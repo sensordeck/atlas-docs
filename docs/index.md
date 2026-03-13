@@ -57,7 +57,7 @@ The Deterministic Sensor Integration Layer provides timestamp correction, teleme
 
 Atlas integrates directly with ROS2 perception pipelines and publishes standardized topics.
 
-[Open Guide →](./ROS2%20Integration)
+[Open Guide →](./ros2-integration)
 
 </div>
 
@@ -67,7 +67,7 @@ Atlas integrates directly with ROS2 perception pipelines and publishes standardi
 
 Learn how Atlas aligns sensor timestamps using PPS and deterministic timing pipelines.
 
-[Open Guide →](./Sensor%20Synchronization)
+[Open Guide →](./sensor-synchronization)
 
 </div>
 
@@ -77,7 +77,7 @@ Learn how Atlas aligns sensor timestamps using PPS and deterministic timing pipe
 
 Step-by-step instructions to install and run the Atlas evaluation kit.
 
-[Open Guide →](./Evaluation%20Kit%20Setup)
+[Open Guide →](./evaluation-kit-setup)
 
 </div>
 
