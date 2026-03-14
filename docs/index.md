@@ -1,6 +1,6 @@
 # Atlas Developer Documentation
 
-<p align="center"><strong>
+<p align="left"><strong>
 Atlas establishes the timing authority for multi-sensor robotics systems.
 </strong></p>
 
