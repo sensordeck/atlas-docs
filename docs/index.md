@@ -1,209 +1,176 @@
 # Atlas Developer Documentation
 
-**Deterministic Sensor Infrastructure for Robotics**
+## Deterministic Sensor Infrastructure for Robotics
 
-Atlas provides a deterministic sensor integration backbone for robotics systems.  
-It consolidates sensor connectivity, timing synchronization, telemetry transport, and power delivery into a single infrastructure layer between robot sensors and the compute platform.
+Atlas provides a **deterministic sensor backbone** for robotics systems.
 
-Atlas allows robotics engineering teams to deploy complex multi-sensor systems without building custom integration hardware and synchronization pipelines internally.
+Atlas establishes a unified sensor infrastructure by providing:
 
----
+• **Time Authority** — a single hardware timestamp authority for all sensors  
+• **Single-Cable Aggregation** — multiple sensors aggregated into one upstream link  
+• **Cross-SKU Standardization** — one sensor infrastructure reused across robot platforms  
 
-## System Overview
-
-Atlas sits between the robot’s sensor stack and the robot compute platform.
-
-Sensors
-(USB Cameras / USB LiDAR / IMU / GNSS / Trigger Signals)
-
-↓
-
-Atlas Hardware Platform
-(sensor aggregation + hardware timestamp engine)
-
-↓
-
-DSIL SDK
-(Deterministic Sensor Integration Layer)
-
-↓
-
-Robot Compute Platform
-(Jetson / ARM SBC / x86)
-
-
-Atlas transforms sensor integration from **custom engineering work** into **deployable infrastructure**.
+Atlas converts sensor integration from **custom engineering work** into **deployable infrastructure**.
 
 ---
 
-# What is SensorDeck Atlas?
+## Atlas in One Diagram
 
-Atlas is a **deterministic sensor infrastructure platform** designed for autonomous robots and perception systems.
+<p align="center">
+<img src="images/atlas_system_overview.png" width="900">
+</p>
 
-Atlas consists of two primary components:
+**Atlas deterministic sensor backbone architecture**
 
-**Atlas Hardware Platform**
-
-• sensor aggregation interface  
-• deterministic timestamp boundary  
-• hardware synchronization engine  
-• sensor telemetry channel  
-• industrial power distribution  
-
-**DSIL SDK (Deterministic Sensor Integration Layer)**
-
-• telemetry decoding  
-• sensor timestamp alignment  
-• ROS2 integration layer  
-• deterministic timing correction  
-• sensor health monitoring  
-
-Together these components form a **deterministic sensor backbone** between sensors and the robot compute platform.
+Sensors connect to Atlas.  
+Atlas synchronizes and aggregates them.  
+The robot compute platform receives a unified sensor pipeline.
 
 ---
 
-# The Problem Atlas Solves
+# What Atlas Solves
 
-Modern robots typically integrate **5-12 independent sensors**.
+Modern robots integrate many independent sensors:
 
-Example sensor stack:
-
-• multiple cameras  
+• cameras  
 • LiDAR  
 • IMU  
 • GNSS  
-• wheel encoders  
-• trigger sources
+• trigger signals  
 
-These sensors use **different communication interfaces**:
+These sensors use different interfaces:
 
 • USB  
 • Ethernet  
 • SPI  
 • UART  
-• CAN
 
-Each interface introduces **different timing characteristics**.
+Each sensor typically runs on its own clock and timing model.
 
-Typical problems robotics teams encounter:
+This leads to common robotics problems:
 
-### Sensor Time Misalignment
-
-Different sensors report timestamps from different clocks.
-
-Common symptoms:
-
+• sensor timestamp drift  
 • perception jitter  
-• inaccurate sensor fusion  
-• SLAM instability  
-• navigation drift
+• unstable sensor fusion  
+• repeated integration work across robot platforms  
+
+Engineering teams often spend **months building custom infrastructure** just to make sensors work together reliably.
+
+Atlas exists to eliminate this repeated work.
 
 ---
 
-### Custom Integration Hardware
+# Atlas Core Principles
 
-Engineering teams frequently build internal boards to connect sensors to compute platforms.
+Atlas is designed around three engineering principles.
 
-Typical effort:
+### Time Authority
+
+Atlas provides a **hardware timestamp authority** for all connected sensors.
+
+Instead of relying on independent device clocks, Atlas creates a deterministic timing boundary before sensor data enters the compute platform.
+
+This significantly reduces cross-sensor time drift and simplifies perception pipelines.
+
+---
+
+### Single-Cable Sensor Aggregation
+
+Atlas aggregates multiple sensors into a **single upstream connection** to the robot compute platform.
+
+Instead of connecting sensors individually to the SBC, Atlas acts as a dedicated sensor backbone.
+
+Benefits include:
+
+• reduced cable harness complexity  
+• simplified sensor integration  
+• cleaner system architecture  
+
+---
+
+### Cross-Platform Sensor Standardization
+
+Robotics companies often build multiple robot models.
+
+Without a standardized sensor infrastructure, integration work must be repeated for each platform.
+
+Atlas provides a reusable sensor infrastructure layer that can be deployed across multiple robot SKUs.
+
+This allows engineering teams to scale robot development more efficiently.
+
+---
+
+# Atlas System Boundary
+
+Atlas focuses exclusively on **perception sensor infrastructure**.
+
+Sensors typically connected to Atlas include:
+
+• cameras (UVC / USB)  
+• LiDAR sensors  
+• inertial measurement units (IMU)  
+• GNSS receivers  
+• synchronization triggers  
+
+These sensors form the **perception domain** of a robotics system.
+
+---
+
+## Systems Outside Atlas Scope
+
+Atlas intentionally does not integrate robot control systems.
+
+Control-domain components remain connected to the robot controller or CAN bus network.
+
+Examples include:
+
+• motor controllers  
+• motor drivers  
+• wheel encoders  
+• safety controllers  
+• actuator feedback loops  
+
+These systems operate inside real-time control loops and remain independent from the Atlas infrastructure.
+
+---
+
+# Atlas Domain Model
+
+Robotics systems using Atlas are typically organized into four domains.
+
+| Domain | Responsibility |
+|------|------|
+| **Perception Domain** | Cameras, LiDAR, IMU, GNSS and other sensors |
+| **Atlas Infrastructure** | Sensor aggregation and timestamp authority |
+| **Compute Domain** | Robot compute platform (Jetson / ARM SBC / x86) |
+| **Control Domain** | Motor control, CAN bus networks, safety controllers |
+
+Atlas provides the **deterministic sensor infrastructure** between the perception domain and the compute domain.
+
+---
+
+# Internal Development vs Atlas
+
+Many robotics teams initially attempt to build their own sensor infrastructure.
+
+Typical internal effort:
 
 | Task | Typical Effort |
 |-----|-----|
-| Interface board design | 1-2 months |
-| Sensor driver integration | 1 month |
-| Timestamp debugging | 2-4 weeks |
-| System integration testing | 1-2 months |
+| Interface board design | 1–2 months |
+| Sensor synchronization debugging | 1–2 months |
+| Driver integration | 1 month |
+| System validation | 1–2 months |
 
-Total effort commonly reaches **4–9 months of engineering work**.
+Total engineering investment can easily reach **4–9 months**.
 
----
-
-### Platform Fragmentation
-
-Sensor integration work must often be repeated for every robot platform.
-
-This leads to:
-
-• duplicated engineering effort  
-• unstable sensor pipelines  
-• platform-specific driver maintenance
-
----
-
-# Why Not Build This Internally?
-
-Many robotics companies initially attempt to build their own sensor infrastructure.
-
-Internal development typically requires:
-
-• custom interface board design  
-• sensor synchronization logic  
-• driver abstraction layer  
-• ROS integration layer  
-• long-term maintenance
-
-Typical internal investment:
-
-**Engineering Time**
-
-4-9 months
-
-**Engineering Cost**
-
-$300k – $700k
-
-Even after deployment, the infrastructure must be maintained across future robot platforms.
-
-Atlas exists to **eliminate this repeated engineering cost**.
-
----
-
-# Atlas Infrastructure Model
-
-Atlas converts sensor integration from a **custom engineering problem** into a **platform infrastructure layer**.
-
-Instead of building internal hardware and synchronization pipelines, robotics teams deploy Atlas as a dedicated sensor backbone.
-
-Atlas provides:
-
-• deterministic sensor timestamp boundary  
-• unified telemetry channel  
-• sensor alignment pipeline  
-• standardized ROS2 integration
-
-This allows engineering teams to focus on:
+Atlas provides a production-ready sensor infrastructure so teams can focus on:
 
 • perception algorithms  
-• navigation systems  
-• robot autonomy
+• robot navigation  
+• autonomy software  
 
-instead of maintaining sensor infrastructure.
-
----
-
-# Atlas Architecture
-
-Atlas operates as a deterministic boundary between the sensor domain and the compute domain.
-
-Sensor Domain
-(cameras / LiDAR / IMU / GNSS)
-
-↓
-
-Atlas Hardware Platform
-(sensor aggregation + hardware timestamp engine)
-
-↓
-
-DSIL SDK
-(timestamp alignment + telemetry decoding)
-
-↓
-
-Robot Compute Platform
-(perception / SLAM / navigation)
-
-
-Atlas ensures all sensor data entering the compute platform has already passed through a **deterministic synchronization layer**.
+instead of building sensor integration platforms.
 
 ---
 
@@ -216,34 +183,34 @@ Typical evaluation setup:
 • USB camera  
 • USB LiDAR  
 • IMU sensor  
-• GNSS receiver
+• GNSS receiver  
 
 Evaluation workflow:
 
-1. Connect sensors to the Atlas evaluation kit
-2. Connect Atlas to the robot compute platform
-3. Run DSIL telemetry pipeline
-4. Observe timestamp alignment and ROS2 output
+1. connect sensors to the Atlas evaluation kit  
+2. connect Atlas to the robot compute platform  
+3. run DSIL telemetry pipeline  
+4. observe synchronized sensor output  
 
-Evaluation typically requires **less than 30 minutes** to deploy.
+Evaluation typically requires **less than 30 minutes**.
 
 ---
 
-# Atlas Documentation
+# Documentation Sections
 
 The Atlas documentation is organized into the following sections.
 
 ### Hardware Architecture
 
-Describes the Atlas hardware platform and sensor aggregation architecture.
+Atlas hardware platform design and sensor aggregation architecture.
 
 ### DSIL SDK
 
-Describes the Deterministic Sensor Integration Layer and telemetry processing pipeline.
+Deterministic Sensor Integration Layer software stack.
 
 ### ROS2 Integration
 
-Explains how Atlas integrates with ROS2 systems.
+How Atlas integrates with ROS2 perception pipelines.
 
 ### Sensor Synchronization
 
@@ -251,47 +218,13 @@ Technical explanation of the Atlas timestamp alignment pipeline.
 
 ### Evaluation Kit Setup
 
-Step-by-step instructions for running the Atlas evaluation system.
+Step-by-step instructions for deploying the Atlas evaluation system.
 
 ---
 
-# Who Atlas Is For
+# Start Exploring
 
-Atlas is designed for robotics teams building systems with multiple sensors.
+To understand how Atlas works internally, begin with the **Hardware Architecture** documentation.
 
-Typical users include:
+Atlas is designed to make multi-sensor robotics systems easier to build, scale, and maintain.
 
-• autonomous mobile robot developers  
-• industrial robotics companies  
-• robotics research laboratories  
-• perception system integrators
-
-Atlas is particularly useful when robots require:
-
-• multiple cameras  
-• LiDAR sensors  
-• inertial sensors  
-• synchronized perception pipelines
-
----
-
-# Becoming an Internal Champion
-
-Atlas adoption within robotics companies typically begins with a small internal evaluation.
-
-If you are evaluating Atlas within your organization:
-
-1. deploy the Atlas evaluation kit
-2. connect a small sensor stack
-3. measure timestamp alignment
-4. integrate DSIL telemetry into ROS2
-
-Many teams begin with a single prototype robot platform before scaling Atlas across multiple systems.
-
----
-
-# Next Steps
-
-Start with the **Hardware Architecture** documentation.
-
-→ Continue to **Hardware Architecture**
