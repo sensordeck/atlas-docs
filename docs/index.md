@@ -183,6 +183,8 @@ Atlas provides a production-ready sensor infrastructure so teams can focus on:
 
 instead of building sensor integration platforms.
 
+More importantly, once Atlas is adopted, the same infrastructure can be **reused across future robot SKUs and product lines**, eliminating the need to rebuild sensor integration systems for each platform.
+
 ---
 
 # Atlas Evaluation Kit
