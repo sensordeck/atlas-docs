@@ -24,14 +24,6 @@ Atlas converts sensor integration from **custom engineering work** into **deploy
 
 Sensors connect to Atlas -> Atlas synchronizes and aggregates them -> The robot compute platform receives a unified sensor pipeline
 
-**This architecture addresses common robotics integration challenges:**
-
-• Timestamp drift between sensors  
-• Unstable perception pipelines  
-• Repeated sensor interface board development  
-• Complex wiring harnesses  
-• Difficult debugging of asynchronous sensor systems
-
 ---
 
 # What Atlas Solves
@@ -187,6 +179,30 @@ More importantly, once Atlas is adopted, the same infrastructure can be **reused
 
 ---
 
+## Becoming an Internal Champion
+
+Atlas is designed for robotics engineers who are responsible for integrating complex multi-sensor systems.
+
+This architecture addresses common robotics integration challenges:
+
+• timestamp drift between sensors  
+• unstable perception pipelines caused by asynchronous data streams  
+• repeated development of custom sensor interface boards  
+• complex wiring harnesses between sensors and compute platforms  
+• difficult debugging of multi-sensor timing alignment  
+
+Atlas replaces this fragmented integration work with a **deterministic sensor backbone** that provides a unified timing authority and aggregation layer.
+
+Many robotics teams begin by deploying Atlas on a **single evaluation robot** to validate the sensor synchronization pipeline.
+
+Once validated, the same Atlas infrastructure can be reused across future robot platforms and product SKUs.
+
+If your team is currently building or maintaining a custom multi-sensor integration stack, Atlas may provide a simpler and more scalable foundation.
+
+Continue to **Hardware Architecture** to understand how the Atlas system works internally.
+
+---
+
 # Atlas Evaluation Kit
 
 Atlas can be evaluated using a minimal sensor configuration.
@@ -194,7 +210,7 @@ Atlas can be evaluated using a minimal sensor configuration.
 Typical evaluation setup:
 
 • USB camera  
-• USB LiDAR  
+• Ethernet LiDAR  
 • IMU sensor  
 • GNSS receiver  
 
