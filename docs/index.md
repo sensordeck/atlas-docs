@@ -124,19 +124,24 @@ These sensors form the **perception domain** of a robotics system.
 
 ## Systems Outside Atlas Scope
 
-Atlas intentionally does not integrate robot control systems.
+Atlas focuses on **USB-based perception sensor infrastructure**.
 
-Control-domain components remain connected to the robot controller or CAN bus network.
-
-Examples include:
+Robot control systems remain connected to the robot controller or CAN bus network, including:
 
 • motor controllers  
 • motor drivers  
 • wheel encoders  
 • safety controllers  
-• actuator feedback loops  
 
-These systems operate inside real-time control loops and remain independent from the Atlas infrastructure.
+High-bandwidth perception sensors may also connect **directly to the robot compute platform**, including:
+
+• Ethernet LiDAR  
+• GMSL cameras  
+• MIPI / CSI cameras  
+
+When time synchronization is required, these sensors can feed **PPS or trigger signals into Atlas**, allowing the entire perception stack to share the same timing authority.
+
+See **Sensor Synchronization** for more details.
 
 ---
 
