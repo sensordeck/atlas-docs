@@ -86,6 +86,162 @@ Benefits include:
 
 ### Cross-SKU Standardization
 
-Robotics companies typically
+Robotics companies typically build multiple robot models.
+
+Without a shared sensor infrastructure, integration work must be repeated for each platform.
+
+Atlas provides a reusable infrastructure layer that can be deployed across multiple robot SKUs and product lines.
+
+---
+
+# Atlas System Boundary
+
+Atlas focuses on **perception sensor infrastructure**.
+
+Sensors typically connected to Atlas include:
+
+• cameras (USB / UVC)  
+• LiDAR sensors  
+• IMU  
+• GNSS  
+• synchronization triggers  
+
+These sensors form the **perception domain** of a robotics system.
+
+---
+
+## Systems Outside Atlas Scope
+
+Robot control systems remain connected to the robot controller or CAN bus network.
+
+Examples include:
+
+• motor controllers  
+• motor drivers  
+• wheel encoders  
+• safety controllers  
+
+High-bandwidth perception sensors may also connect directly to the robot compute platform:
+
+• Ethernet LiDAR  
+• GMSL cameras  
+• MIPI / CSI cameras  
+
+When time synchronization is required, these sensors can feed **PPS or trigger signals into Atlas**, allowing the entire perception stack to share the same timing authority.
+
+See **Sensor Synchronization** for more details.
+
+---
+
+# Atlas Domain Model
+
+Robotics systems using Atlas are typically organized into four domains.
+
+| Domain | Responsibility |
+|------|------|
+| **Perception Domain** | Cameras, LiDAR, IMU, GNSS |
+| **Atlas Infrastructure** | Sensor aggregation and timing authority |
+| **Compute Domain** | Robot compute platform (Jetson / ARM SBC / x86) |
+| **Control Domain** | Motor control and safety systems |
+
+Atlas provides the **deterministic sensor backbone** between the perception domain and the compute domain.
+
+---
+
+# Internal Development vs Atlas
+
+Many robotics teams initially attempt to build their own sensor integration infrastructure.
+
+Typical internal effort:
+
+| Task | Typical Effort |
+|-----|-----|
+| Interface board design | 1–2 months |
+| Sensor synchronization debugging | 1–2 months |
+| Driver integration | 1 month |
+| System validation | 1–2 months |
+
+Total engineering investment can easily reach **4–9 months**.
+
+Atlas provides a ready-to-deploy sensor infrastructure so teams can focus on:
+
+• perception algorithms  
+• robot navigation  
+• autonomy software  
+
+More importantly, once Atlas is adopted, the same infrastructure can be reused across **future robot SKUs and product lines**, eliminating the need to rebuild sensor integration systems for each platform.
+
+---
+
+## Becoming an Internal Champion
+
+Atlas is designed for robotics engineers responsible for integrating multi-sensor systems.
+
+Common integration challenges include:
+
+• timestamp drift between sensors  
+• unstable perception pipelines  
+• repeated development of sensor interface boards  
+• complex wiring harnesses between sensors and compute platforms  
+• difficult debugging of asynchronous sensor systems  
+
+These issues often emerge only after multiple sensors are integrated, making them time-consuming to diagnose.
+
+Atlas replaces this fragmented integration work with a **deterministic sensor backbone and timing authority**.
+
+Many robotics teams begin by deploying Atlas on a **single evaluation robot** to validate the synchronization pipeline.
+
+Once validated, the same infrastructure can be reused across future robot platforms.
+
+Continue to **Hardware Architecture** to understand how the Atlas system works internally.
+
+---
+
+# Atlas Evaluation Kit
+
+Atlas can be evaluated using a minimal sensor configuration.
+
+Typical evaluation setup:
+
+• USB camera  
+• Ethernet LiDAR  
+• IMU  
+• GNSS  
+
+Evaluation workflow:
+
+1. connect sensors to the Atlas evaluation kit  
+2. connect Atlas to the robot compute platform  
+3. run DSIL telemetry pipeline  
+4. observe synchronized sensor output  
+
+Evaluation typically requires **less than 30 minutes**.
+
+---
+
+# Documentation Sections
+
+The Atlas documentation is organized into the following sections.
+
+### Hardware Architecture  
+Atlas hardware platform design and sensor aggregation architecture.
+
+### DSIL SDK  
+Deterministic Sensor Integration Layer software stack.
+
+### ROS2 Integration  
+How Atlas integrates with ROS2 perception pipelines.
+
+### Sensor Synchronization  
+Technical explanation of the Atlas timestamp alignment pipeline.
+
+### Evaluation Kit Setup  
+Step-by-step instructions for deploying the Atlas evaluation system.
+
+---
+
+# Start Exploring
+
+To understand how Atlas works internally, begin with the **Hardware Architecture** documentation.
 
 
