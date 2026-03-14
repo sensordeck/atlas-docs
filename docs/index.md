@@ -17,7 +17,7 @@ Atlas converts sensor integration from **custom engineering work** into **deploy
 ## Atlas in One Diagram
 
 <p align="center">
-<img src="images/atlas_system_overview.png" width="900">
+<img src="Catalog2.png" width="60%">
 </p>
 
 **Atlas deterministic sensor backbone architecture**
