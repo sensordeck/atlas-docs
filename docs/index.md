@@ -22,9 +22,15 @@ Atlas converts sensor integration from **custom engineering work** into **deploy
 
 **Atlas deterministic sensor backbone architecture**
 
-Sensors connect to Atlas.  
-Atlas synchronizes and aggregates them.  
-The robot compute platform receives a unified sensor pipeline.
+Sensors connect to Atlas -> Atlas synchronizes and aggregates them -> The robot compute platform receives a unified sensor pipeline
+
+**This architecture addresses common robotics integration challenges:**
+
+• Timestamp drift between sensors  
+• Unstable perception pipelines  
+• Repeated sensor interface board development  
+• Complex wiring harnesses  
+• Difficult debugging of asynchronous sensor systems
 
 ---
 
