@@ -1,14 +1,8 @@
 # Atlas Developer Documentation
 
-<p align="left"><strong>
-Atlas establishes the timing authority for multi-sensor robotics systems.
-</strong></p>
+### Atlas provides a deterministic sensor backbone and timing authority for multi-sensor robotics systems.
 
 ---
-
-## Deterministic Sensor Infrastructure for Robotics
-
-Atlas provides a **deterministic sensor backbone** for robotics systems.
 
 Atlas establishes a unified sensor infrastructure by providing:
 
