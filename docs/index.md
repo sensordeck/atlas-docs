@@ -30,11 +30,11 @@ Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robo
 
 Modern robots integrate multiple independent sensors such as:
 
-• cameras  
+• Cameras  
 • LiDAR  
 • IMU  
 • GNSS  
-• synchronization triggers  
+• Synchronization triggers  
 
 These sensors often operate with different clocks and communication interfaces:
 
@@ -45,10 +45,10 @@ These sensors often operate with different clocks and communication interfaces:
 
 Without a shared timing authority, robotics teams commonly encounter:
 
-• timestamp drift between sensors  
-• unstable perception pipelines  
-• difficult multi-sensor synchronization  
-• repeated development of custom sensor interface boards  
+• Timestamp drift between sensors  
+• Unstable perception pipelines  
+• Difficult multi-sensor synchronization  
+• Repeated development of custom sensor interface boards  
 
 Engineering teams often spend **months building internal infrastructure** simply to make sensors work together reliably.
 
@@ -78,9 +78,9 @@ Instead of connecting each sensor directly to the SBC, Atlas acts as the dedicat
 
 Benefits include:
 
-• reduced wiring complexity  
-• simplified sensor integration  
-• clearer system architecture  
+• Reduced wiring complexity  
+• Simplified sensor integration  
+• Clearer system architecture  
 
 ---
 
@@ -100,11 +100,11 @@ Atlas focuses on **perception sensor infrastructure**.
 
 Sensors typically connected to Atlas include:
 
-• cameras (USB / UVC)  
+• Cameras (USB / UVC)  
 • LiDAR sensors  
 • IMU  
 • GNSS  
-• synchronization triggers  
+• Synchronization triggers  
 
 These sensors form the **perception domain** of a robotics system.
 
@@ -165,9 +165,9 @@ Total engineering investment can easily reach **4–9 months**.
 
 Atlas provides a ready-to-deploy sensor infrastructure so teams can focus on:
 
-• perception algorithms  
-• robot navigation  
-• autonomy software  
+**• Perception algorithms  
+• Robot navigation  
+• Autonomy software**  
 
 More importantly, once Atlas is adopted, the same infrastructure can be reused across **future robot SKUs and product lines**, eliminating the need to rebuild sensor integration systems for each platform.
 
@@ -179,15 +179,15 @@ Atlas is designed for robotics engineers responsible for integrating multi-senso
 
 Common integration challenges include:
 
-• timestamp drift between sensors  
-• unstable perception pipelines  
-• repeated development of sensor interface boards  
-• complex wiring harnesses between sensors and compute platforms  
-• difficult debugging of asynchronous sensor systems  
+• Timestamp drift between sensors  
+• Unstable perception pipelines  
+• Repeated development of sensor interface boards  
+• Complex wiring harnesses between sensors and compute platforms  
+• Difficult debugging of asynchronous sensor systems  
 
 These issues often emerge only after multiple sensors are integrated, making them time-consuming to diagnose.
 
-Atlas replaces this fragmented integration work with a **deterministic sensor backbone and timing authority**.
+Atlas replaces this fragmented integration work with a **Deterministic Sensor Infrastructure and Timing Authority**.
 
 Many robotics teams begin by deploying Atlas on a **single evaluation robot** to validate the synchronization pipeline.
 
