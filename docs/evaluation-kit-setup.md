@@ -1,3 +1,5 @@
+# Evaluation Kit Setup
+
 Evaluation Kit Contents
 Hardware
 • Fusion V2 board
