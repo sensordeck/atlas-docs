@@ -5,14 +5,14 @@ sidebar_position: 2
 description: Atlas hardware architecture for deterministic sensor aggregation, onboard power distribution, and board-level time authority in robotics systems.
 ---
 
-# Atlas Hardware Architecture
+# Atlas Fusion V2 Hardware Architecture
 
 > Atlas is an industrial sensor aggregation and timing authority board for robotics platforms.  
-> It consolidates sensor connectivity, onboard power distribution, and timing control into one deployable hardware backbone between the sensor domain and the robot compute platform.
+> Fusion V2 consolidates sensor connectivity, onboard power distribution, and timing control into one deployable hardware backbone between the sensor domain and the robot compute platform.
 
 ---
 
-## Why Atlas Exists
+## Why Atlas Fusion V2 Exists
 
 Robotics teams repeatedly run into the same system-level hardware problems:
 
@@ -23,7 +23,7 @@ Robotics teams repeatedly run into the same system-level hardware problems:
 - Poor field reliability due to loose connectors and harness complexity
 - Repeated engineering work for every new robot SKU
 
-Atlas solves these problems at the hardware infrastructure layer.
+Atlas Fusion V2 solves these problems at the hardware infrastructure layer.
 
 It converts multi-sensor integration from **custom wiring and software guesswork** into a **deterministic hardware subsystem**.
 
@@ -31,7 +31,7 @@ It converts multi-sensor integration from **custom wiring and software guesswork
 
 ## System Role
 
-Atlas is designed as a board-level sensor infrastructure platform for robotics and industrial mobility systems.
+Atlas Fusion V2 is designed as a board-level sensor infrastructure platform for robotics and industrial mobility systems.
 
 At the hardware level, Atlas provides:
 
@@ -52,7 +52,7 @@ Certified / Integrated Sensor Group
                          │
                          ▼
 ┌────────────────────────────────────────────────────┐
-│                     Atlas Board                    │
+│           Atlas Fusion V2 Board                    │
 │                                                    │
 │  • Sensor interface aggregation                    │
 │  • FusionPower protected power distribution        │
@@ -72,7 +72,7 @@ Certified / Integrated Sensor Group
 
 ---
 
-## Core Hardware Functions
+## Core Fusion V2 Hardware Functions
 
 ### 1. Sensor Aggregation
 
@@ -87,9 +87,9 @@ Atlas aggregates multiple sensor classes onto one integration board:
 
 This allows the compute platform to integrate against **one board-level sensor domain**, instead of managing multiple direct sensor wiring paths individually.
 
-### 2. FusionPower Onboard Power Distribution
+### 2. Fusion V2 Onboard Power Distribution
 
-Atlas distributes protected power from the robot battery to the connected sensor group.
+Atlas Fusion V2 distributes protected power from the robot battery to the connected sensor group.
 
 Typical board-level power role:
 
@@ -99,17 +99,17 @@ Typical board-level power role:
 - Isolate faults so one failed peripheral does not bring down the full sensor harness
 - Report power and health telemetry upstream through CDC
 
-### 3. Board-Level Time Authority
+### 3. Fusion V2 Board-Level Time Authority
 
-Atlas is not only a sensor breakout board.
+Atlas Fusion V2 is not only a sensor breakout board.
 
 It acts as the **timing authority** for the sensor subsystem:
 
-- accepting an external time reference
-- maintaining a board timing domain
-- redistributing timing signals to downstream devices
-- aligning captured data to board-managed timing events
-- exposing timing state and diagnostics to the host
+- Accepting an external time reference
+- Maintaining a board timing domain
+- Redistributing timing signals to downstream devices
+- Aligning captured data to board-managed timing events
+- Exposing timing state and diagnostics to the host
 
 This timing role is central to Atlas’s value.
 
@@ -133,9 +133,9 @@ Instead of each sensor living in its own time world, Atlas defines the timing bo
 
 ---
 
-## Timing Interfaces
+## Fusion V2 Timing Interfaces
 
-Atlas extends its timing domain into the hardware layer through four dedicated timing interfaces:
+Atlas extends its timing domain into the Fusion V2 hardware layer through four dedicated timing interfaces:
 
 | Interface | Role | Function in the timing system | Primary value |
 |---|---|---|---|
@@ -196,16 +196,16 @@ This allows Atlas to serve as the local timing reference distributor for:
 
 This signal is intended for deterministic periodic acquisition use cases such as:
 
-- synchronized multi-camera exposure
-- aligned periodic LiDAR or scan-cycle coordination
-- recurring acquisition boundaries for sensors that support sync input
-- establishing a board-controlled sample cadence
+- Synchronized multi-camera exposure
+- Aligned periodic LiDAR or scan-cycle coordination
+- Recurring acquisition boundaries for sensors that support sync input
+- Establishing a board-controlled sample cadence
 
 #### Why it matters
 
-- multiple sensors can be aligned to a common hardware event
-- exposure and sampling drift can be reduced or eliminated
-- motion scenes become easier to fuse accurately
+- Multiple sensors can be aligned to a common hardware event
+- Exposure and sampling drift can be reduced or eliminated
+- Motion scenes become easier to fuse accurately
 
 ### TRIGGER_OUT — Event Trigger Control
 
@@ -213,17 +213,17 @@ This signal is intended for deterministic periodic acquisition use cases such as
 
 Unlike `SYNC_OUT`, which is periodic, `TRIGGER_OUT` is intended for:
 
-- one-shot trigger events
-- burst sequences
-- scheduled action timing
-- mode-specific sensor wake/capture control
+- One-shot trigger events
+- Burst sequences
+- Scheduled action timing
+- Mode-specific sensor wake/capture control
 
 Typical use cases include:
 
-- triggering a camera at a specific LiDAR scan phase
-- commanding capture only when a condition is met
-- controlling acquisition in power-sensitive systems
-- aligning actuation and sensing events
+- Triggering a camera at a specific LiDAR scan phase
+- Commanding capture only when a condition is met
+- Controlling acquisition in power-sensitive systems
+- Aligning actuation and sensing events
 
 #### Why it matters
 
@@ -511,11 +511,11 @@ From the compute platform perspective, Atlas presents a much cleaner integration
 
 Typical host-visible results include:
 
-- standard UVC camera devices
+- Standard UVC camera devices
 - CDC telemetry path for aggregated board information
-- board timing status
-- power and health telemetry
-- sensor metadata aligned to the Atlas timing domain
+- Board timing status
+- Power and health telemetry
+- Sensor metadata aligned to the Atlas timing domain
 
 This reduces the burden on host-side software and improves determinism upstream.
 
@@ -555,10 +555,10 @@ Atlas is more than a sensor hub.
 
 It is a **deterministic sensor infrastructure board** that combines:
 
-- sensor aggregation
-- protected onboard power
-- single-cable host integration
-- and, most critically, **board-level time authority**
+- Sensor aggregation
+- Protected onboard power
+- Single-cable host integration
+- and, most critically, **Board-level time authority**
 
 That timing authority is expressed in hardware through:
 
