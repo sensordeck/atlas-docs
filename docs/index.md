@@ -17,7 +17,7 @@ Together these capabilities allow robotics teams to treat sensor integration as 
 ## Atlas in One Diagram
 
 <p align="center">
-<img src="Catalog2.png" width="60%">
+  <img src="Catalog2.png" width="60%" />
 </p>
 
 **Atlas establishes the timing authority and aggregation backbone for the robot perception stack.**
