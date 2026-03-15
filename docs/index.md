@@ -104,28 +104,9 @@ DSIL converts raw sensor streams into a **synchronized perception data pipeline*
 
 Example workflow:
 
-Atlas CDC Telemetry Device
-
-`/dev/ttyACM0`
-
-↓
-
-DSIL SDK telemetry pipeline
-
-↓
-
-ROS2 sensor topics
-
-```
-/imu/data
-/gnss/fix
-/pps/trigger
-/sensor/health
-```
-
-↓
-
-Perception / Navigation / SLAM stacks
+<p align="center">
+  <img src="/img/Fig 1.png" width="60%" alt="DSIL Workflow" />
+</p>
 
 Because DSIL operates above the hardware layer, it allows robotics teams to integrate Atlas without writing custom synchronization infrastructure.
 
