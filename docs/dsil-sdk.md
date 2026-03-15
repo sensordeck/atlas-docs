@@ -2,294 +2,762 @@
 
 Deterministic Sensor Integration Layer
 
-The Deterministic Sensor Integration Layer (DSIL) is the software stack that allows robotics systems to consume synchronized multi-sensor data from Atlas.
+DSIL is the software layer that turns Atlas from a hardware integration board into a deterministic sensor infrastructure platform.
 
-Atlas provides the hardware timing authority and sensor aggregation infrastructure.
+Atlas establishes the hardware timing boundary, synchronization authority, and sensor aggregation path.
 
-DSIL converts this infrastructure into a usable software interface for robotics applications.
+DSIL exposes that infrastructure to Linux, ROS2, and robotics software through a focused runtime, command-line tools, and monitoring interfaces.
 
-DSIL runs on the robot compute platform and provides:
+In one sentence:
 
-• Deterministic sensor timestamp alignment  
-• Telemetry decoding from Atlas  
-• Sensor health monitoring  
-• ROS2 integration nodes  
-• Unified perception data interfaces  
-
-Together Atlas hardware and DSIL SDK form a complete deterministic sensor infrastructure.
+**DSIL makes Atlas timing and synchronization visible to software, so robotics teams can evaluate, trust, and reuse deterministic sensor infrastructure without building it from scratch.**
 
 ---
 
-# DSIL Architecture
+# Why DSIL Matters
 
-The DSIL SDK sits between the Atlas hardware platform and the robotics software stack.
+Most robotics teams can physically connect sensors.
+
+The real difficulty begins after those sensors are connected.
+
+As sensor count grows, the system becomes harder to trust, harder to debug, and harder to reuse across robot platforms.
+
+Typical integration problems include:
+
+| Problem | What Happens in Practice | Cost to the Team |
+|---|---|---|
+| Untrusted timestamps | Fusion and perception pipelines must guess temporal alignment | Weeks or months of synchronization debugging |
+| Driver-to-hardware coupling | A new sensor model causes integration rework | 2–4 weeks per new sensor path |
+| ROS2 sees software timing only | `/image`, `/imu`, and navigation data do not align reliably | Heavy preprocessing and validation effort |
+| Black-box diagnostics | It is unclear whether faults come from hardware, timing, drivers, or software | Slow root-cause analysis |
+| Per-platform duplication | Every robot SKU rebuilds almost the same integration stack | Low reuse and repeated engineering work |
+
+DSIL exists to solve these problems at the software infrastructure layer.
+
+Atlas provides the hardware timing backbone.
+
+DSIL makes that timing backbone visible and usable.
+
+Together they form the Atlas deterministic sensor platform.
+
+---
+
+# DSIL in the Atlas Stack
 
 System flow:
 
 Sensors  
 ↓  
-Atlas Hardware (aggregation + timing authority)  
+Atlas Hardware  
+↓  
+USB 3.0 Upstream Link  
 ↓  
 CDC Telemetry Channel  
 ↓  
-DSIL SDK  
+DSIL Runtime  
 ↓  
-ROS2 / Perception Stack  
+ROS2 / Application Software / Perception Stack
 
-Atlas handles the physical sensor integration.
+Atlas Fusion V2 handles:
 
-DSIL handles the software integration.
+• Sensor aggregation  
+• Board-level timing authority  
+• Synchronization signal distribution  
+• Board telemetry generation  
+• Infrastructure visibility
 
-This separation allows robotics teams to integrate complex sensor stacks without building custom synchronization infrastructure.
+DSIL handles:
+
+• Telemetry decoding  
+• Synchronization visibility  
+• Timestamp alignment logic  
+• Runtime diagnostics  
+• ROS2 monitoring integration  
+• Developer evaluation tools
+
+This separation is fundamental.
+
+Atlas is not just hardware.
+
+Atlas becomes a platform when paired with DSIL.
+
+---
+
+# DSIL Architecture
+
+DSIL is organized into four software layers.
+
+## Application Layer
+
+This is where customer software runs.
+
+Typical consumers include:
+
+• ROS2 perception nodes  
+• Fusion pipelines  
+• Navigation systems  
+• SLAM stacks  
+• Logging and evaluation tools  
+• Customer robotics software
+
+These applications should be able to consume deterministic infrastructure state without needing to understand Atlas hardware internals.
+
+## ROS2 Integration Layer
+
+This layer bridges DSIL runtime data into ROS2-facing interfaces.
+
+Core DSIL ROS2 components:
+
+• `dsil_telemetry_node`  
+• `dsil_monitor_node`
+
+This layer makes Atlas timing state and synchronization results visible to robotics software teams.
+
+## Core Runtime Layer
+
+This is the core of DSIL.
+
+Core runtime modules include:
+
+• Telemetry Decoder  
+• Timestamp Analyzer  
+• Sync Correction Engine  
+• Device Manager  
+• Evaluation Monitor
+
+This layer provides the minimal host-side software needed for evaluation and final public DSIL operation.
+
+## Host Transport Layer
+
+This layer interfaces with Atlas through standard Linux device paths.
+
+Primary transport path:
+
+• `/dev/ttyACM*` for CDC telemetry
+
+The transport layer is responsible for framing, message decoding, channel handling, and reconnect behavior.
+
+---
+
+# DSIL Architecture Diagram
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │           Applications / Perception / Navigation / SLAM      │
+    │    ROS2 nodes · fusion logic · logging · customer software   │
+    └──────────────────────────────────────────────────────────────┘
+                                 ▲
+                                 │
+                                 │ ROS2 topics / CLI tools
+                                 │
+                                 ▼
+    ┌──────────────────────────────────────────────────────────────┐
+    │                    DSIL ROS2 Integration Layer               │
+    │        dsil_telemetry_node · dsil_monitor_node               │
+    └──────────────────────────────────────────────────────────────┘
+                                 ▲
+                                 │
+                                 │ Runtime API / evaluation tools
+                                 │
+                                 ▼
+    ┌──────────────────────────────────────────────────────────────┐
+    │                     DSIL Core Runtime Layer                  │
+    │  Telemetry Decoder · Timestamp Analyzer · Sync Correction    │
+    │  Device Manager · Evaluation Monitor                         │
+    └──────────────────────────────────────────────────────────────┘
+                                 ▲
+                                 │
+                                 │ Linux device abstraction
+                                 │
+                                 ▼
+    ┌──────────────────────────────────────────────────────────────┐
+    │                    DSIL Host Transport Layer                 │
+    │         CDC telemetry transport over /dev/ttyACM*            │
+    │         framing · recovery · channel management              │
+    └──────────────────────────────────────────────────────────────┘
+                                 ▲
+                                 │
+                                 │ USB 3.0 upstream link
+                                 │
+                                 ▼
+    ┌──────────────────────────────────────────────────────────────┐
+    │                         Atlas Hardware                       │
+    │   timing authority · sync fabric · PPS discipline            │
+    │   sensor aggregation · board telemetry                       │
+    └──────────────────────────────────────────────────────────────┘
 
 ---
 
 # Atlas Telemetry Channel
 
-Atlas exposes a telemetry channel to the compute platform through a USB CDC device.
+Atlas exposes a dedicated telemetry path to the host compute platform through a USB CDC device.
 
-Typical device path:
+Typical host enumeration target:
 
     /dev/ttyACM0
 
-This channel transports structured sensor telemetry and timing information from Atlas to the compute platform.
+The telemetry channel is intended to carry structured infrastructure data such as:
 
-Telemetry typically includes:
+• Timing metadata  
+• PPS events  
+• Sync state  
+• Sensor presence  
+• Board health  
+• Power telemetry  
+• Warning and fault counters
 
-• Sensor timestamp metadata  
-• Synchronization signals  
-• PPS timing events  
-• Sensor health status  
-• Hardware diagnostics  
-
-The CDC channel is designed to provide deterministic metadata flow independent from high-bandwidth sensor streams.
+This telemetry path is intentionally separate from high-bandwidth sensor data paths.
 
 For example:
 
-USB cameras transmit video through USB UVC directly to the compute platform.
+• a USB camera continues to stream through standard UVC  
+• Atlas exports timing and health telemetry through CDC  
+• DSIL observes and evaluates system state without disrupting the primary data path
 
-Atlas simultaneously provides timing and synchronization metadata through the CDC telemetry channel.
+This preserves compatibility while adding deterministic infrastructure visibility.
 
 ---
 
-# DSIL Telemetry Pipeline
+# Design Principle: Out-of-Band Metadata
 
-DSIL includes a telemetry pipeline responsible for decoding Atlas telemetry and aligning sensor data streams.
+Atlas and DSIL are built around an out-of-band metadata model.
 
-Typical telemetry flow:
+    [USB Camera / LiDAR / Sensor Streams] ── standard data paths ──► host
+                               │
+                               └──── Atlas CDC telemetry ──► DSIL runtime
 
-Atlas CDC Telemetry Device
+The sensor data path remains as standard as possible.
 
-    /dev/ttyACM0
+The deterministic metadata path is handled separately.
 
-↓
+This gives Atlas three major advantages:
 
-DSIL Telemetry Decoder
+• Existing device drivers stay usable  
+• Timing and health infrastructure remain visible  
+• High-bandwidth traffic does not bury synchronization state
 
-↓
-
-Timestamp Alignment Engine
-
-↓
-
-ROS2 Sensor Topics
-
-↓
-
-Perception / Navigation / SLAM pipelines
-
-This pipeline converts raw Atlas telemetry into structured robotics data streams.
+This principle is one of the most important architectural decisions in Atlas.
 
 ---
 
 # Timestamp Alignment
 
-Robotics perception pipelines require consistent timestamps across multiple sensors.
+The timestamp alignment function is the core of DSIL.
 
-Without synchronization:
+Its purpose is to convert Atlas hardware timing into a usable software time model for the robot.
 
-• Camera timestamps drift from LiDAR timestamps  
-• IMU timestamps drift from GNSS time  
-• Perception algorithms receive inconsistent sensor frames  
+Without this layer, multi-sensor systems often depend on software-side arrival time, kernel scheduling behavior, driver timing, or device-local clocks.
 
-Atlas establishes the hardware timing authority.
+That leads to unstable time semantics.
 
-DSIL propagates this timing authority into the compute platform.
+DSIL provides a cleaner model.
 
-The DSIL timestamp alignment engine performs:
+Core responsibilities include:
 
-• Timestamp normalization  
-• PPS event propagation  
-• Synchronization boundary detection  
-• Sensor frame alignment  
+• Time-domain normalization  
+• PPS event ingestion  
+• Synchronization state tracking  
+• Cross-sensor offset measurement  
+• Correction application  
+• Deterministic timestamp visibility to host-side software
 
-This allows perception pipelines to operate on a consistent time base.
+Conceptually:
+
+Traditional software timestamp:
+
+    sensor event → transport → host buffering → scheduler delay → application timestamp
+
+Atlas + DSIL model:
+
+    sensor event → Atlas hardware capture → telemetry propagation → DSIL alignment → application-visible deterministic time
+
+The goal of DSIL is to make the second model practical, measurable, and easy to demonstrate.
 
 ---
 
-# Example DSIL Workflow
+# DSIL SDK v0.1
 
-A typical robotics system using Atlas and DSIL operates as follows.
+LOI Evaluation Pack
 
-1. Sensors connect to Atlas.
+DSIL SDK v0.1 exists for one purpose only:
 
-Examples:
+**Demonstrate that Atlas provides deterministic multi-sensor timing and significantly improves cross-sensor timestamp alignment.**
 
-• USB camera  
-• LiDAR sensor  
-• IMU  
-• GNSS receiver
+The evaluation must allow an engineer to observe:
 
-2. Atlas aggregates sensor connectivity and provides timing authority.
+• Baseline sensor timestamp drift  
+• Atlas timing backbone activation  
+• DSIL synchronization improvement
 
-3. Atlas exposes a CDC telemetry device to the compute platform.
+If this is clearly demonstrated, the evaluator can confidently present the result to a CTO, technical lead, or internal platform decision-maker.
+
+## What DSIL SDK v0.1 Includes
+
+The v0.1 scope is intentionally minimal.
+
+### CLI Tools
+
+• `dsil_status`  
+• `dsil_analyze`  
+• `dsil_sync`  
+• `dsil_plot`
+
+### ROS2 Nodes
+
+• `dsil_telemetry_node`  
+• `dsil_monitor_node`
+
+### Evaluation Utilities
+
+• `run_dsil_demo.sh`  
+• evaluation runbook  
+• sample output graphs
+
+## Most Valuable Features in v0.1
+
+These are the features that matter most for LOI evaluation and internal champion adoption.
+
+### 1. Atlas enumerates as a real infrastructure device
+
+The evaluator plugs Atlas into a host and sees:
+
+    /dev/ttyACM0
+
+That matters because Atlas becomes immediately visible as a real infrastructure element.
+
+### 2. Timing state is visible
+
+The evaluator can confirm that Atlas is present, PPS-locked, and synchronization-capable.
+
+### 3. Baseline drift can be measured
+
+The evaluator can quantify the timing problem before DSIL correction is applied.
+
+### 4. Synchronization improvement can be demonstrated
+
+The evaluator can enable DSIL and measure the improvement directly.
+
+### 5. Results can be shown to decision-makers
+
+The evaluator can generate simple output and before/after plots that support an LOI conversation.
+
+---
+
+# CLI Tools
+
+These tools are the heart of DSIL SDK v0.1.
+
+## dsil_status
+
+Purpose:
+
+Verify Atlas timing engine status.
 
 Example:
 
-    /dev/ttyACM0
+    dsil_status
 
-4. DSIL reads telemetry from the device.
+Representative output target:
 
-Example command:
+    Atlas detected
+    PPS locked
+    Sync active
 
-    dsil_telemetry --device /dev/ttyACM0
+## dsil_analyze
 
-5. DSIL converts telemetry into ROS2 topics.
+Purpose:
 
-6. Robotics perception software consumes synchronized sensor streams.
+Measure cross-sensor timestamp offset.
+
+Example:
+
+    dsil_analyze --baseline
+
+Representative output target:
+
+    Camera-LiDAR offset: 12.0 ms
+    IMU-LiDAR offset: 8.0 ms
+
+This confirms the timing problem exists before correction.
+
+## dsil_sync
+
+Purpose:
+
+Apply Atlas timing correction.
+
+Example:
+
+    dsil_sync
+
+Representative conceptual model:
+
+    corrected_timestamp =
+    sensor_timestamp
+    + atlas_clock_offset
+
+## dsil_plot
+
+Purpose:
+
+Visualize before/after timestamp alignment.
+
+Example:
+
+    dsil_plot
+
+Representative outputs:
+
+    offset_before.png
+    offset_after.png
+
+These tools are not cosmetic.
+
+For many evaluators, the quality of these tools will determine whether Atlas feels credible enough for a pilot discussion.
 
 ---
 
-# ROS2 Integration
+# Minimal ROS2 Integration
 
-DSIL integrates directly with ROS2 robotics software pipelines.
+The DSIL v0.1 ROS2 layer is intentionally narrow.
 
-The DSIL ROS2 node architecture typically follows this model.
+## dsil_telemetry_node
 
-Atlas CDC Telemetry Channel
+Purpose:
 
-    /dev/ttyACM0
+Publish Atlas timing state to ROS2.
 
-↓
+Representative topics:
 
-DSIL Telemetry ROS2 Node
+• `/dsil/status`  
+• `/dsil/pps`
 
-    dsil_telemetry_node
+Representative message model:
 
-↓
+    atlas_connected: true
+    pps_locked: true
+    sync_active: true
+    clock_offset_ms: 0.3
 
-ROS2 Topics
+## dsil_monitor_node
 
+Purpose:
+
+Monitor sensor topics and compute drift.
+
+Representative inputs:
+
+• `/camera/image`  
+• `/livox/lidar`  
+• `/imu/data`
+
+Representative output:
+
+• `/dsil/sync_drift`
+
+Representative result:
+
+    camera_lidar_offset_ms: 9.2
+    imu_lidar_offset_ms: 6.8
+
+After DSIL correction:
+
+    camera_lidar_offset_ms: 0.9
+    imu_lidar_offset_ms: 0.4
+
+This is the right ROS2 boundary for v0.1.
+
+It proves Atlas value without overextending the first release.
+
+---
+
+# 30-Minute Evaluation Flow
+
+The Atlas evaluation experience should be fast, visible, and easy to defend internally.
+
+## Step 1 — Connect Sensors
+
+Example evaluation wiring:
+
+• Camera → Atlas USB  
+• IMU → Atlas I2C or onboard sensor path  
+• GNSS → Atlas UART + PPS_IN  
+• Atlas → SBC USB  
+• Ethernet LiDAR → SBC Ethernet
+
+## Step 2 — Launch Atlas
+
+    fusion_start
+
+Expected:
+
+    Atlas detected
+    PPS locked
+    Timing engine active
+
+## Step 3 — Launch ROS2 Drivers
+
+    ros2 launch livox_ros2_driver
+    ros2 run usb_cam usb_cam_node
+    ros2 run vectornav_driver imu_node
+
+Verify topics:
+
+    ros2 topic list
+
+Representative topics:
+
+    /camera/image
+    /livox/lidar
     /imu/data
-    /gnss/fix
-    /pps/trigger
-    /sensor/health
 
-↓
+## Step 4 — Baseline Timing
 
-Perception / Navigation / SLAM nodes
+    dsil_analyze --baseline
 
-This allows existing ROS2 perception software to integrate with Atlas without modification.
+Representative output:
 
----
+    Camera ↔ LiDAR offset: 12 ms
+    IMU ↔ LiDAR offset: 8 ms
 
-# DSIL CLI Tools
+This confirms the timing problem exists.
 
-The DSIL SDK includes command line tools for debugging and development.
+## Step 5 — Enable DSIL
 
-Example tools include:
+    dsil_sync
 
-dsil_telemetry
+## Step 6 — Verify Synchronization
 
-Reads raw telemetry data from Atlas.
+    dsil_sync_check
 
-Example:
+Representative output:
 
-    dsil_telemetry --device /dev/ttyACM0
+    Camera ↔ LiDAR offset: 0.9 ms
+    IMU ↔ LiDAR offset: 0.5 ms
 
-dsil_health
+## Step 7 — Visualization
 
-Displays sensor health and synchronization status.
+    dsil_plot
 
-Example:
+Representative outputs:
 
-    dsil_health
+    offset_before.png
+    offset_after.png
 
-dsil_time
-
-Displays current Atlas time reference and PPS status.
-
-Example:
-
-    dsil_time
-
-These tools allow robotics engineers to quickly validate synchronization pipelines during system integration.
+This entire flow is designed to help an engineer validate Atlas in less than 30 minutes.
 
 ---
 
-# Sensor Health Monitoring
+# Expected Evaluation Metrics
 
-Atlas monitors sensor infrastructure status and publishes telemetry through DSIL.
+A successful LOI evaluation demonstrates:
 
-Typical monitoring information includes:
+• Cross-sensor offset under 1 ms  
+• Stable synchronization for more than 30 minutes  
+• Deterministic timestamp origin  
+• GNSS-referenced time base
 
-• Sensor connectivity status  
-• PPS lock state  
-• Synchronization trigger events  
-• Ppower subsystem status  
-• Hardware diagnostics  
-
-This telemetry allows robotics teams to detect sensor failures or synchronization issues early.
+These are the right proof points for an evaluation package.
 
 ---
 
-# Why DSIL Exists
+# DSIL SDK v1.0
 
-Most robotics companies build custom infrastructure to synchronize multiple sensors.
+Final Public Core Boundary
 
-Typical internal development includes:
+DSIL SDK v1.0 is the finalized public software boundary for Atlas.
 
-• timestamp alignment infrastructure  
-• sensor interface drivers  
-• synchronization debugging tools  
-• perception pipeline validation  
+It is not a broad future roadmap.
 
-This infrastructure often takes several months to develop and must be maintained across robot platforms.
+It is the stable software definition of the Atlas platform.
 
-DSIL provides this infrastructure as a reusable software layer.
+## v1.0 Includes
 
-This allows robotics teams to focus on:
+• Stable CDC telemetry transport  
+• Runtime telemetry decoding  
+• Timestamp alignment engine  
+• Sync source and sync state model  
+• Sensor health visibility  
+• Board power visibility  
+• Command-line tools  
+• ROS2 monitoring integration  
+• Documented message schemas  
+• Documented installation flow  
+• Supported Ubuntu and Jetson-class deployment path
 
-• Perception algorithms  
-• Autonomy software  
-• Robot navigation
+## What v1.0 Must Accomplish
 
-instead of building sensor synchronization infrastructure.
+V1.0 should finish the core Atlas value proposition:
+
+• Timing visibility  
+• Synchronization visibility  
+• Health visibility  
+• Power visibility  
+• ROS2-friendly integration
+
+V1.0 should not try to become every future customer-specific integration layer.
+
+It should finalize the core public DSIL boundary.
 
 ---
 
-# DSIL Roadmap
+# Final Product Boundary
 
-The DSIL SDK will evolve to include additional infrastructure capabilities.
+Atlas DSIL has two public software stages only.
 
-Future DSIL features may include:
+## DSIL SDK v0.1
 
-• expanded sensor telemetry schemas  
-• deterministic sensor replay tools  
-• sensor timing diagnostics  
-• distributed synchronization support  
-• advanced ROS2 tooling
+Evaluation-pack software for technical validation, LOI support, and first internal champion adoption.
 
-These capabilities will further simplify multi-sensor robotics system integration.
+## DSIL SDK v1.0
+
+The finalized public DSIL core platform.
+
+## What Comes After v1.0
+
+Anything deeper than the public v1.0 boundary becomes:
+
+**White-Label OEM Pilot DSIL SDK VX**
+
+This is tailored for:
+
+• Customer-specific Atlas PCB variants  
+• Customer-selected sensor bundles  
+• Customer timing topology  
+• Customer deployment environment  
+• Customer-specific integration requirements
+
+This boundary is intentional.
+
+It keeps the public platform simple and stable while reserving deeper engineering work for paid OEM pilot programs.
+
+---
+
+# What Is Not in the Public DSIL Boundary
+
+The following do not belong in DSIL SDK v0.1 and should not expand the public v1.0 core without strong justification:
+
+• Broad plugin architecture  
+• Custom ROS sensor drivers  
+• CAN integration  
+• Encoder support  
+• GMSL camera support  
+• Fleet telemetry systems  
+• Cloud dashboards  
+• Distributed multi-Atlas orchestration  
+• Customer-specific sensor adaptation logic
+
+Those belong in White-Label OEM Pilot DSIL SDK VX work, not in the core public DSIL boundary.
+
+---
+
+# Achievable Scope
+
+DSIL SDK v0.1 and the core path to v1.0 must remain disciplined enough to be achievable inside an 80-day development window and a $90k budget envelope.
+
+That means focusing on:
+
+• CDC telemetry transport and parser  
+• Timestamp analysis  
+• Sync correction  
+• Visualization  
+• ROS2 monitoring nodes  
+• Evaluation scripts  
+• Installation documentation  
+• Validation workflow for the evaluation kit
+
+This is realistic because the scope is narrow and intentional.
+
+The purpose is to finalize the core Atlas software value, not to solve every future customer request in the first release.
+
+---
+
+# Supported Platform Direction
+
+Primary DSIL targets:
+
+• Ubuntu 22.04 LTS  
+• ROS2 Humble  
+• Jetson-class ARM64 systems  
+• x86_64 Linux development hosts
+
+This is the correct starting point for Atlas.
+
+It is broad enough for evaluation and narrow enough for delivery.
+
+---
+
+# Frequently Asked Questions
+
+## Does DSIL require Atlas hardware?
+
+Yes.
+
+DSIL is the software layer designed for Atlas hardware. Its timing and infrastructure model depends on Atlas-generated telemetry, synchronization state, and board-level observability.
+
+## Does DSIL replace existing ROS2 sensor drivers?
+
+No.
+
+The intended model is to preserve standard sensor drivers where possible and layer deterministic infrastructure monitoring alongside them.
+
+## Does DSIL require custom perception code?
+
+No.
+
+The goal is to improve timing visibility and synchronization proof without forcing robotics teams to rewrite their perception stack.
+
+## Is DSIL a long public roadmap with many versions?
+
+No.
+
+The public software boundary is intentionally simple:
+
+• DSIL SDK v0.1 for evaluation  
+• DSIL SDK v1.0 as the finalized public core
+
+Anything deeper becomes White-Label OEM Pilot DSIL SDK VX.
+
+## Why is DSIL strategically important?
+
+Atlas hardware is what gets installed.
+
+DSIL is what allows engineers to trust, evaluate, and reuse the system.
+
+Hardware makes the platform physically possible.
+
+DSIL makes the platform operationally credible.
+
+That is why DSIL is one of the most important assets in the Atlas platform.
+
+---
+
+# Why DSIL Is the Strategic Center of Atlas
+
+Atlas hardware is what gets deployed.
+
+DSIL is what gets adopted.
+
+Hardware makes the system possible.
+
+DSIL makes the system visible, measurable, and reusable.
+
+For robotics teams, DSIL changes the integration model from:
+
+custom sensor plumbing per robot
+
+to:
+
+reusable deterministic sensor infrastructure across product lines
+
+That is the long-term value of Atlas.
 
 ---
 
 # Next Steps
 
-To understand the Atlas hardware platform, continue to:
+If you are evaluating Atlas as a platform, continue in this order:
 
-Hardware Architecture
-
-To understand how Atlas synchronizes sensors, see:
-
-Sensor Synchronization
+1. Hardware Architecture  
+2. Sensor Synchronization  
+3. ROS2 Integration  
+4. Evaluation Kit Setup
