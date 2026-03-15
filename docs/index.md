@@ -17,7 +17,7 @@ Together these capabilities allow robotics teams to treat sensor integration as 
 ## Atlas in One Diagram
 
 <p align="center">
-  <img src="Catalog2.png" width="60%" alt="Atlas deterministic sensor backbone architecture" />
+  <img src="/img/Catalog2.png" width="60%" alt="Atlas deterministic sensor backbone architecture" />
 </p>
 
 **Atlas establishes the timing authority and aggregation backbone for the robot perception stack.**
