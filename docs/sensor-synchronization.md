@@ -1,3 +1,5 @@
+# Sensor Synchronization
+
 Timestamp Synchronization
 Atlas hardware generates precise timestamps through the hardware timestamp engine.
 The DSIL SDK uses these timestamps to align sensor events across multiple sources.
