@@ -25,6 +25,30 @@ Together these capabilities allow robotics teams to treat sensor integration as 
 
 Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robot compute platform receives a unified sensor pipeline.
 
+## Time to Hello-World
+
+Atlas is designed to integrate into a ROS2 robotics stack in minutes.
+
+Once Atlas is connected to the robot compute platform, start the DSIL runtime and launch the ROS2 telemetry bridge.
+
+```bash
+# Start Atlas DSIL runtime
+atlas_start
+
+# Launch ROS2 telemetry bridge
+ros2 launch atlas_dsil_bridge telemetry.launch.py
+```
+
+Within seconds, Atlas timing and infrastructure telemetry become visible to ROS2:
+
+```
+/atlas/status
+/atlas/pps
+/atlas/sync_drift
+```
+
+This allows robotics developers to observe synchronization state and timing behavior directly inside their ROS2 system.
+
 ---
 
 # What Atlas Solves
