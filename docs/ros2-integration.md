@@ -25,7 +25,7 @@ A typical ROS2 integration with Atlas requires only launching the DSIL telemetry
 
 Example launch command:
 
-    ros2 launch atlas_dsil_bridge telemetry.launch.py
+**ros2 launch atlas_dsil_bridge telemetry.launch.py**
 
 After launch, Atlas telemetry becomes available as ROS2 topics.
 
@@ -45,7 +45,7 @@ Robotics applications can subscribe to these topics using standard ROS2 tools.
 
 Example:
 
-    ros2 topic echo /imu/data
+**ros2 topic echo /imu/data**
 
 Atlas integrates directly into the ROS2 topic graph and can be consumed by navigation, perception, and SLAM pipelines without modifying existing sensor drivers.
 
@@ -55,10 +55,10 @@ Atlas follows a **non-intrusive integration model**.
 
 Atlas does not attempt to replace or modify:
 
-- existing ROS2 sensor drivers  
-- camera pipelines  
+- Eexisting ROS2 sensor drivers  
+- Camera pipelines  
 - LiDAR drivers  
-- navigation stacks  
+- Nnavigation stacks
 
 Instead, Atlas introduces a **deterministic timing boundary** and a **sensor telemetry layer** that runs alongside the ROS2 system.
 
