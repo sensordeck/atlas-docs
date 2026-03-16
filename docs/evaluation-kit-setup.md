@@ -1,178 +1,483 @@
-# Evaluation Kit Setup
+# Atlas Evaluation Kit Setup
 
-Evaluation Kit Contents
-Hardware
-• Fusion V2 board
-• OV9281 USB global shutter camera
-• RPLIDAR C1
-• BMI088 IMU
-Software
-• DSIL SDK v0.1
-• ROS2 sensor drivers
-• Timing validation CLI tools
-________________________________________
-30 Minutes Quick Evaluation Flow
-Step 1 — Connect sensors
-Camera → Fusion USB1
-LiDAR → Fusion USB2
-IMU → Fusion I²C
-Fusion → SBC USB3
-________________________________________
-Step 2 — Launch Fusion
+The Atlas Evaluation Kit allows robotics teams to validate deterministic multi-sensor synchronization using a real sensor stack.
+
+The evaluation is designed to answer one question:
+
+**Can Atlas reduce cross-sensor timestamp drift and simplify sensor integration?**
+
+The complete evaluation can typically be performed in **under 30 minutes once the system is connected**.
+
+---
+
+# Request an Evaluation Kit
+
+Robotics teams interested in evaluating Atlas may request an evaluation kit.
+
+[Request Evaluation Kit](mailto:jack@sensordeck.tech?subject=Atlas%20Evaluation%20Kit%20Request&body=Company%3A%0AName%3A%0ATitle%3A%0ARobotics%20Platform%20Description%3A%0ACurrent%20Sensor%20Stack%3A%0AEstimated%20Evaluation%20Timeline%3A%0AShipping%20Location%3A)
+
+When requesting a kit, please include:
+
+• Company / organization  
+• Contact name and role  
+• Robotics platform description  
+• Current sensor stack (camera, LiDAR, IMU, etc.)  
+• Estimated evaluation timeline  
+• Shipping location  
+
+---
+
+# Evaluation Kit Availability
+
+The Atlas Evaluation Kit is provided **free of charge** to qualified robotics development teams for the purpose of technical evaluation.
+
+The goal of the evaluation program is to allow engineering teams to validate Atlas synchronization performance in their own development environment before committing to a potential OEM integration pilot.
+
+Evaluation kits are distributed in **limited quantities to robotics teams actively developing multi-sensor perception platforms.**
+
+---
+
+# Evaluation Program Terms
+
+| Item | Description |
+|-----|-------------|
+| Cost | **Free evaluation kit** |
+| Evaluation period | Typically **2–3 weeks** |
+| Shipping | SensorDeck ships the kit to the evaluation team |
+| Return requirement | Kit must be returned after the evaluation period |
+| Return shipping | Return label provided by SensorDeck |
+
+The evaluation kit remains the **property of SensorDeck** and is intended strictly for technical evaluation purposes.
+
+---
+
+# What the Evaluation Kit Includes
+
+The Atlas evaluation kit contains a reference sensor stack designed to expose real synchronization problems across multiple timing domains.
+
+## Hardware Included
+
+| Component | Role |
+|---|---|
+| Atlas Reference Board | Sensor aggregation and timing backbone |
+| USB UVC Camera (Logitech C270) | Standard host-timestamp camera |
+| Ethernet LiDAR (Livox MID-360) | Independent clock domain sensor |
+| IMU (VectorNav VN-100) | High-rate inertial sensor |
+| GNSS (u-blox ZED-F9P) | Global PPS reference clock |
+| GNSS antenna | PPS timing reference (included) |
+| Industrial USB cables | Sensor connections |
+| PPS timing cable | GNSS → Atlas timing discipline |
+
+The sensor stack intentionally includes **multiple independent timing domains** so synchronization improvements can be clearly observed.
+
+The Logitech C270 is intentionally used as a **standard UVC camera without hardware sync pins**, demonstrating how Atlas improves timing even for sensors that normally rely on host timestamps.
+
+---
+
+# GNSS Timing Note
+
+The included **u-blox ZED-F9P GNSS receiver** provides a PPS timing reference.
+
+For best results the GNSS antenna should be placed:
+
+• near a window  
+• outdoors  
+• or in a location with partial sky visibility  
+
+However, Atlas can also operate in **internal time authority mode** if GNSS lock is unavailable, allowing evaluation inside indoor labs or facilities without direct sky access.
+
+---
+
+# What to Prepare Before the Kit Arrives
+
+Most robotics teams can prepare their compute platform before the evaluation kit arrives.
+
+## Required Compute Platform
+
+Any Linux SBC capable of running ROS2.
+
+Examples include:
+
+• NVIDIA Jetson Orin Nano  
+• NVIDIA Jetson Xavier  
+• Intel NUC  
+• x86 ROS workstation  
+
+Recommended environment:
+
+```
+Ubuntu 22.04
+ROS2 Humble
+Python 3.10+
+```
+
+---
+
+## Required Network Setup
+
+The system should allow:
+
+• USB device access  
+• Ethernet connection for LiDAR  
+• ROS2 topic transport  
+
+---
+
+## Software Dependencies
+
+Install the following ROS2 drivers:
+
+```
+usb_cam
+livox_ros2_driver
+vectornav_driver
+```
+
+These drivers run independently of Atlas.
+
+Atlas does **not modify sensor firmware or drivers**.
+
+---
+
+# Evaluation System Architecture
+
+The evaluation intentionally uses sensors with independent clocks.
+
+```
+             GNSS PPS
+                │
+                ▼
+             Atlas
+      (Timing + Sync Fabric)
+         │        │
+         │        │
+      Camera     IMU
+      (USB)      (I²C)
+         │        │
+         └──► USB CDC
+                │
+                ▼
+               SBC
+               ROS2
+                │
+                │
+         Ethernet LiDAR
+```
+
+This setup allows Atlas to demonstrate **cross-domain sensor alignment**.
+
+---
+
+# 30-Minute Evaluation Flow
+
+## Step 1 — Connect Sensors
+
+Camera → Atlas USB  
+IMU → Atlas I²C  
+GNSS → Atlas UART + PPS  
+
+Atlas → SBC via USB  
+
+LiDAR connects directly to SBC Ethernet.
+
+---
+
+## Step 2 — Start Atlas
+
+```
 fusion_start
-Sensors are automatically detected.
-________________________________________
-Step 3 — ROS2 verification
+```
+
+Expected output:
+
+```
+Fusion detected
+PPS locked
+Timing engine active
+```
+
+---
+
+## Step 3 — Start Sensor Drivers
+
+Launch ROS2 drivers:
+
+```
+ros2 launch livox_ros2_driver
+ros2 run usb_cam usb_cam_node
+ros2 run vectornav_driver imu_node
+```
+
+Verify topics:
+
+```
 ros2 topic list
-Example output
-/fusion/camera0/image
-/fusion/lidar0/scan
-/fusion/imu/data
-________________________________________
-Step 4 — Timing validation
-dsil-sync-check
-This verifies cross-sensor time alignment.
-________________________________________
-Expected Result
-Typical evaluation metrics
-• Cross-sensor offset < 1 ms
-• Stable synchronization during long runtime
-• Deterministic timestamp origin
-The Goal of This Evaluation
-We are not asking for a purchase decision today.
-We are simply asking for one engineering evaluation.
-If Fusion proves valuable in your robotics platform, we can explore production integration.
-If it does not meet your requirements, the evaluation ends with no obligation.
-________________________________________
-Evaluation Timeline
-Evaluation partners signing the LOI will receive priority access to the first evaluation kits.
-________________________________________
-Development and Evaluation Timeline
-Step 1 — Evaluation LOI Signed
-Your engineering team confirms interest in evaluating the Fusion + DSIL platform.
-________________________________________
-Step 2 — Seed Round Closing
-Seed funding enables final engineering completion and production of the evaluation kits.
-________________________________________
-Step 3 — Platform Completion (60–90 days)
-Fusion V2 hardware
-•	DSIL SDK v0.1
-are finalized and prepared for partner testing.
-________________________________________
-Evaluation Phase
-Day 1 — Evaluation Kit Shipped
-Fusion V2 hardware + DSIL SDK delivered.
-________________________________________
-Day 2–3 — Kit Arrival
-Engineering team receives the hardware.
-________________________________________
-Day 3 — Initial Validation (~30 minutes)
-Sensors connected to Fusion.
-ROS2 topics appear and synchronization is verified.
-________________________________________
-Day 7–14 — Optional Stability Testing
-Run multi-sensor workloads and long-duration tests.
-________________________________________
-Day 30 — Production Discussion
-Engineering teams determine whether to explore production integration.
+```
 
-Evaluation Process after Signing
-•	No purchasing approval or legal review is required at this stage.
-•	Technical Introduction Call (30 minutes) Within 3–5 business days
-•	SensorDeck engineering team schedules a short call to introduce the Fusion architecture and confirm the evaluation plan. 
-•	Evaluation Kit Shipment Evaluation hardware and SDK access are shipped to the partner engineering team according to the early partner schedule. 
-•	Engineering Evaluation Period Partners test Fusion within their sensor stack and provide feedback. 
-•	SensorDeck engineers support integration and collect evaluation results. 
-•	This LOI only expresses technical evaluation interest and does not create purchasing obligations or procurement commitments. 
+Example:
 
+```
+/camera/image
+/livox/lidar
+/imu/data
+```
 
+---
 
-________________________________________
-Hardware Proof of Execution
-Fusion V1 was developed to validate the core system architecture before the production-ready Fusion V2 platform.
-This prototype platform allowed internal validation of:
-• sensor synchronization architecture
-• multi-sensor data aggregation
-• hardware timestamp injection
+## Step 4 — Baseline Timing Measurement
 
- 
-Fusion V1 PCB
+Measure cross-sensor timestamp drift.
 
+```
+dsil_analyze --baseline
+```
 
-Fusion V1 Hardware Prototype
-• Functional power rail architecture
-• UVC + CDC aggregation over single USB link
-• Deterministic timestamp boundary implementation
+Example result:
 
-Hardware Availability 
-Evaluation kits are produced in a limited pilot batch. Early evaluation units will ship to LOI partners within 45–60 days. Fusion V1 prototype boards are already operational internally and available for early technical validation with selected partners. 
+```
+Camera ↔ LiDAR offset: 12 ms
+IMU ↔ LiDAR offset: 8 ms
+```
 
+This confirms that the system currently has **unsynchronized sensors**.
 
+---
 
+## Step 5 — Activate DSIL Synchronization
 
-________________________________________
-Evaluation LOI
-Title:
-Evaluation and Production Exploration Letter of Intent
-________________________________________
-Company: _______________________
-We confirm that we have received the Fusion + DSIL evaluation materials from SensorDeck.
-We agree to:
-• Evaluate the Fusion system in our robotics platform
-• Provide engineering feedback during testing
-• Discuss potential production integration if evaluation results are positive
-We understand that:
-• This LOI is non-binding
-• It does not constitute a purchase commitment
-________________________________________
-Signed
-Name: _____________________
-Title: _____________________
-Company: _____________________
-Date: _____________________
+```
+dsil_sync
+```
 
-Notes:
-SensorDeck is an early-stage robotics infrastructure company currently raising its seed round. The Fusion hardware architecture and DSIL SDK have already been internally validated on working prototype boards. Evaluation hardware production is pre-funded and not dependent on financing completion. The company is currently working with early robotics partners for architecture evaluation.
+DSIL applies a dynamic timestamp offset mapping each sensor's arrival time to the Atlas hardware timing boundary.
 
+---
 
+## Step 6 — Verify Synchronization
 
-________________________________________
-Technical Decision Summary
-This section summarizes the practical engineering reasons robotics teams decide to evaluate Fusion.
-________________________________________
-Core Engineering Value
-Engineering Factor	Traditional Approach	With Fusion
-Sensor integration time	2–4 weeks	1–3 days
-First-platform development cost	$40k–$60k	~$20k (100 robot units)
-Cross-SKU reuse	Rebuild integration per robot	Shared architecture across robot platforms
-Sensor timing infrastructure	Custom per project	Reusable DSIL SDK backbone
-Fusion allows engineering teams to reduce infrastructure development effort and focus on autonomy, perception, and product differentiation.
-________________________________________
-Platform Architecture Advantage
-Fusion introduces a reusable sensor integration backbone for robotics platforms.
-The DSIL SDK layer standardizes sensor timing, synchronization, and data alignment before data reaches the compute platform.
-Once integrated, the same architecture can scale across:
-• multiple robot SKUs
-• next-generation hardware platforms
-• different robotics verticals
-Examples:
-• AMR warehouse robots
-• outdoor UGV platforms
-• inspection robots
-• service robots
-Instead of rebuilding sensor synchronization infrastructure for every platform, teams can reuse the DSIL backbone across product lines, improving system stability while reducing engineering overhead.
-________________________________________
-Evaluation Program Availability
-The initial evaluation program includes a limited number of engineering evaluation kits.
-Early evaluation partners receive:
-• priority access to evaluation hardware
-• direct engineering communication with the development team
-• early influence on DSIL SDK feature priorities
-Evaluation kits will be shipped after completion of the Fusion V2 + DSIL SDK v0.1 release.
-________________________________________
-What Early Evaluation Partners Receive
-Teams signing the evaluation LOI receive:
-✓ priority access to the first Fusion V2 evaluation kits
-✓ direct engineering support from the SensorDeck team
-✓ opportunity to provide feedback during DSIL SDK development
-✓ early access to a reusable DSIL infrastructure backbone for future robot platforms
+```
+dsil_sync_check
+```
+
+Expected result:
+
+```
+Camera ↔ LiDAR offset: 0.9 ms
+IMU ↔ LiDAR offset: 0.5 ms
+```
+
+---
+
+## Step 7 — Generate Visualization
+
+```
+dsil_plot
+```
+
+Outputs:
+
+```
+offset_before.png
+offset_after.png
+```
+
+These graphs visualize timestamp alignment improvements.
+
+---
+
+# Golden Pass Criteria
+
+An evaluation is considered **successful** when the following metrics are achieved.
+
+| Metric | Target |
+|---|---|
+| Cross-sensor offset | < 1 ms |
+| Synchronization stability | > 30 minutes |
+| Time base | GNSS disciplined |
+| Sensor drivers | unchanged |
+
+This demonstrates that Atlas establishes a **deterministic timing boundary** across multiple sensor types.
+
+---
+
+# Evaluation Performance Report
+
+At the end of the evaluation the engineering team can generate a **one-page performance report**.
+
+The report typically contains:
+
+• baseline drift measurement  
+• synchronized drift measurement  
+• synchronization improvement graphs  
+• system architecture diagram  
+
+Example result:
+
+| Metric | Before Atlas | After Atlas |
+|---|---|---|
+| Camera ↔ LiDAR | 12 ms | 0.9 ms |
+| IMU ↔ LiDAR | 8 ms | 0.5 ms |
+
+This report allows the engineering lead to present a clear recommendation internally.
+
+---
+
+# CTO Recommendation Summary
+
+Typical internal recommendation structure:
+
+**Problem**
+
+Multi-sensor perception stacks suffer from timestamp drift and complex integration.
+
+**Atlas Result**
+
+Deterministic timing boundary established across camera, LiDAR, and IMU.
+
+**Impact**
+
+• Improved sensor alignment for SLAM  
+• Reduced perception pipeline uncertainty  
+• Simplified integration architecture  
+
+Recommendation:
+
+Proceed to **OEM integration pilot evaluation**.
+
+---
+
+# What Happens After Evaluation
+
+If the evaluation demonstrates value, teams typically move to a **White-Label OEM Integration Pilot**.
+
+The pilot phase adapts Atlas to the production robot platform.
+
+---
+
+## OEM Pilot Program Includes
+
+• Custom connector configuration  
+• Sensor interface mapping  
+• Power distribution design  
+• Mechanical mounting integration  
+• Software integration support  
+
+The pilot program produces a **white-label Atlas reference design** customized for the robot platform.
+
+---
+
+# OEM Deployment Validation
+
+During the OEM pilot phase a second validation is performed inside the real robot system.
+
+Metrics validated:
+
+• full robot sensor synchronization  
+• perception pipeline stability  
+• system latency impact  
+• deployment reliability  
+• power and thermal behavior  
+
+Once validated, Atlas becomes part of the robot’s **production sensor infrastructure**.
+
+---
+
+# Evaluation Completion Feedback
+
+After completing the evaluation we ask participating teams to provide a brief outcome summary.
+
+This feedback helps improve the Atlas platform and determine whether further collaboration would be useful.
+
+Providing feedback **does not create any obligation**.
+
+---
+
+## Option A — Ready to Discuss OEM Integration Pilot
+
+The evaluation demonstrated value for our system.
+
+We are open to discussing a **White-Label OEM Integration Pilot**.
+
+Optional notes:
+
+```
+Key benefits observed:
+
+• ___________________________
+• ___________________________
+• ___________________________
+```
+
+---
+
+## Option B — Evaluation Completed, Returning the Kit
+
+The evaluation is complete and we will return the kit.
+
+At this time we do not plan to move forward with integration.
+
+Optional feedback (1–3 reasons):
+
+```
+Reason 1:
+________________________________
+
+Reason 2:
+________________________________
+
+Reason 3:
+________________________________
+```
+
+Typical reasons may include:
+
+• Not aligned with current architecture  
+• Timing infrastructure already implemented internally  
+• Sensor stack roadmap changed  
+• Budget or project timing constraints  
+
+---
+
+## Option C — Possible Future Interest
+
+The evaluation was useful, but we are not ready to proceed at this time.
+
+Optional follow-up information:
+
+```
+Preferred contact:
+________________________
+
+Possible follow-up timeframe:
+
+□ 3 months
+□ 6 months
+□ 12 months
+□ Other: __________
+```
+
+---
+
+# Returning the Evaluation Kit
+
+After the evaluation period, please return the kit using the provided shipping label.
+
+Return address:
+
+```
+SensorDeck Evaluation Program
+ATTN: Atlas Evaluation Returns
+[Return Address Placeholder]
+[City, State ZIP]
+USA
+```
+
+Please include all components originally provided in the kit.
+
+---
+
+# Final Note
+
+We appreciate the time engineering teams spend evaluating new infrastructure.
+
+Even when Atlas is not the right fit today, the feedback from evaluation programs helps improve future platform development.
