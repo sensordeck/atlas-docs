@@ -80,6 +80,136 @@ These signals allow Atlas to coordinate sensor sampling events.
 
 ---
 
+# Electrical and Deployment Considerations
+
+Atlas synchronization interfaces are designed to provide deterministic timing signals while maintaining a clear electrical boundary for the reference platform.
+
+The Atlas reference hardware defines a **3.3V logic timing domain** for synchronization signals. This applies to the PPS and trigger interfaces used by the Atlas timing engine.
+
+Higher-voltage industrial trigger standards or differential signaling interfaces are **not directly supported by the Atlas reference platform**. These requirements are addressed through the Atlas **white-label OEM integration program**, where synchronization interfaces can be adapted to match the electrical characteristics of the target sensor stack.
+
+This separation keeps the reference Atlas platform safe, predictable, and easy to integrate while allowing production deployments to tailor synchronization interfaces to real-world sensor requirements.
+
+---
+
+## Signal Electrical Specs
+
+Atlas reference synchronization signals operate using **3.3V logic-level interfaces**.
+
+| Signal | Reference Platform Level | Standard Support in Atlas v1.0 | Notes |
+|------|------|------|------|
+| PPS_IN | 3.3V logic | Yes | External timing input for Atlas timing engine |
+| PPS_OUT | 3.3V logic | Yes | Standard PPS distribution to sensors |
+| SYNC_OUT | 3.3V logic | Yes | Sensor synchronization signal |
+| TRIGGER_OUT | 3.3V logic | Yes | Frame capture trigger output |
+| 5V trigger interfaces | Not native | No | Requires OEM interface adaptation |
+| 12V industrial trigger | Not native | No | Do not connect directly to Atlas reference I/O |
+| Differential sync (RS-422 / LVDS) | Not native | No | Requires OEM interface design |
+
+Atlas synchronization I/O should be treated as **3.3V logic timing signals only**.
+
+Industrial trigger standards such as **5V, 12V, or differential synchronization interfaces** must not be connected directly to the Atlas reference hardware without appropriate signal conditioning.
+
+---
+
+## Output Drive and Loading Guidance
+
+Atlas timing outputs are designed as **logic timing signals**, not as power outputs.
+
+PPS_OUT, SYNC_OUT, and TRIGGER_OUT are intended to drive **high-impedance sensor timing inputs** rather than multiple parallel loads.
+
+Practical guidance for the Atlas reference platform:
+
+- connect each timing output to a compatible logic-level timing input
+- avoid directly daisy-chaining multiple sensors onto a single trigger line
+- use a trigger fanout or line-driver stage when one timing signal must drive multiple devices
+
+This is particularly important in multi-camera systems where a single trigger event may need to reach several cameras.
+
+In such systems, Atlas provides the **deterministic timing authority**, while the physical trigger distribution stage may be implemented as part of the electrical design of the target platform.
+
+For OEM deployments, trigger fanout, buffering, isolation, or differential conversion can be tailored to match the sensor topology and cabling environment.
+
+---
+
+## Reference Connector Implementation
+
+On the Atlas reference board, synchronization I/O is exposed through **locking board connectors defined in the Atlas hardware reference design**.
+
+The synchronization interfaces are clearly labeled in board silkscreen and documented as part of the Atlas reference I/O specification.
+
+Connector documentation typically includes:
+
+- connector family
+- pitch and locking style
+- pin numbering
+- signal names
+- recommended mating housing or cable assembly
+
+This allows evaluation-kit users to prepare appropriate cables, terminals, and crimp tooling before hardware arrival.
+
+For production white-label deployments, connector selection may be customized to match the robot harness standard, environmental requirements, or sensor vendor cabling ecosystem.
+
+---
+
+## Trigger Scheduling and Phase Offset Control
+
+Atlas provides deterministic trigger signals aligned to the system timing authority.
+
+The reference platform supports **synchronized capture events across multiple sensors** using shared trigger and synchronization signals.
+
+In some robotics systems, engineers intentionally stagger capture events to reduce interference. Example scenarios include:
+
+- staggering multiple cameras to reduce illumination conflicts
+- avoiding LiDAR optical interference
+- coordinating sensors with different exposure windows
+
+Advanced trigger orchestration such as **phase-offset scheduling** may be implemented during Atlas OEM integrations when required by the target sensor stack.
+
+Example concept:
+
+    Camera A trigger → 0 ms offset
+    Camera B trigger → 50 ms offset
+
+This approach allows multi-sensor systems to coordinate capture timing while maintaining a shared system timing authority.
+
+Atlas therefore serves as a **deterministic trigger distribution foundation**, while advanced trigger profiles may be tailored for specific deployments.
+
+---
+
+## Cabling and Signal Integrity
+
+Synchronization accuracy depends not only on the Atlas timing engine but also on the physical signaling environment between Atlas and connected sensors.
+
+Factors influencing synchronization quality include:
+
+- cable length
+- shielding quality
+- grounding strategy
+- connector quality
+- electromagnetic interference
+- sensor input circuitry
+
+Atlas reference synchronization signals should be treated as **short-run 3.3V timing lines**.
+
+Recommended deployment practices include:
+
+- using shielded cables where appropriate
+- keeping synchronization runs short whenever possible
+- routing timing lines away from high-current power paths
+- maintaining clean grounding between Atlas and sensors
+
+In installations where sensors are mounted far from the compute platform (for example roof-mounted LiDAR or external camera rigs), OEM deployments may incorporate:
+
+- differential signaling
+- dedicated line drivers
+- signal isolation
+- sensor-specific trigger conditioning
+
+Atlas synchronization specifications describe timing performance **at the Atlas board boundary**.
+
+End-to-end synchronization accuracy across the full sensor system depends on the electrical implementation of the deployed platform.
+
 # PPS Timing Reference
 
 Many robotics systems use **PPS (Pulse-Per-Second)** as a global timing reference.
