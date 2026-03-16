@@ -1,5 +1,5 @@
 // @ts-check
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -31,7 +31,7 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: '/',
+          routeBasePath: 'docs',
         },
         blog: false,
         theme: {
@@ -57,7 +57,7 @@ const config = {
         },
         items: [
           {
-            to: '/',
+            to: '/docs',
             label: 'Documentation',
             position: 'left',
           },
@@ -80,14 +80,14 @@ const config = {
           {
             title: 'Documentation',
             items: [
-              {label: 'Atlas Overview', to: '/'},
-              {label: 'Hardware Architecture', to: '/hardware-architecture'},
-              {label: 'DSIL SDK', to: '/dsil-sdk'},
-              {label: 'ROS2 Integration', to: '/ros2-integration'},
-              {label: 'Sensor Synchronization', to: '/sensor-synchronization'},
-              {label: 'Evaluation Kit Setup', to: '/evaluation-kit-setup'},
-              {label: 'OEM Integration Pilot Program', to: '/oem-integration-pilot-program'},
-              {label: 'Downloads', to: '/downloads'},
+              { label: 'Atlas Overview', to: '/docs' },
+              { label: 'Hardware Architecture', to: '/docs/hardware-architecture' },
+              { label: 'DSIL SDK', to: '/docs/dsil-sdk' },
+              { label: 'ROS2 Integration', to: '/docs/ros2-integration' },
+              { label: 'Sensor Synchronization', to: '/docs/sensor-synchronization' },
+              { label: 'Evaluation Kit Setup', to: '/docs/evaluation-kit-setup' },
+              { label: 'OEM Integration Pilot Program', to: '/docs/oem-integration-pilot-program' },
+              { label: 'Downloads', to: '/downloads' },
             ],
           },
           {
