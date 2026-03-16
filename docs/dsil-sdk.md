@@ -217,6 +217,35 @@ This preserves compatibility while adding deterministic infrastructure visibilit
 
 ---
 
+# Runtime Reliability
+
+Robotics systems must operate reliably even if hardware connections reset.
+
+DSIL includes automatic **device reconnect logic**.
+
+If the Atlas telemetry device disappears:
+
+    /dev/ttyACM0
+
+DSIL will automatically:
+
+1. detect the device disconnect
+2. continue polling available CDC devices
+3. reattach when Atlas reappears
+4. resume telemetry decoding without restarting the runtime
+
+This behavior ensures Atlas infrastructure monitoring continues across:
+
+• USB bus resets  
+• cable replug events  
+• Atlas firmware restarts  
+
+A driver that requires manual restart after disconnect is unacceptable in production robotics systems.
+
+DSIL is designed to recover automatically.
+
+---
+
 # Design Principle: Out-of-Band Metadata
 
 Atlas and DSIL are built around an out-of-band metadata model.
@@ -372,10 +401,19 @@ Example:
 
     dsil_analyze --baseline
 
-Representative output target:
+### Sample Output
+
+Example DSIL timing analysis result:
+
+    DSIL Timing Analysis Report
+    ---------------------------
 
     Camera-LiDAR offset: 12.0 ms
     IMU-LiDAR offset: 8.0 ms
+    Camera-IMU offset: 4.1 ms
+
+    PPS detected: true
+    Atlas sync active: false
 
 This confirms the timing problem exists before correction.
 
@@ -394,6 +432,8 @@ Representative conceptual model:
     corrected_timestamp =
     sensor_timestamp
     + atlas_clock_offset
+
+The corrected timestamp is injected into the ROS2 message header (header.stamp).    
 
 ## dsil_plot
 
@@ -671,18 +711,24 @@ The purpose is to finalize the core Atlas software value, not to solve every fut
 
 ---
 
-# Supported Platform Direction
+# Software Installation Requirements
 
-Primary DSIL targets:
+Minimum runtime dependencies for DSIL SDK:
 
-• Ubuntu 22.04 LTS  
-• ROS2 Humble  
-• Jetson-class ARM64 systems  
-• x86_64 Linux development hosts
+| Component | Requirement |
+|---|---|
+| Python | Python 3.10+ |
+| Build system | colcon |
+| USB support | CDC ACM driver |
+| Library dependency | libusb-1.0 |
 
-This is the correct starting point for Atlas.
+Atlas exposes its telemetry interface as a standard Linux device:
 
-It is broad enough for evaluation and narrow enough for delivery.
+    /dev/ttyACM0
+
+DSIL automatically discovers this interface and attaches to the Atlas telemetry channel.
+
+No custom kernel modules are required.
 
 ---
 
