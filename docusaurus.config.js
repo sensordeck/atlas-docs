@@ -55,24 +55,7 @@ const config = {
           alt: 'Atlas Logo',
           src: 'img/SensorDeck.png',
         },
-        items: [
-          {
-            to: '/',
-            label: 'Documentation',
-            position: 'left',
-          },
-          {
-            to: '/downloads',
-            label: 'Downloads',
-            position: 'left',
-          },
-          {
-            href: 'https://github.com/sensordeck/atlas-docs',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
+              },
 
       footer: {
         style: 'dark',
