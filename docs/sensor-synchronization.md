@@ -57,25 +57,9 @@ Atlas introduces a **hardware timing layer** between sensors and the compute pla
 
 Typical architecture:
 
-    External Time Source
-          │
-          │ PPS
-          ▼
-       Atlas
-       Timing Engine
-          │
-          ├─ PPS_OUT
-          ├─ SYNC_OUT
-          └─ TRIGGER_OUT
-          │
-          ▼
-       Sensors
-          │
-          ▼
-       Robot Compute Platform
-          │
-          ▼
-       DSIL SDK → ROS2
+<p align="center">
+  <img src="/img/Fig 16.png" width="60%" alt="Atlas timing architecture" />
+</p>
 
 Atlas becomes the **timing distribution hub** for the robot sensor infrastructure.
 
@@ -164,16 +148,9 @@ Atlas acts as the **time authority for the perception sensor domain**.
 
 Typical timing hierarchy:
 
-    External GNSS Clock
-           │
-           ▼
-         Atlas
-           │
-           ▼
-       Sensor Group
-           │
-           ▼
-       Robot Compute
+<p align="center">
+  <img src="/img/Fig 17.png" width="60%" alt="Atlas timing hierarch" />
+</p>
 
 Atlas becomes the **single synchronization reference between sensors and compute**.
 
@@ -223,20 +200,9 @@ Instead, Atlas provides the **timing authority** for the perception stack.
 
 Typical synchronization architecture:
 
-    GNSS PPS
-        │
-        ▼
-      Atlas
-        │
-        ├─ PPS_OUT ─────► LiDAR
-        │
-        ├─ SYNC_OUT ────► Camera Trigger
-        │
-        └─ PPS_OUT ─────► Compute Timing Input
-                          │
-                          ▼
-                ROS2 Sensor Drivers
-
+<p align="center">
+  <img src="/img/Fig 18.png" width="60%" alt="Atlas synchronization architecture" />
+</p>
 In this model:
 
 - sensors capture data based on Atlas timing signals
