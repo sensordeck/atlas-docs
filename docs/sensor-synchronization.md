@@ -115,7 +115,7 @@ Atlas then distributes this timing signal across the sensor infrastructure.
 Typical PPS characteristics:
 
 - 1 Hz timing pulse
-- <100 ns rise time
+- &lt;100 ns rise time
 - deterministic hardware capture
 
 This allows Atlas to align sensor sampling with an external global time source.
@@ -257,9 +257,9 @@ Typical characteristics:
 
 | Property | Typical Value |
 |---------|--------------|
-| Trigger jitter | <1 µs |
-| PPS distribution skew | <1 µs |
-| DSIL timestamp correction | <1 ms |
+| Trigger jitter | &lt;1 µs |
+| PPS distribution skew | &lt;1 µs |
+| DSIL timestamp correction | &lt;1 ms |
 
 Hardware synchronization ensures that sensor capture events remain tightly aligned.
 
