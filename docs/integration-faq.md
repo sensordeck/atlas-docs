@@ -7,11 +7,11 @@ sidebar_position: 7
 
 The following information helps robotics teams quickly evaluate Atlas for integration into real robot platforms.
 
-## Mechanical CAD & Dimensions
+## Mechanical CAD and Dimensions
 
 Robotics teams must verify mechanical fit before evaluating a hardware platform.
 
-Atlas provides full mechanical references for chassis integration.
+Atlas provides mechanical references for chassis integration.
 
 **Available mechanical assets**
 
@@ -20,7 +20,7 @@ Atlas provides full mechanical references for chassis integration.
 - Mounting hole pattern and spacing
 - Connector heights and keep-out zones
 
-**Download**
+**Downloads**
 
 - Atlas Mechanical STEP Model
 - Atlas Mechanical Drawing (PDF)
@@ -31,9 +31,9 @@ Atlas is designed for deployment in mobile robotics environments.
 
 | Parameter | Specification |
 | --- | --- |
-| Operating Temperature | -40°C to +85°C |
-| Cooling | Passive conduction / chassis mounting |
-| Typical Power Dissipation | ~6–8W depending on sensor load |
+| Operating Temperature | -40 C to +85 C |
+| Cooling | Passive conduction or chassis mounting |
+| Typical Power Dissipation | 6 W to 8 W depending on sensor load |
 | Fan Requirement | Not required |
 
 Atlas is designed to operate fanless when mounted to a robot chassis or aluminum mounting plate that provides basic heat spreading.
@@ -44,18 +44,18 @@ Atlas includes an onboard protected power distribution system that powers connec
 
 | Rail | Maximum Available | Typical Usage |
 | --- | --- | --- |
-| 5V Sensor Rail | 3A | USB cameras, USB LiDAR |
-| 3.3V Sensor Rail | 1.5A | IMU, GNSS modules |
-| PPS / Timing IO | <50mA | Synchronization signals |
+| 5V Sensor Rail | 3 A | USB cameras and USB LiDAR |
+| 3.3V Sensor Rail | 1.5 A | IMU and GNSS modules |
+| PPS and Timing IO | less than 50 mA | Synchronization signals |
 
-### Example supported configuration
+## Example Supported Configuration
 
 | Sensor | Power |
 | --- | --- |
-| 2 × USB LiDAR (5W each) | 10W |
-| 3 × UVC cameras (2W each) | 6W |
-| IMU + GNSS | 1W |
-| **Total** | **17W** |
+| 2 x USB LiDAR at 5 W each | 10 W |
+| 3 x UVC cameras at 2 W each | 6 W |
+| IMU plus GNSS | 1 W |
+| **Total** | **17 W** |
 
 This configuration remains within the Atlas power envelope.
 
@@ -72,14 +72,10 @@ Atlas supports typical robotics sensor stacks.
 
 | Interface | Typical Devices |
 | --- | --- |
-| USB 3.0 | UVC cameras, USB LiDAR |
-| UART | GNSS, navigation sensors |
+| USB 3.0 | UVC cameras and USB LiDAR |
+| UART | GNSS and navigation sensors |
 | SPI | IMU |
 | I2C | Auxiliary sensors |
 | PPS | Timing reference |
 
 Atlas aggregates these sensors into a single upstream connection to the robot compute platform.
-Example command:
-
-```bash
-ros2 launch atlas_dsil_bridge telemetry.launch.py
