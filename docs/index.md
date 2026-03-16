@@ -301,12 +301,9 @@ Step-by-step instructions for deploying the Atlas evaluation system.
 
 To understand how Atlas works internally, begin with the **Hardware Architecture** documentation.
 
----
-
 ## Integration Resources
 
-• [Mechanical CAD & Dimensions](integration-faq.md)  
-• [Power Capability & Thermal Envelope](integration-faq.md)  
-• [Atlas Downloads](downloads.md)
+Atlas provides the core materials needed for engineering evaluation and pilot integration.
 
-
+- [Integration & Deployment FAQ](./integration-faq)
+- [Downloads](./downloads)
