@@ -303,7 +303,7 @@ To understand how Atlas works internally, begin with the **Hardware Architecture
 
 ## Integration Resources
 
-Atlas provides the core materials needed for engineering evaluation and pilot integration.
+Atlas provides the core materials needed for mechanical review, power planning, and pilot deployment.
 
-- [Integration & Deployment FAQ](./integration-faq)
+- [Integration and Deployment FAQ](./integration-faq)
 - [Downloads](./downloads)
