@@ -14,7 +14,7 @@ The complete evaluation can typically be performed in **under 30 minutes once th
 
 Robotics teams interested in evaluating Atlas may request an evaluation kit.
 
-[Request Evaluation Kit](mailto:jack@sensordeck.tech?subject=Atlas%20Evaluation%20Kit%20Request&body=Company%3A%0AName%3A%0ATitle%3A%0ARobotics%20Platform%20Description%3A%0ACurrent%20Sensor%20Stack%3A%0AEstimated%20Evaluation%20Timeline%3A%0AShipping%20Location%3A)
+[**Request Evaluation Kit**](mailto:jack@sensordeck.tech?subject=Atlas%20Evaluation%20Kit%20Request&body=Company%3A%0AName%3A%0ATitle%3A%0ARobotics%20Platform%20Description%3A%0ACurrent%20Sensor%20Stack%3A%0AEstimated%20Evaluation%20Timeline%3A%0AShipping%20Location%3A)
 
 When requesting a kit, please include:
 
