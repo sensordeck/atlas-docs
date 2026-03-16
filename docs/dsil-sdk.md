@@ -46,17 +46,9 @@ Together they form the Atlas deterministic sensor platform.
 
 System flow:
 
-Sensors  
-↓  
-Atlas Hardware  
-↓  
-USB 3.0 Upstream Link  
-↓  
-CDC Telemetry Channel  
-↓  
-DSIL Runtime  
-↓  
-ROS2 / Application Software / Perception Stack
+<p align="center">
+  <img src="/img/Fig 8.png" width="60%" alt="Atlas DSIL Stack" />
+</p>
 
 Atlas Fusion V2 handles:
 
@@ -141,49 +133,9 @@ The transport layer is responsible for framing, message decoding, channel handli
 
 # DSIL Architecture Diagram
 
-    ┌──────────────────────────────────────────────────────────────┐
-    │           Applications / Perception / Navigation / SLAM      │
-    │    ROS2 nodes · fusion logic · logging · customer software   │
-    └──────────────────────────────────────────────────────────────┘
-                                 ▲
-                                 │
-                                 │ ROS2 topics / CLI tools
-                                 │
-                                 ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │                    DSIL ROS2 Integration Layer               │
-    │        dsil_telemetry_node · dsil_monitor_node               │
-    └──────────────────────────────────────────────────────────────┘
-                                 ▲
-                                 │
-                                 │ Runtime API / evaluation tools
-                                 │
-                                 ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │                     DSIL Core Runtime Layer                  │
-    │  Telemetry Decoder · Timestamp Analyzer · Sync Correction    │
-    │  Device Manager · Evaluation Monitor                         │
-    └──────────────────────────────────────────────────────────────┘
-                                 ▲
-                                 │
-                                 │ Linux device abstraction
-                                 │
-                                 ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │                    DSIL Host Transport Layer                 │
-    │         CDC telemetry transport over /dev/ttyACM*            │
-    │         framing · recovery · channel management              │
-    └──────────────────────────────────────────────────────────────┘
-                                 ▲
-                                 │
-                                 │ USB 3.0 upstream link
-                                 │
-                                 ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │                         Atlas Hardware                       │
-    │   timing authority · sync fabric · PPS discipline            │
-    │   sensor aggregation · board telemetry                       │
-    └──────────────────────────────────────────────────────────────┘
+ <p align="center">
+  <img src="/img/Fig 9.png" width="60%" alt="Atlas DSIL architecture" />
+</p>
 
 ---
 
@@ -250,9 +202,9 @@ DSIL is designed to recover automatically.
 
 Atlas and DSIL are built around an out-of-band metadata model.
 
-    [USB Camera / LiDAR / Sensor Streams] ── standard data paths ──► host
-                               │
-                               └──── Atlas CDC telemetry ──► DSIL runtime
+<p align="center">
+  <img src="/img/Fig 10.png" width="60%" alt="Atlas out-of-band metadata model" />
+</p>
 
 The sensor data path remains as standard as possible.
 
@@ -297,7 +249,9 @@ Traditional software timestamp:
 
 Atlas + DSIL model:
 
-    sensor event → Atlas hardware capture → telemetry propagation → DSIL alignment → application-visible deterministic time
+<p align="center">
+  <img src="/img/Fig 11.png" width="60%" alt="Atlas DSIL Timestamp" />
+</p>
 
 The goal of DSIL is to make the second model practical, measurable, and easy to demonstrate.
 
