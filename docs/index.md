@@ -54,7 +54,9 @@ Atlas establishes a **single hardware timestamp authority** for all connected se
 
 ### Sensor Aggregation
 
-Multiple sensors connect to Atlas and are aggregated into a **single upstream connection** to the robot compute platform.
+Atlas aggregates multiple sensors into a **single upstream connection** to the robot compute platform.
+
+By consolidating sensor interfaces and providing centralized power distribution, Atlas significantly reduces **cable harness complexity and scattered power modules**, resulting in a cleaner and more reliable perception system architecture.
 
 ### DSIL SDK
 
@@ -89,6 +91,10 @@ Technical explanation of the Atlas timing and synchronization model.
 ### Evaluation Kit Setup
 
 Step-by-step instructions for deploying the Atlas evaluation system.
+
+### White Label OEM Integration Pilot Program
+
+How Atlas supports OEM evaluation, system tailoring, and pilot deployment for production-oriented robotics programs..
 
 ---
 
