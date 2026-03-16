@@ -144,7 +144,7 @@ the DSIL runtime automatically:
 3. re-establishes the telemetry stream  
 4. restores the Atlas timing reference
 
-Reconnection and time-base recovery typically occur within **<100 ms of device re-enumeration**.
+Reconnection and time-base recovery typically occur within 100 ms of device re-enumeration.
 
 This behavior ensures DSIL continues operating in real robotics environments where USB devices may reset or briefly disconnect during operation.
 
