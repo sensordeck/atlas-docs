@@ -74,6 +74,77 @@ Atlas integrates as an **infrastructure layer**, not as a competing middleware.
 
 ---
 
+## Runtime Characteristics
+
+Atlas is designed to operate as a deterministic sensor infrastructure layer.  
+The DSIL ROS2 bridge is intentionally lightweight so that it does not introduce additional timing uncertainty or significant CPU overhead on embedded compute platforms.
+
+### Message Frequency and Latency
+
+Atlas timing and telemetry messages are published at deterministic rates that correspond to the underlying hardware timing signals.
+
+Typical behavior:
+
+| Topic | Typical Rate | Notes |
+|------|------|------|
+| `/atlas/pps` | 1 Hz | Published on every PPS timing event |
+| `/atlas/sync` | Event-driven | Published when synchronization trigger occurs |
+| `/imu/data` | Sensor dependent | Typically 100–400 Hz |
+| `/gps/fix` | Sensor dependent | Typically 1–10 Hz |
+| `/atlas/health` | 1–5 Hz | System status updates |
+
+The DSIL telemetry bridge performs **timestamp correction and message publishing entirely in user space**.
+
+Typical bridge latency:
+
+- < 1 ms message translation latency
+- negligible additional jitter relative to sensor driver timing
+
+This ensures that the ROS2 integration layer preserves the deterministic timing boundary established by Atlas hardware.
+
+---
+
+### TF2 and Coordinate Frames
+
+In ROS2 systems, spatial relationships between sensors are managed through the **TF2 coordinate frame tree**.
+
+Atlas can act as a natural **sensor aggregation reference frame**.
+
+Typical frame structure:
+
+    <p align="center">
+  <img src="/img/Fig 15.png" width="60%" alt="Atlas frame structure" />
+</p>
+
+Atlas deployments commonly define an `atlas_link` frame that represents the physical mounting location of the Atlas board within the robot chassis.
+
+Sensor frames can then be defined relative to this reference.
+
+Atlas integrations may include:
+
+- a static transform publisher
+- URDF snippets defining the Atlas mounting frame
+- sensor frames defined relative to the Atlas board location
+
+This allows the ROS2 TF tree to align naturally with the robot's physical sensor wiring topology.
+
+---
+
+### CPU Overhead
+
+The DSIL ROS2 bridge is designed to run efficiently on embedded compute platforms.
+
+Typical resource usage on a Jetson Orin Nano:
+
+- < 2% CPU utilization
+- < 20 MB memory footprint
+
+Because DSIL operates as a **lightweight user-space telemetry bridge**, the majority of compute resources remain available for perception, SLAM, and planning workloads.
+
+This makes Atlas suitable for robotics systems running on resource-constrained SBC platforms.
+
+---
+
 # System Integration Overview
 
 A typical Atlas-to-ROS2 integration pipeline looks like this.
