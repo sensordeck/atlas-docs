@@ -375,7 +375,7 @@ Instead of routing each sensor and timing dependency separately into the SBC, At
 
 ---
 
-## FusionPower Architecture
+## Fusion V2 Power Architecture
 
 Atlas includes a protected onboard power system that turns robot battery input into a controlled sensor power domain.
 
