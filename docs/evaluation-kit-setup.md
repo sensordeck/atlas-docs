@@ -143,26 +143,9 @@ Atlas does **not modify sensor firmware or drivers**.
 
 The evaluation intentionally uses sensors with independent clocks.
 
-```
-             GNSS PPS
-                │
-                ▼
-             Atlas
-      (Timing + Sync Fabric)
-         │        │
-         │        │
-      Camera     IMU
-      (USB)      (I²C)
-         │        │
-         └──► USB CDC
-                │
-                ▼
-               SBC
-               ROS2
-                │
-                │
-         Ethernet LiDAR
-```
+<p align="center">
+  <img src="/img/Fig 19.png" width="60%" alt="Atlas evaluation kit architecture" />
+</p>
 
 This setup allows Atlas to demonstrate **cross-domain sensor alignment**.
 
