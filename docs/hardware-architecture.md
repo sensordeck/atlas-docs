@@ -271,9 +271,11 @@ PPS_OUT	Forwarded PPS signal for downstream devices
 
 This architecture ensures that:
 
-• sensor capture occurs on deterministic boundaries
-• timestamps are aligned to a global epoch
-• sensor data streams can be fused reliably in the robot compute stack
+~~~
+• Sensor capture occurs on deterministic boundaries
+• Timestamps are aligned to a global epoch
+• Sensor data streams can be fused reliably in the robot compute stack
+~~~
 
 > Final electrical values and implementation limits should track the production hardware specification for the exact Atlas revision.
 
