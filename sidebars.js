@@ -6,7 +6,7 @@ module.exports = {
     'ros2-integration',
     'sensor-synchronization',
     'evaluation-kit-setup',
-    'integration-faq',
+    'oem-integration-pilot-program',
     'downloads',
   ],
 };
