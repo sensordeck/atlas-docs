@@ -6,6 +6,8 @@ Successful evaluation confirms that Atlas can improve cross-sensor timing alignm
 
 The goal of the pilot is to reduce integration risk, accelerate deployment readiness, and provide a clear path from successful evaluation to OEM production planning.
 
+Once adopted, Atlas is intended to become a **reusable DSIL infrastructure layer across future product lines and SKUs**, not only a one-off integration for a single robot revision.
+
 ---
 
 # Program Overview
@@ -33,7 +35,7 @@ The pilot is typically executed as a structured multi-phase engineering sprint.
 | Phase 1 | Design Audit | sensor list review, I/O mapping, power review, integration plan |
 | Phase 2 | Pilot Build Definition | white-label hardware configuration, connector plan, software scope |
 | Phase 3 | Validation | system-level synchronization verification, performance report, deployment review |
-| Phase 4 | Production Handoff Planning | firmware package, software handoff, manufacturing and supply planning |
+| Phase 4 | Production Handoff Planning | firmware package, software handoff, commercial framework, supply planning |
 
 The exact timeline depends on system complexity, sensor count, and required customization level.
 
@@ -116,6 +118,7 @@ The OEM pilot validates how Atlas fits into the robot’s power path, including:
 • protection and brownout behavior  
 • startup sequencing  
 • fault visibility through telemetry  
+• selective rail control and recovery behavior  
 
 ---
 
@@ -128,11 +131,26 @@ Typical integration topics include:
 | Rail / Interface | Purpose | Pilot Review Focus |
 |---|---|---|
 | Input Power | robot-side supply into Atlas | voltage range, surge tolerance, polarity protection |
-| 5V Sensor Rail | powered USB / sensor distribution | total current budget, fault handling |
+| 5V Sensor Rail | powered USB / sensor distribution | total current budget, fault handling, selective shutdown behavior |
 | 3.3V Aux Rail | low-power sensor and timing interfaces | peripheral budget and noise sensitivity |
 | PPS / Timing I/O | synchronization signals | logic-level compatibility and protection |
 
 Detailed rail limits, protection behavior, and load budgets are reviewed as part of the pilot integration package.
+
+---
+
+## Brownout and Load-Shed Strategy
+
+For systems with constrained battery conditions, Atlas pilot scoping can define a **load-shed strategy** that prioritizes timing continuity over non-critical sensor power.
+
+This may include:
+
+• preserving the timing engine and control-plane logic during low-voltage events  
+• selectively disabling high-draw sensor rails such as 5V LiDAR or camera loads  
+• maintaining telemetry visibility during degraded power conditions  
+• controlled recovery and re-enable sequencing after power stabilization  
+
+This allows Atlas to function not only as a sensor timing layer, but also as a **managed sensor infrastructure node** during real robot power stress scenarios.
 
 ---
 
@@ -220,6 +238,23 @@ The pilot program defines the cleanest path based on the customer stack rather t
 
 ---
 
+## Software IP and Ownership Framework
+
+Because Atlas is offered as a white-label OEM platform, the pilot scoping phase should explicitly define the software IP boundary.
+
+Typical scoping topics include:
+
+• what host-side code is provided by SensorDeck  
+• whether source code access is included for pilot participants  
+• whether the OEM may modify provided drivers or integration layers  
+• ownership of customer-developed software built on top of Atlas interfaces  
+• redistribution boundaries for white-label deployments  
+• licensing model for SDK, runtime, and update tools  
+
+The goal is to ensure that the software partnership model is clear before pilot approval, especially for teams intending to embed Atlas into long-lifecycle commercial robots.
+
+---
+
 # Time Synchronization Model
 
 Precise timing is one of the core reasons teams move from evaluation into pilot.
@@ -284,6 +319,24 @@ Atlas may be evaluated with combinations of:
 
 ---
 
+## High-End Camera and LiDAR Stacks
+
+Atlas is not limited to entry-level USB-only sensor configurations.
+
+For modern robotics stacks using **GMSL2, FPD-Link III, or Ethernet-based sensor pipelines**, Atlas can act as the deterministic control-plane authority even when high-bandwidth payload data bypasses the Atlas USB path.
+
+In these architectures, Atlas provides the **sub-microsecond Trigger-Plane for GMSL / FPD-Link deserializers**, acting as the global frame-master while the video transport remains on the high-speed native camera path.
+
+This allows Atlas to coordinate timing across mixed sensor stacks that may include:
+
+• GMSL camera systems  
+• FPD-Link III camera systems  
+• Ethernet LiDAR  
+• USB peripherals  
+• GNSS and inertial sensors  
+
+---
+
 ## Capacity and Bandwidth Review
 
 A pilot integration review usually includes:
@@ -315,6 +368,22 @@ The white-label model allows Atlas to evolve from a reference board into a platf
 
 ---
 
+## Hardware Adaptation Scope
+
+Pilot scoping should explicitly classify requested customization into clear levels so engineering, sourcing, and management teams can align on cost and lead-time impact.
+
+Typical categories may include:
+
+| Customization Level | Typical Example | Expected Impact |
+|---|---|---|
+| Minor adaptation | connector substitution, pinout remap, harness alignment | lower NRE, shorter lead time |
+| Moderate adaptation | mechanical mounting change, I/O reassignment, revised protection or rail allocation | scoped engineering review required |
+| Major adaptation | new board revision, major layout change, new interface topology, Atlas-on-main-board integration | formal NRE, schedule impact, pilot re-baseline |
+
+This classification helps prevent ambiguity between a simple white-label harness variation and a full custom hardware respin.
+
+---
+
 # Reliability and Field Readiness
 
 The OEM Integration Pilot is also where Atlas is evaluated as a deployable infrastructure component rather than only a lab tool.
@@ -329,6 +398,39 @@ Typical reliability topics include:
 • cable retention and harness stability  
 
 Where applicable, the pilot can define the expected fallback behavior if timing lock or a sensor heartbeat is lost.
+
+---
+
+## Reliability Validation Plan
+
+If formal reliability targets such as MTBF or uptime thresholds are required, these should be defined jointly during pilot scoping.
+
+Typical pilot reliability work may include:
+
+• long-duration bench uptime testing  
+• thermal stress verification  
+• vibration-informed harness review  
+• sensor disconnect / reconnect testing  
+• controlled power fault injection  
+• recovery timing characterization  
+
+Where formal production metrics are not yet locked, the pilot should at minimum define a **shared reliability validation plan** that can be used to set acceptance criteria for deployment readiness.
+
+---
+
+# Firmware Update and Field Support Strategy
+
+A production robot requires a defined firmware maintenance path, not just lab flashing procedures.
+
+Pilot scoping should therefore define:
+
+• how Atlas firmware is updated in development and in fielded robots  
+• whether updates are host-assisted, service-mode, or integrated into the customer OTA pipeline  
+• integrity verification and rollback behavior  
+• fleet-safe release and versioning strategy  
+• update logging and recovery procedures  
+
+Where applicable, Atlas can be positioned to support a **secure host-mediated field update model** compatible with the OEM’s existing fleet management workflow.
 
 ---
 
@@ -359,9 +461,30 @@ Pilot deliverables depend on scope, but commonly include the following:
 • software integration guidance  
 • synchronization validation plan  
 • system-level performance review  
+• commercial framework discussion  
 • production handoff discussion package  
 
 For qualified pilot engagements, additional documentation may be made available under the appropriate agreement structure.
+
+---
+
+# Production Handoff and Continuity Planning
+
+For teams considering Atlas as long-term infrastructure, production handoff must include not only technical readiness but continuity planning.
+
+Scoping and handoff discussions may therefore include:
+
+• firmware binary delivery model  
+• white-label software packaging model  
+• long-term support expectations  
+• source access boundaries  
+• secure update flow ownership  
+• supply continuity planning  
+• contingency planning for lifecycle events  
+
+Where required by the OEM program structure, discussions may also include **firmware source escrow, long-term support (LTS) commitments, or other continuity mechanisms** to reduce platform risk for long-lived robotics deployments.
+
+This is especially important when Atlas is intended to become a **cross-platform DSIL infrastructure layer reused across future robot SKUs**.
 
 ---
 
@@ -379,6 +502,20 @@ Typical pilot success metrics may include:
 • readiness for production planning discussion  
 
 The pilot is intended to end with a clear engineering conclusion, not an open-ended experiment.
+
+---
+
+# Scoping Clarification Matrix
+
+The following topics are commonly reviewed before pilot approval because they can materially affect cost, schedule, ownership, and deployment risk.
+
+| Area of Concern | Why It Matters | What Should Be Clarified in Scoping |
+|---|---|---|
+| Hardware Adaptation Scope | White-label customization can range from simple connector changes to a full board respin, with very different cost and lead-time implications. | Define which requests are minor adaptations versus major hardware revisions, and identify expected NRE and lead-time impact. |
+| Software IP and Ownership | OEM teams need clarity on whether provided drivers and SDK components can be modified, embedded, or redistributed. | Define source access, modification rights, ownership boundaries for customer-added software, and licensing model for provided code. |
+| Pilot to Production Commercial Terms | A CTO cannot approve a pilot without at least a high-level view of production economics and supply assumptions. | Outline expected pricing model, production MOQ assumptions, and lead-time framework at a non-final commercial level. |
+| Firmware Update in the Field | Production robots need a secure and operationally realistic firmware update strategy. | Define whether Atlas can fit into the OEM OTA pipeline, how updates are verified, and what rollback / recovery behavior is supported. |
+| Reliability Metrics | General references to uptime and fault reporting are not enough for deployment planning. | Share available reliability data or jointly define a validation plan for uptime, thermal stress, recovery behavior, and acceptance targets. |
 
 ---
 
@@ -420,21 +557,27 @@ One of the reasons Atlas is valuable is that it can improve timing coordination 
 
 Yes.
 
-The pilot is the correct stage to define how Atlas interacts with sensors that already support PPS, trigger, PTP, or other synchronization methods. In these systems, Atlas can serve as the timing backbone or coordination layer across the full sensor domain.
+Atlas supports mixed sensor architectures, including systems that already use PPS, trigger, PTP, GMSL, FPD-Link, or Ethernet timing methods. In these deployments, Atlas can serve as the timing backbone or trigger-plane authority across the full sensor domain.
 
 ---
 
 ## What if our cameras use GMSL or FPD-Link instead of USB?
 
-That can be discussed during the pilot scoping phase.
+Atlas provides the **sub-microsecond Trigger-Plane for GMSL / FPD-Link deserializers**, acting as the global frame-master even when the video data path bypasses the Atlas USB transport.
 
-In these architectures, Atlas may still serve as the control-plane timing authority even when high-speed video data follows a different physical transport path.
+This allows Atlas to remain the timing authority for the camera stack while preserving the native high-speed video architecture.
 
 ---
 
 ## Can trigger offsets be scheduled to reduce sensor interference?
 
 Pilot-specific timing behaviors such as phased trigger scheduling can be reviewed as part of the program scope if the target sensor stack requires them.
+
+---
+
+## Can Atlas shed load during low-battery events?
+
+Pilot architectures may define selective rail shutdown behavior so Atlas can preserve timing authority, health telemetry, and control-plane continuity while disabling higher-draw sensor loads during brownout or degraded power conditions.
 
 ---
 
@@ -452,11 +595,11 @@ Pilot participants typically receive direct engineering support, structured sync
 
 ---
 
-## How is firmware handled during the pilot?
+## How is firmware handled during the pilot and after deployment?
 
 Pilot firmware is managed as part of the engineering engagement.
 
-Version tracking, feature alignment, update procedures, and any pilot-specific firmware behavior are defined during the program. Deployment-grade update flow can also be discussed where relevant.
+Version tracking, feature alignment, update procedures, field update strategy, and any pilot-specific firmware behavior are defined during the program. Long-term continuity topics such as LTS expectations or firmware escrow can also be addressed in handoff discussions where needed.
 
 ---
 
@@ -471,6 +614,7 @@ Those discussions may include:
 • supply and lead-time planning  
 • commercial terms  
 • support structure for deployment scale-up  
+• reuse of Atlas DSIL infrastructure across additional robot programs or SKUs  
 
 ---
 
@@ -494,6 +638,10 @@ The purpose of the scoping step is to determine whether Atlas should move forwar
 # Final Positioning
 
 The Atlas Evaluation Kit proves that deterministic timing improves system behavior.
+
+The Atlas White Label OEM Integration Pilot is the structured path that converts that result into a real deployment program.
+
+For engineering leads, this pilot is not just a technical trial. It is the framework for deciding whether Atlas should become part of the robot’s production sensor and timing infrastructure.
 
 The Atlas White Label OEM Integration Pilot is the structured path that converts that result into a real deployment program.
 
