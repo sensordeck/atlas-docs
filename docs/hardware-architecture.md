@@ -46,29 +46,9 @@ At the hardware level, Atlas provides:
 
 ## High-Level Architecture
 
-```text
-Certified / Integrated Sensor Group
-(USB Cameras / USB LiDAR / IMU / GNSS / UART / I2C / SPI)
-                         │
-                         ▼
-┌────────────────────────────────────────────────────┐
-│           Atlas Fusion V2 Board                    │
-│                                                    │
-│  • Sensor interface aggregation                    │
-│  • FusionPower protected power distribution        │
-│  • Hardware timestamp engine                       │
-│  • Time authority and timing I/O                   │
-│  • CDC telemetry aggregation                       │
-│  • USB 3.0 upstream bridge to compute              │
-└────────────────────────────────────────────────────┘
-                         │
-                         ▼
-            Robot Compute Platform / SBC
-              (Jetson / ARM SBC / x86)
-                         │
-                         ▼
-                 DSIL SDK / ROS 2 Stack
-```
+<p align="center">
+  <img src="/img/Fig 2.png" width="60%" alt="Atlas Fusion V2 architecture" />
+</p>
 
 ---
 
@@ -249,26 +229,9 @@ Atlas’s time-authority model is intended to support a closed loop:
 
 Conceptually:
 
-```text
-External Reference / Board Clock
-                │
-                ▼
-         Atlas Timing Domain
-                │
-      ┌─────────┼─────────┐
-      ▼         ▼         ▼
-   PPS_OUT   SYNC_OUT  TRIGGER_OUT
-      │         │         │
-      ▼         ▼         ▼
- downstream  downstream downstream
-  devices      sensors     sensors
-      \         |         /
-       \        |        /
-        └──── sensor data ────► Atlas timestamp / correlation path
-                               │
-                               ▼
-                      CDC telemetry to host
-```
+<p align="center">
+  <img src="/img/Fig 4.png" width="60%" alt="Atlas Time Authority" />
+</p>
 
 This is what elevates Atlas from a board that “has timing pins” into a board that establishes **time authority**.
 
@@ -288,6 +251,29 @@ The table below defines the intended engineering behavior for the timing interfa
 | Frequency behavior | External 1PPS reference | 1Hz base, optional conditioned redistribution | Periodic, configurable | one-shot / burst / periodic |
 | Phase behavior | External source defined | aligned to board timing domain | configurable phase offset | configurable phase offset |
 | Protection | input clamp / protection | short-circuit protection | short-circuit protection | short-circuit protection |
+
+<p align="center">
+  <img src="/img/Fig 5.png" width="60%" alt="Atlas Time Signal" />
+</p>
+
+Timing Behavior
+
+Atlas uses the external PPS_IN signal as the global time reference.
+Each PPS pulse establishes a deterministic timing epoch inside Atlas.
+
+From this reference, Atlas generates deterministic synchronization signals:
+
+Signal	Function
+PPS_IN	External 1 Hz timing reference (GPS, LiDAR master clock, or robot clock source)
+SYNC_OUT	Periodic frame synchronization signal distributed to sensors
+TRIGGER_OUT	Optional sensor capture trigger for cameras or LiDAR
+PPS_OUT	Forwarded PPS signal for downstream devices
+
+This architecture ensures that:
+
+• sensor capture occurs on deterministic boundaries
+• timestamps are aligned to a global epoch
+• sensor data streams can be fused reliably in the robot compute stack
 
 > Final electrical values and implementation limits should track the production hardware specification for the exact Atlas revision.
 
@@ -365,18 +351,9 @@ Instead of routing each sensor and timing dependency separately into the SBC, At
 - one upstream hardware integration boundary
 - one cleaner deployment path to the host
 
-```text
-Sensors + Timing + Power Management
-                │
-                ▼
-              Atlas
-                │
-                ▼
-      Single USB 3.0 upstream link
-                │
-                ▼
-        Robot Compute Platform
-```
+<p align="center">
+  <img src="/img/Fig 3.png" width="60%" alt="Atlas Timing Approach" />
+</p>
 
 ---
 
@@ -460,19 +437,9 @@ Atlas is intended for mobile and industrial environments.
 
 ### Example 1 — GNSS-Referenced Mobile Robot
 
-```text
-[GNSS Module] ---- PPS_IN ----┐
-                              │
-                              ▼
-                           [Atlas]
-                              │
-         ┌───────────────┬────┴────┬───────────────┐
-         ▼               ▼         ▼               ▼
-      PPS_OUT         SYNC_OUT  TRIGGER_OUT   USB Upstream
-         │               │         │               │
-         ▼               ▼         ▼               ▼
-    Controller     Camera Group   LiDAR        Robot Compute
-```
+<p align="center">
+  <img src="/img/Fig 6.png" width="60%" alt="Atlas Time Topologies" />
+</p>
 
 Use case intent:
 
@@ -483,19 +450,9 @@ Use case intent:
 
 ### Example 2 — Factory Robot / Fixed Automation Cell
 
-```text
-[Plant / PLC Timing Source] ---- PPS_IN ----┐
-                                            │
-                                            ▼
-                                          [Atlas]
-                                            │
-                          ┌─────────────────┴──────────────┐
-                          ▼                                ▼
-                       SYNC_OUT                        TRIGGER_OUT
-                          │                                │
-                          ▼                                ▼
-                    3D Vision Sensor                  Motion / Capture Device
-```
+<p align="center">
+  <img src="/img/Fig 7.png" width="60%" alt="Atlas External Time Reference" />
+</p>
 
 Use case intent:
 
