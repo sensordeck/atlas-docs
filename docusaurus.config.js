@@ -41,6 +41,22 @@ const config = {
     ],
   ],
 
+plugins: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        language: ['en'],
+        indexDocs: true,
+        indexBlog: false,
+        indexPages: true,
+        docsRouteBasePath: '/',
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+      },
+    ],
+  ],
+  
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -56,6 +72,10 @@ const config = {
           src: 'img/SensorDeck.png',
         },
               },
+       {
+            type: 'search',
+            position: 'right',
+          },
 
       footer: {
         style: 'dark',
