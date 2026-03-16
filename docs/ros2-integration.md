@@ -7,7 +7,7 @@ sidebar_label: ROS2 Integration
 
 ### Deterministic Sensor Integration for ROS2 Robotics Systems
 
-Atlas is designed to integrate directly into modern **ROS2-based robotics stacks**.
+Atlas is designed to integrate directly into modern ROS2-based robotics stacks.
 
 The Deterministic Sensor Integration Layer (DSIL) provides a **ROS2-ready interface** that transforms Atlas telemetry and timing data into standard ROS2 topics.
 
