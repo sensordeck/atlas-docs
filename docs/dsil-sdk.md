@@ -129,6 +129,25 @@ Primary transport path:
 
 The transport layer is responsible for framing, message decoding, channel handling, and reconnect behavior.
 
+### Runtime Reconnection Logic
+
+The DSIL Host Transport Layer includes a persistent reconnection watchdog.
+
+If the Atlas telemetry device disappears due to power cycling, USB reset, or cable vibration:
+
+    /dev/ttyACM0
+
+the DSIL runtime automatically:
+
+1. detects the device loss  
+2. begins polling for CDC device re-enumeration  
+3. re-establishes the telemetry stream  
+4. restores the Atlas timing reference
+
+Reconnection and time-base recovery typically occur within **<100 ms of device re-enumeration**.
+
+This behavior ensures DSIL continues operating in real robotics environments where USB devices may reset or briefly disconnect during operation.
+
 ---
 
 # DSIL Architecture Diagram
@@ -255,6 +274,20 @@ Atlas + DSIL model:
 
 The goal of DSIL is to make the second model practical, measurable, and easy to demonstrate.
 
+## Timing Signal Flow
+
+The Atlas timing system distributes synchronization events from the timing reference to connected sensors and telemetry.
+
+Representative timing flow:
+
+<p align="center">
+  <img src="/img/Fig 12.png" width="60%" alt="Atlas DSIL Timing Signal Flow" />
+</p>
+
+Atlas captures the timing reference at the hardware layer and exposes the timing state through telemetry.
+
+DSIL then aligns sensor timestamps to that timing reference so that robotics software operates on a deterministic multi-sensor timeline.
+
 ---
 
 # DSIL SDK v0.1
@@ -377,17 +410,30 @@ Purpose:
 
 Apply Atlas timing correction.
 
-Example:
+### Mechanics of Synchronization
 
-    dsil_sync
+DSIL applies a **dynamic software offset** to ROS2 message timestamps.
 
-Representative conceptual model:
+The correction is calculated from the Atlas timing domain and applied to the message header:
 
     corrected_timestamp =
     sensor_timestamp
     + atlas_clock_offset
 
-The corrected timestamp is injected into the ROS2 message header (header.stamp).    
+The corrected timestamp is written into the ROS2 message header:
+
+    header.stamp
+
+This maps the raw sensor arrival time to the **Atlas hardware-captured timing reference**.
+
+DSIL **does not attempt to modify the sensor's internal silicon clock**.  
+Instead, it corrects timestamps at the software layer, ensuring compatibility with standard drivers such as:
+
+• UVC cameras  
+• Serial sensors  
+• ROS2 driver packages  
+
+This approach preserves driver compatibility while exposing deterministic infrastructure timing to robotics software.    
 
 ## dsil_plot
 
@@ -665,24 +711,35 @@ The purpose is to finalize the core Atlas software value, not to solve every fut
 
 ---
 
-# Software Installation Requirements
+---
 
-Minimum runtime dependencies for DSIL SDK:
+# Software Requirements
+
+Minimum environment for running DSIL SDK:
 
 | Component | Requirement |
 |---|---|
-| Python | Python 3.10+ |
-| Build system | colcon |
-| USB support | CDC ACM driver |
-| Library dependency | libusb-1.0 |
+| OS | Ubuntu 22.04 LTS (Jammy Jellyfish) |
+| Kernel | Linux 5.15+ |
+| ROS | ROS2 Humble |
+| Dependencies | libusb-1.0-0, python3-serial |
+| ROS packages | ros-humble-desktop |
 
-Atlas exposes its telemetry interface as a standard Linux device:
+Atlas exposes its telemetry interface through a standard Linux CDC device:
 
     /dev/ttyACM0
 
-DSIL automatically discovers this interface and attaches to the Atlas telemetry channel.
+Required permissions:
 
-No custom kernel modules are required.
+Users must belong to the **dialout** group in order to access the telemetry device.
+
+Example:
+
+    sudo usermod -a -G dialout $USER
+
+After updating permissions, log out and log back in.
+
+**No custom kernel modules are required.**
 
 ---
 
