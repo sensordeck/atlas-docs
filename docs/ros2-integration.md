@@ -78,30 +78,9 @@ Atlas integrates as an **infrastructure layer**, not as a competing middleware.
 
 A typical Atlas-to-ROS2 integration pipeline looks like this.
 
-    Sensors
-       │
-       │  USB / UART / SPI / I2C
-       ▼
-    Atlas Hardware
-       │
-       │  USB CDC Telemetry Channel
-       ▼
-    DSIL Telemetry Bridge
-       │
-       ▼
-    ROS2 DSIL Node
-       │
-       ▼
-    ROS2 Topic Graph
-       │
-       ├─ /imu/data
-       ├─ /gps/fix
-       ├─ /atlas/pps
-       ├─ /atlas/sync
-       └─ /atlas/health
-       │
-       ▼
-    Navigation / Perception / SLAM Nodes
+    <p align="center">
+  <img src="/img/Fig 13.png" width="60%" alt="Atlas ROS2 Integration" />
+</p>
 
 Atlas introduces a **deterministic timing reference** that improves cross-sensor alignment inside the ROS2 ecosystem.
 
@@ -198,17 +177,9 @@ Atlas then redistributes synchronization signals to connected sensors.
 
 DSIL performs **timestamp correction in software**, using hardware timing events captured by Atlas.
 
-    Raw Sensor Data
-            │
-            │ arrival timestamp
-            ▼
-    DSIL receives PPS / trigger event from Atlas
-            │
-            ▼
-    DSIL calculates timing offset
-            │
-            ▼
-    Corrected ROS2 message timestamp
+    <p align="center">
+  <img src="/img/Fig 14.png" width="60%" alt="Atlas mechanics of synchronization" />
+</p>
 
 DSIL applies a **dynamic offset to ROS2 message header timestamps**, mapping the raw sensor arrival time to the Atlas hardware-captured synchronization event.
 
