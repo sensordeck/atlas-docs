@@ -6,25 +6,25 @@ Atlas establishes a **hardware timing authority and sensor backbone** for modern
 
 Instead of wiring sensors directly into the robot compute platform, Atlas creates a **dedicated infrastructure layer** that synchronizes sensors, aggregates data streams, and delivers a unified perception pipeline.
 
-Atlas enables robotics teams to treat **sensor integration as infrastructure**, rather than rebuilding custom solutions for every robot platform.
+Atlas allows robotics teams to treat **sensor integration as infrastructure**, rather than rebuilding custom solutions for every robot platform.
 
 ---
 
-# Atlas Architecture
+## Atlas Architecture
 
 <p align="center">
-<img src="/img/Catalog2.png" width="60%" alt="Atlas deterministic sensor backbone architecture" />
+<img src="/img/Catalog2.png" width="65%" alt="Atlas deterministic sensor backbone architecture" />
 </p>
 
 Atlas sits between the **sensor domain** and the **robot compute platform**.
 
-Sensors connect to Atlas → Atlas synchronizes and aggregates them → the compute platform receives a unified sensor pipeline.
+Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robot compute platform receives a unified perception pipeline.
 
 ---
 
-# Time to Hello-World
+## Time to Hello-World
 
-Atlas is designed to integrate into a ROS2 robotics stack in minutes.
+Atlas is designed to integrate into a **ROS2 robotics stack in minutes**.
 
 Once Atlas is connected to the robot compute platform, start the DSIL runtime and launch the ROS2 telemetry bridge.
 
@@ -40,11 +40,11 @@ Within seconds Atlas infrastructure telemetry becomes visible inside ROS2:
 - `/atlas/pps`
 - `/atlas/sync_drift`
 
-This allows robotics engineers to observe synchronization state and timing behavior directly within their perception pipeline.
+Engineers can immediately observe synchronization state and timing behavior inside the perception pipeline.
 
 ---
 
-# Core Capabilities
+## Core Capabilities
 
 Atlas provides four foundational capabilities for robotics sensor infrastructure.
 
@@ -60,7 +60,7 @@ By consolidating sensor interfaces and providing centralized power distribution,
 
 ### DSIL SDK
 
-The **Deterministic Sensor Integration Layer (DSIL)** provides telemetry decoding, timestamp alignment, and ROS2 integration for Atlas-enabled systems.
+The **Deterministic Sensor Integration Layer (DSIL)** provides telemetry decoding, timestamp alignment, synchronization diagnostics, and ROS2 integration.
 
 ### Cross-SKU Infrastructure
 
@@ -68,7 +68,7 @@ Atlas provides a reusable sensor infrastructure layer that can be deployed acros
 
 ---
 
-# Explore the Atlas Platform
+## Explore the Atlas Platform
 
 Atlas documentation is organized into the following sections.
 
@@ -92,15 +92,15 @@ Technical explanation of the Atlas timing and synchronization model.
 
 Step-by-step instructions for deploying the Atlas evaluation system.
 
-### White Label OEM Integration Pilot Program
+### White-Label OEM Integration Pilot Program
 
-How Atlas supports OEM evaluation, system tailoring, and pilot deployment for production-oriented robotics programs..
+How Atlas supports OEM evaluation, system customization, and pilot deployment for production-oriented robotics programs.
 
 ---
 
-# Integration Resources
+## Integration Resources
 
-Atlas provides the core materials required for engineering evaluation and deployment.
+Atlas provides materials for engineering evaluation and deployment.
 
-- [Integration and Deployment FAQ](./oem-integration-pilot-program)
+- [Integration and Deployment FAQ](./integration-faq)
 - [Downloads](./downloads)
