@@ -194,17 +194,17 @@ Atlas reference synchronization signals should be treated as **short-run 3.3V ti
 
 Recommended deployment practices include:
 
-- using shielded cables where appropriate
-- keeping synchronization runs short whenever possible
-- routing timing lines away from high-current power paths
-- maintaining clean grounding between Atlas and sensors
+- Using shielded cables where appropriate
+- Keeping synchronization runs short whenever possible
+- Routing timing lines away from high-current power paths
+- Maintaining clean grounding between Atlas and sensors
 
 In installations where sensors are mounted far from the compute platform (for example roof-mounted LiDAR or external camera rigs), OEM deployments may incorporate:
 
-- differential signaling
-- dedicated line drivers
-- signal isolation
-- sensor-specific trigger conditioning
+- Differential signaling
+- Dedicated line drivers
+- Signal isolation
+- Sensor-specific trigger conditioning
 
 Atlas synchronization specifications describe timing performance **at the Atlas board boundary**.
 
@@ -217,8 +217,8 @@ Many robotics systems use **PPS (Pulse-Per-Second)** as a global timing referenc
 Common PPS sources include:
 
 - GNSS receivers
-- external master clocks
-- industrial timing systems
+- External master clocks
+- Industrial timing systems
 
 Atlas can ingest PPS using:
 
@@ -252,7 +252,7 @@ Synchronization signal used to align sensor clocks.
 
 Common uses include:
 
-- camera exposure alignment
+- Camera exposure alignment
 - IMU sampling alignment
 - LiDAR frame timing reference
 
@@ -262,9 +262,9 @@ Frame trigger signal for sensors that support hardware capture triggering.
 
 Examples include:
 
-- industrial cameras
-- synchronized multi-camera systems
-- triggered LiDAR sampling
+- Industrial cameras
+- Synchronized multi-camera systems
+- Triggered LiDAR sampling
 
 ---
 
@@ -335,8 +335,8 @@ Typical synchronization architecture:
 </p>
 In this model:
 
-- sensors capture data based on Atlas timing signals
-- data flows directly to the compute platform
+- Sensors capture data based on Atlas timing signals
+- Data flows directly to the compute platform
 - DSIL aligns timestamps inside ROS2
 
 This allows **high-bandwidth sensors to remain directly connected to compute while still participating in the Atlas timing domain**.
@@ -369,15 +369,15 @@ A key design principle of Atlas is separating **hardware synchronization** from 
 
 Hardware layer:
 
-- captures PPS events
-- distributes synchronization pulses
-- aligns sensor capture events
+- Captures PPS events
+- Distributes synchronization pulses
+- Aligns sensor capture events
 
 Software layer (DSIL):
 
-- observes timing events
-- calculates timestamp offsets
-- corrects ROS2 message timestamps
+- Observes timing events
+- Calculates timestamp offsets
+- Corrects ROS2 message timestamps
 
 This hybrid approach preserves compatibility with existing drivers while improving timing consistency.
 
@@ -435,6 +435,7 @@ Timing relationships depend entirely on driver behavior.
 
 With Atlas:
 
+~~~
     Sensors
         │
         ▼
@@ -445,6 +446,7 @@ With Atlas:
         │
         ▼
       ROS2
+~~~
 
 Timing relationships are anchored by Atlas hardware.
 
