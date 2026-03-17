@@ -28,40 +28,98 @@ Robot control systems such as motor controllers or wheel encoders typically oper
 
 ---
 
-# Why Sensor Synchronization Matters
+## Why Sensor Synchronization Matters
 
 Without synchronization, sensor timestamps drift relative to each other.
 
 Typical problems include:
 
-- camera frames misaligned with LiDAR scans
-- IMU readings offset from perception frames
-- GNSS timestamps inconsistent with localization pipelines
-- degraded SLAM accuracy
-- difficult debugging of perception edge cases
+- camera frames misaligned with LiDAR scans  
+- IMU readings offset from perception frames  
+- GNSS timestamps inconsistent with localization pipelines  
+- degraded SLAM accuracy  
+- difficult debugging of perception edge cases  
 
 These problems often appear as:
 
-- localization drift
-- unstable sensor fusion
-- inconsistent replay results
-- non-deterministic behavior between runs
+- localization drift  
+- unstable sensor fusion  
+- inconsistent replay results  
+- non-deterministic behavior between runs  
 
 Atlas addresses this by establishing a **single timing authority for the sensor infrastructure**.
 
 ---
 
-# Atlas Timing Architecture
+## Atlas Timing Architecture
 
 Atlas introduces a **hardware timing layer** between sensors and the compute platform.
-
-Typical architecture:
 
 <p align="center">
   <img src="/img/Fig 16.png" width="60%" alt="Atlas timing architecture" />
 </p>
 
 Atlas becomes the **timing distribution hub** for the robot sensor infrastructure.
+
+It can ingest external timing references such as:
+
+- GNSS PPS  
+- system master clock  
+- external synchronization controller  
+
+Atlas then redistributes synchronization signals to connected sensors, creating a **shared timing reference** across all devices.
+
+---
+
+## Hardware Timing Boundary
+
+Atlas introduces a deterministic timing boundary:
+
+- sensors operate in their native timing domain  
+- Atlas captures precise timing events in hardware  
+- timing relationships are preserved and made observable  
+
+This ensures that all downstream data can be aligned to a common reference.
+
+---
+
+## Mechanics of Synchronization
+
+DSIL performs timestamp correction in software using hardware timing events captured by Atlas.
+
+It applies a dynamic offset that maps:
+
+- raw sensor arrival time  
+→ to  
+- Atlas hardware-captured synchronization event  
+
+---
+
+## Design Principle: Non-Intrusive Synchronization
+
+Atlas does not modify sensor firmware or internal clocks.
+
+This ensures compatibility with:
+
+- standard UVC cameras  
+- serial sensors  
+- LiDAR drivers  
+- existing ROS2 drivers  
+
+Atlas operates alongside existing drivers rather than replacing them.
+
+---
+
+## What This Enables
+
+With deterministic timestamp alignment:
+
+- multi-sensor fusion becomes reliable  
+- timing jitter becomes measurable and correctable  
+- system behavior becomes observable  
+- debugging synchronization issues becomes tractable  
+
+Atlas converts timing from a hidden problem into a **visible system property**.
 
 ---
 
