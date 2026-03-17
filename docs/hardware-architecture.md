@@ -206,6 +206,103 @@ The Atlas hardware stack transforms sensor integration from a one-time engineeri
 
 ---
 
+## Hardware Specification Details
+
+This section defines the core hardware characteristics of Atlas Fusion V2, focusing on sensor aggregation, power distribution, interface definition, and mechanical design.
+
+---
+
+### Sensor Aggregation Architecture
+
+Atlas Fusion V2 aggregates multiple sensor classes into a single board-level integration domain.
+
+Supported sensor interfaces include:
+
+- USB 3.0 downstream connections for cameras, LiDAR, and peripherals  
+- UART interface for serial sensors and telemetry devices  
+- I2C interface for low-speed digital sensors  
+- SPI interface for higher-speed peripheral communication  
+- Dedicated UART+PPS path for navigation or timing-aware sensors  
+
+This architecture allows the robot compute platform to interface with **one unified sensor domain**, instead of managing multiple independent sensor connections.
+
+---
+
+### Power Distribution
+
+Atlas Fusion V2 includes a protected onboard power system designed for robotics environments.
+
+**Input domain**
+
+- 9–24V DC input from robot battery  
+- reverse polarity protection  
+- transient and surge protection  
+
+**Output domain**
+
+- 5V rail for USB sensors and high-power peripherals  
+- 3.3V rail for MCU and low-voltage interfaces  
+- No onboard 3.3V / 5V level shifting on Fusion V2; mixed-voltage support is implemented in white-label OEM PCB derivatives  
+
+**Design objectives**
+
+- centralized power delivery across all sensors  
+- reduced reliance on external DC-DC modules  
+- improved electrical stability and noise control  
+- protection against peripheral faults  
+- consistent power architecture across deployments  
+
+---
+
+### Interface Definition
+
+Atlas exposes a structured set of hardware interfaces for sensor integration, timing control, and host communication.
+
+#### Sensor and System Interfaces
+
+| Interface Type | Qty | Description |
+|---|---:|---|
+| USB 3.0 Downstream | 3 | USB cameras, LiDAR, and peripherals |
+| UART | 1 | Serial sensors or telemetry |
+| I2C | 1 | Low-speed digital sensors |
+| SPI | 1 | High-speed peripheral communication |
+| UART+PPS Navigation Path | 1 | Dedicated serial path for navigation sensors |
+| USB 3.0 Upstream | 1 | Connection to robot compute platform |
+| DC Power Input | 1 | 9–24V system power input |
+
+#### Timing Interfaces
+
+| Interface | Role | Function in the timing system | Primary value |
+|---|---|---|---|
+| `PPS_IN` | External time reference input | Receives PPS from GNSS or another high-accuracy source to align Atlas to a global or system-level reference | Gives Atlas traceable absolute time |
+| `PPS_OUT` | Standard PPS output | Redistributes a conditioned board PPS signal to downstream systems | Provides hardware heartbeat and clock reference to other devices |
+| `SYNC_OUT` | Periodic synchronization output | Emits periodic sync pulses for simultaneous sensor capture | Enables deterministic multi-sensor acquisition cadence |
+| `TRIGGER_OUT` | Programmable trigger output | Emits one-shot, burst, or scheduled trigger pulses | Precisely controls sensor action timing |
+
+This interface model defines a **clear hardware boundary** between the sensor subsystem and the compute platform, while extending Atlas timing control through dedicated synchronization I/O.
+
+---
+
+### Mechanical Specification
+
+Atlas Fusion V2 is designed for integration into mobile and industrial robotics systems.
+
+**Mechanical characteristics**
+
+- industrial-grade locking connectors for all external interfaces  
+- reduced risk of cable loosening under vibration  
+- board-level mounting holes for secure installation  
+- optimized connector placement for clean cable routing  
+
+**Design intent**
+
+- improve mechanical reliability in field deployments  
+- simplify assembly and maintenance  
+- reduce cable strain and routing complexity  
+- support integration into enclosed or space-constrained systems  
+
+---
+
 ## Next Steps
 
 - See **Sensor Synchronization** for timing details  
