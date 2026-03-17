@@ -221,26 +221,19 @@ Examples include:
 
 ---
 
-# Timestamp Synchronization
+## Timestamp Synchronization in ROS2
 
-One of Atlas's core contributions is **deterministic timestamp alignment**.
+DSIL applies a dynamic offset to ROS2 message header timestamps.
 
-Many robotics systems suffer from:
+This maps the raw sensor arrival time to the Atlas hardware-captured synchronization event.
 
-- USB camera timing jitter  
-- inconsistent driver timestamps  
-- weak alignment between sensors  
-- poor timing observability  
+Atlas does not modify sensor firmware or internal clocks.
 
-Atlas addresses this through a **hardware-assisted timing boundary**.
-
-Atlas can ingest timing references such as:
-
-- GNSS PPS  
-- system master clock  
-- external synchronization controller  
-
-Atlas then redistributes synchronization signals to connected sensors.
+This ensures compatibility with:
+- UVC cameras
+- serial sensors
+- LiDAR drivers
+- standard ROS2 drivers
 
 ---
 
