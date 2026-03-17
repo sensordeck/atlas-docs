@@ -221,7 +221,7 @@ Examples include:
 
 ---
 
-## Timestamp Synchronization in ROS2
+# Timestamp Synchronization in ROS2
 
 DSIL applies a dynamic offset to ROS2 message header timestamps.
 
