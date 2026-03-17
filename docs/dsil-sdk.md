@@ -481,9 +481,7 @@ to:
 That is the long-term value of Atlas.
 
 ## Next Steps
-If you are evaluating Atlas as a platform, continue in this order:
 
-Hardware Architecture
-Sensor Synchronization
-ROS2 Integration
-Evaluation Kit Setup
+- See **Sensor Synchronization** for timing details  
+- See **ROS2 Integration** for software integration  
+- See **Evaluation Kit Setup** for getting started  
