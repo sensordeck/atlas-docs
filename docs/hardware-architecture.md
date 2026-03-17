@@ -147,7 +147,7 @@ Once adopted, the same architecture can be deployed across multiple SKUs and pro
 
 ## System Role
 
-Atlas Fusion V2 does not replace the robot compute platform. It manages the **sensor-side infrastructure**, allowing the robot compute platform to focus on: **Perceptio，Planning and AI processing**.
+Atlas Fusion V2 does not replace the robot compute platform. It manages the **sensor-side infrastructure**, allowing the robot compute platform to focus on: **Perception，Planning and AI processing**.
 
 At the hardware level, Atlas provides:
 
