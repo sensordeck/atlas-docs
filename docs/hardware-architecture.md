@@ -48,7 +48,7 @@ Atlas provides:
 - lower integration effort  
 
 <p align="center">
-  <img src="/img/Fig 5.png" width="60%" alt="Atlas Fusion V2 One Cable" />
+  <img src="/img/Fig 3.png" width="60%" alt="Atlas Fusion V2 One Cable" />
 </p>
 
 ---
