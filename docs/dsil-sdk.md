@@ -271,22 +271,6 @@ Anything beyond this becomes OEM-specific work.
 
 ---
 
-## Why DSIL Matters
-
-Atlas hardware is what gets deployed.
-
-DSIL is what allows engineers to:
-
-- understand the system  
-- validate timing behavior  
-- trust synchronization  
-- reuse the platform across programs  
-
-Hardware makes the system possible.  
-DSIL makes the system **operationally credible**.
-
----
-
 ## Strategic Role of DSIL
 
 For robotics teams, DSIL changes the integration model from:
