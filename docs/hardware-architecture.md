@@ -89,10 +89,12 @@ It accepts external timing input and distributes synchronization signals across 
 
 Traditional robotics systems connect sensors directly to the SBC, resulting in:
 
-- 7–10 independent cables  
-- multiple distributed power modules  
-- complex internal wiring  
-- difficult debugging and maintenance  
+- 7–10 independent sensor cables routed to the SBC
+- mixed interfaces across USB, UART, I2C, SPI, and PPS  
+- multiple sensor powers delivered through scattered converters and ad hoc wiring
+- No clean timing boundary across devices  
+- difficult debugging and maintenance due to loose connectors and harness complexity
+- Repeated engineering work for every new robot SKU  
 
 Atlas replaces this with a structured hardware model:
 
@@ -147,11 +149,20 @@ Once adopted, the same architecture can be deployed across multiple SKUs and pro
 
 Atlas Fusion V2 does not replace the robot compute platform.
 
-It manages the **sensor-side infrastructure**, allowing the SBC to focus on:
+At the hardware level, Atlas provides:
 
-- Perception  
-- Planning  
-- AI processing
+- **Sensor aggregation** across mixed interfaces
+- **Protected onboard power** for connected sensor groups
+- **A board-level timing authority**
+- **External PPS input and timing signal redistribution**
+- **Single-cable upstream integration** to the compute platform
+- **A strong reference design for white-label OEM customization**
+
+It manages the **sensor-side infrastructure**, allowing the robot compute platform to focus on:
+
+- **Perception**  
+- **Planning**  
+- **AI processing**
 
 ---
 
