@@ -336,26 +336,232 @@ Atlas is designed around a **single upstream connection model** to the robot com
 
 Instead of routing each sensor and timing dependency separately into the SBC, Atlas consolidates the subsystem into one hardware boundary.
 
-### Traditional approach
+## One-Cable Upstream Architecture
 
-- separate USB lines
-- standalone UART wiring
-- isolated sensor power modules
-- independent timing wires
-- weak fault isolation
-- difficult field debugging
+Atlas is designed around a **single upstream connection model** to the robot compute platform.
 
-### Atlas approach
+Instead of routing each sensor interface, timing signal, and power dependency separately into the SBC, Atlas consolidates the sensor subsystem into **one hardware integration boundary**.
 
-- one board-level sensor backbone
-- one protected onboard power domain
-- one timing authority
-- one upstream hardware integration boundary
-- one cleaner deployment path to the host
+This architecture reduces cable harness complexity, improves electrical stability, lowers field failure risk, and creates a reusable sensor backbone that can be deployed across multiple robot SKUs and product lines.
+
+---
+
+## Traditional Sensor Integration
+
+In many robotics systems, sensors are connected **directly to the SBC** using separate cables, separate interfaces, and separate power paths.
+
+A typical deployment may look like this:
+
+- 3 × USB cameras → 3 USB cables → 3 SBC USB ports  
+- 1 × LiDAR → 1 Ethernet or USB cable  
+- 1 × IMU → 1 UART cable  
+- 1 × GNSS → 1 UART cable + 1 PPS cable  
+- Multiple distributed power converters for different sensor groups  
+
+Total system result:
+
+**7–10 independent cables + multiple power modules, all connected directly to the SBC.**
+
+This is still the common approach across many robotics teams.
+
+---
+
+## Problems with the Traditional Approach
+
+### Cable Harness Complexity
+
+As more sensors are added, internal wiring complexity increases rapidly.
+
+Robots often end up with large cable bundles routed directly to the compute platform, which increases:
+
+- mechanical routing difficulty  
+- assembly time  
+- wiring mistakes during production  
+- service difficulty during field maintenance  
+
+### Electrical Noise and Power Instability
+
+Traditional sensor stacks often rely on **multiple scattered power converters** to support different sensors.
+
+This creates:
+
+- more switching noise sources inside the robot  
+- higher EMI coupling risk  
+- inconsistent grounding behavior across devices  
+- greater susceptibility to noise on timing and signal lines  
+
+Long and unstructured cable paths can also behave like antennas, increasing interference and reducing signal robustness.
+
+### SBC Port Dependency
+
+In the direct-connect model, every new sensor consumes physical interfaces on the SBC:
+
+- USB ports  
+- UART ports  
+- GPIO pins  
+- timing inputs  
+
+As sensor count grows, the SBC becomes the integration bottleneck.
+
+### Connector and Field Reliability Risk
+
+When many cables connect directly to the SBC, the system becomes more vulnerable to:
+
+- loose USB connectors  
+- vibration-induced disconnects  
+- weak connector retention  
+- difficult fault tracing across the robot chassis  
+
+This is especially problematic in mobile robots, industrial platforms, and field-deployed systems.
+
+---
+
+## Atlas One-Cable Architecture
+
+Atlas reorganizes the sensor domain into a **board-level sensor backbone**.
+
+Sensors connect to Atlas instead of directly to the SBC.
+
+Atlas consolidates:
+
+- sensor interface aggregation  
+- onboard protected power distribution  
+- timing synchronization  
+- board-level diagnostics and telemetry  
+
+The compute platform then interacts with the entire sensor subsystem through **one upstream integration path**.
+
+---
+
+## What Atlas Centralizes
+
+Atlas provides:
+
+- **one board-level sensor backbone**  
+- **one protected onboard power domain**  
+- **one timing authority**  
+- **one upstream hardware integration boundary to the SBC**  
+- **one centralized point for sensor diagnostics and health visibility**
+
+This changes the robot architecture from a distributed cable problem into a structured hardware platform.
+
+---
+
+## One-Cable Deployment Advantages
+
+### Reduced Cable Harness
+
+Instead of routing every sensor cable to the SBC, sensors terminate at Atlas.
+
+This significantly reduces cable bundle size and simplifies system wiring.
+
+### Cleaner Mechanical Integration
+
+With Atlas acting as the sensor backbone, the compute platform no longer needs to be the physical connection point for every sensor.
+
+This simplifies:
+
+- chassis wiring layout  
+- cable management  
+- enclosure design  
+- service access  
+
+### Reduced Electrical Interference
+
+Atlas centralizes sensor power distribution into a controlled board-level design.
+
+This reduces the need for multiple scattered power modules and lowers the risk of:
+
+- converter-to-converter noise interaction  
+- EMI coupling into sensor lines  
+- unstable sensor behavior caused by noisy local power wiring  
+
+### Lower Cable Disconnection Risk
+
+Instead of many cables plugging directly into the SBC, Atlas creates a cleaner boundary where the compute platform only manages one upstream connection.
+
+This reduces:
+
+- loose cable risk at the SBC  
+- accidental unplugging during service  
+- vibration-related connection failures  
+
+### Improved Fault Isolation
+
+Sensor, timing, or power problems can be isolated at the Atlas boundary instead of forcing engineers to inspect multiple distributed wiring paths.
+
+This improves root-cause identification and accelerates system debugging.
+
+### Faster Production and Service
+
+Atlas reduces the number of independent cable terminations required during assembly.
+
+This helps:
+
+- manufacturing teams reduce wiring errors  
+- test teams validate the subsystem more efficiently  
+- field service teams troubleshoot from one known hardware boundary  
+
+---
+
+## Cross-SKU and Cross-Product-Line Reuse
+
+One of the strongest advantages of the Atlas architecture is **reuse across robot programs**.
+
+Once adopted, the **Atlas white-label reference board** can be reused across multiple SKUs and product lines with similar sensor requirements.
+
+Instead of redesigning sensor wiring, timing integration, and power architecture for each new robot, OEM teams can reuse the same Atlas sensor backbone as a standard hardware layer.
+
+This creates major long-term value:
+
+- reuse across multiple robot models  
+- less custom wiring redesign per SKU  
+- faster development of derivative products  
+- more consistent validation and testing  
+- simpler platform standardization across teams  
+
+For OEMs, Atlas converts sensor integration from **repeated custom engineering work** into **reusable platform infrastructure**.
+
+---
+
+## Why This Matters
+
+Atlas is not intended to replace the SBC.
+
+Atlas allows the SBC to focus on:
+
+- perception  
+- planning  
+- navigation  
+- AI workloads  
+
+while Atlas manages the sensor-side infrastructure.
+
+This creates a cleaner system model:
 
 <p align="center">
   <img src="/img/Fig 3.png" width="60%" alt="Atlas Timing Approach" />
 </p>
+
+---
+
+## Core Value Summary
+
+Atlas helps robotics teams move away from a direct-to-SBC wiring model that creates cable complexity, electrical instability, and difficult field maintenance.
+
+Instead, Atlas provides:
+
+- a cleaner one-cable upstream architecture  
+- centralized power and timing management  
+- lower wiring complexity  
+- lower disconnection risk  
+- lower EMI exposure from scattered power modules  
+- faster integration and debugging  
+- reusable white-label hardware infrastructure across multiple SKUs  
+
+Atlas is not “an extra board.”
+
+Atlas is the **sensor backbone layer** that simplifies robot system integration.
 
 ---
 
