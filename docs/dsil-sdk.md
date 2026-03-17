@@ -275,35 +275,94 @@ It is the **stable, production-ready definition** of how Atlas integrates into t
 
 ---
 
-### v1.0 Core Capabilities
+## DSIL SDK v1.0 Capability Architecture
 
-DSIL SDK v1.0 includes:
+DSIL SDK v1.0 is organized into four core capability domains, each representing a distinct layer of value delivered to robotics systems.
 
-- **Stable CDC telemetry transport** (`/dev/ttyACM0`)
-- **Runtime telemetry decoding**
-- **Timestamp correlation and alignment engine**
-- **Sync source and sync state model**
-- **Sensor health visibility**
-- **Board power visibility**
-- **Command-line interface (CLI) tools**
-- **ROS2 monitoring integration**
-- **Documented message schemas**
-- **Documented installation flow**
-- **Supported Ubuntu and Jetson-class deployment path**
+---
+
+### 1. Time Correlation & Alignment Engine
+
+This domain defines the core timing intelligence of DSIL.
+
+It transforms raw sensor data arrival into timing-aware data aligned with Atlas hardware events.
+
+Includes:
+
+- timestamp correlation and alignment engine  
+- synchronization-aware timestamp mapping to ROS2 (`header.stamp`)  
+
+Primary value:
+
+- Converts non-deterministic sensor data into a deterministic timing domain  
+- Enables consistent multi-sensor temporal alignment  
+
+---
+
+### 2. System Observability
+
+This domain exposes the internal state of the sensor infrastructure to software.
+
+Includes:
+
+- sync source and sync state model  
+- sensor health visibility  
+- board power visibility (hardware-dependent)  
+
+Primary value:
+
+- Makes timing, synchronization, and system health visible to the robot compute stack  
+- Enables engineers to verify system correctness without custom debugging tools  
+
+---
+
+### 3. Telemetry Transport & Decoding
+
+This domain defines how Atlas communicates with the host system.
+
+Includes:
+
+- stable CDC telemetry transport (`/dev/ttyACM0`)  
+- runtime telemetry decoding  
+
+Primary value:
+
+- Provides a standardized, driver-free communication channel  
+- Ensures consistent and structured data delivery to host software  
+
+---
+
+### 4. Developer Tooling & Platform Support
+
+This domain enables integration, validation, and deployment within robotics environments.
+
+Includes:
+
+- command-line interface (CLI) tools  
+- ROS2 monitoring integration  
+- documented message schemas  
+- documented installation flow  
+- supported Ubuntu and Jetson-class deployment path  
+
+Primary value:
+
+- Reduces integration effort and time-to-first-success  
+- Provides a reference software layer for evaluating and deploying Atlas  
 
 ---
 
 ### What v1.0 Must Accomplish
 
-DSIL SDK v1.0 completes the core Atlas value proposition:
+DSIL SDK v1.0 completes the core Atlas value proposition by making the sensor infrastructure observable, verifiable, and usable within a standard robotics software stack.
 
-- **Timing visibility** — making hardware timing observable in software  
-- **Synchronization visibility** — exposing sync state and timing relationships  
-- **Health visibility** — monitoring sensor and system status  
-- **Power visibility** — exposing board-level power conditions  
-- **ROS2-friendly integration** — enabling immediate adoption in robotics stacks  
+It must enable:
 
-This defines the **minimum complete system behavior** required for Atlas to be usable in real deployments.
+- **Deterministic timing awareness** — sensor data is aligned to a consistent hardware timing domain  
+- **Synchronization transparency** — the system exposes timing source and synchronization state to software  
+- **System observability** — sensor activity, system health, and power status are visible without custom tooling  
+- **Immediate ROS2 usability** — data and telemetry are accessible through standard ROS2 workflows  
+
+This defines the **minimum complete system behavior** required for Atlas to be usable in real-world robotics deployments.
 
 ---
 
