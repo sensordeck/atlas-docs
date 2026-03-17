@@ -13,22 +13,6 @@ description: The Deterministic Sensor Integration Layer (DSIL) SDK provides timi
 
 ---
 
-## Primary Value
-
-DSIL sits between Atlas telemetry and the robot application layer.
-
-It gives the host system a clean way to consume:
-
-- timing-aware metadata
-- synchronization state
-- sensor health visibility
-- board power and runtime status
-- structured telemetry over a standard host interface
-
-This is what allows Atlas to move from **hardware capability** to **deployable infrastructure**.
-
----
-
 ## Why It Matters
 
 In many robotics systems, the hardware may already be connected, but the software stack still lacks:
@@ -52,6 +36,22 @@ As a result:
 - timing becomes observable  
 - synchronization becomes verifiable  
 - system state becomes inspectable  
+
+---
+
+## Primary Value
+
+DSIL sits between Atlas telemetry and the robot application layer.
+
+It gives the host system a clean way to consume:
+
+- timing-aware metadata
+- synchronization state
+- sensor health visibility
+- board power and runtime status
+- structured telemetry over a standard host interface
+
+This is what allows Atlas to move from **hardware capability** to **deployable infrastructure**.
 
 ---
 
@@ -141,7 +141,7 @@ Primary value:
 
 ---
 
-### What v1.0 Must Accomplish
+## What v1.0 Must Accomplish
 
 DSIL SDK v1.0 completes the core Atlas value proposition by making the sensor infrastructure observable, verifiable, and usable within a standard robotics software stack.
 
@@ -156,6 +156,18 @@ This defines the **minimum complete system behavior** required for Atlas to be u
 
 ---
 
+## Device Interface:
+
+Atlas exposes telemetry through a standard Linux CDC device:
+
+
+/dev/ttyACM0
+
+
+No custom kernel modules are required.
+
+---
+
 ## Software Requirements
 
 Minimum environment:
@@ -167,18 +179,6 @@ Minimum environment:
 | ROS | ROS2 Humble |
 | Dependencies | libusb-1.0-0, python3-serial |
 | ROS Packages | ros-humble-desktop |
-
----
-
-## Device Interface:
-
-Atlas exposes telemetry through a standard Linux CDC device:
-
-
-/dev/ttyACM0
-
-
-No custom kernel modules are required.
 
 ---
 
@@ -232,6 +232,20 @@ This avoids disruption to existing perception and control pipelines.
 
 ---
 
+## Strategic Role of DSIL
+
+For robotics teams, DSIL changes the integration model from:
+
+**custom sensor plumbing per robot**
+
+to:
+
+**reusable deterministic sensor infrastructure across product lines**
+
+That is the long-term value of Atlas.
+
+---
+
 ## Frequently Asked Questions
 
 ### Does DSIL require Atlas hardware?
@@ -270,18 +284,6 @@ The public boundary is intentionally simple:
 Anything beyond this becomes OEM-specific work.
 
 ---
-
-## Strategic Role of DSIL
-
-For robotics teams, DSIL changes the integration model from:
-
-**custom sensor plumbing per robot**
-
-to:
-
-**reusable deterministic sensor infrastructure across product lines**
-
-That is the long-term value of Atlas.
 
 ## Next Steps
 
