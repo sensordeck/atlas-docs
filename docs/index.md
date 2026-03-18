@@ -92,27 +92,80 @@ Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robo
 
 ---
 
-## Explore the Atlas Platform
+# Getting Started with Atlas
 
-Atlas documentation is organized into the following sections:
+Atlas documentation is structured as a step-by-step system.
 
-### [Hardware Architecture](./hardware-architecture.md)
-Atlas hardware design, sensor aggregation, and system topology.
+To fully understand how Atlas works and how to integrate it into your robotics platform, we recommend following this sequence:
 
-### [DSIL SDK](./dsil-sdk.md)
-Deterministic Sensor Integration Layer software stack and telemetry model.
+---
 
-### [ROS2 Integration](./ros2-integration.md)
-How Atlas integrates into ROS2 perception pipelines without driver changes.
+## 1. [Sensor Synchronization](./sensor-synchronization.md)
 
-### [Sensor Synchronization](./sensor-synchronization.md)
-Detailed explanation of the Atlas timing model and synchronization mechanisms.
+Understand the core problem Atlas solves.
 
-### [Evaluation Kit Setup](./evaluation-kit-setup.md)
-Step-by-step guide to deploying and validating the Atlas system.
+Learn why independent sensor timestamps lead to inconsistent perception, SLAM instability, and difficult debugging.
 
-### [White-Label OEM Integration Pilot Program](./oem-integration-pilot-program.md)
-How Atlas supports OEM customization and production-oriented robotics deployments.
+👉 Defines the **problem space**
+
+→ /sensor-synchronization
+
+---
+
+## 2. [Hardware Architecture](./hardware-architecture.md)
+
+See how Atlas solves synchronization at the physical level.
+
+Atlas establishes a **sensor domain boundary** that unifies timing, power, and connectivity across all sensors.
+
+👉 Defines the **system architecture**
+
+→ /hardware-architecture
+
+---
+
+## 3. [DSIL SDK](./dsil-sdk.md)
+
+Understand how Atlas hardware becomes usable in software.
+
+DSIL converts hardware timing into synchronized ROS2 timestamps, structured telemetry, and system observability.
+
+👉 Defines the **infrastructure layer**
+
+→ /dsil-sdk
+
+---
+
+## 4. [ROS2 Integration](./ros2-integration.md)
+
+Deploy Atlas into your existing robotics stack.
+
+Atlas integrates without modifying drivers or pipelines, enabling immediate adoption.
+
+👉 Defines the **integration model**
+
+→ /ros2-integration
+
+---
+
+## What You Gain
+
+By following this architecture, Atlas transforms sensor integration from:
+
+**custom engineering work → deployable infrastructure**
+
+- deterministic sensor timing  
+- unified sensor interface  
+- reduced integration complexity  
+- improved system observability  
+
+---
+
+## Next Step
+
+The best way to understand Atlas is to evaluate it in your own system.
+
+👉 Request the **[Atlas Evaluation Kit](./evaluation-kit-setup.md)**
 
 ---
 
