@@ -22,24 +22,45 @@ Atlas allows robotics teams to treat **sensor integration as infrastructure**, e
 
 ## 🚀 Time to Hello-World (ROS2 in Minutes)
 
-Atlas is designed for **immediate integration into existing ROS2 systems**.
+Atlas integrates into your existing ROS2 stack in minutes.
 
-Start the Atlas runtime and launch the ROS2 telemetry bridge:
+Run two commands:
+```bash
+atlas_start
+ros2 launch atlas_dsil_bridge telemetry.launch.py
+```
 
-    ### Start Atlas DSIL runtime
-    atlas_start
+### What you will see
 
-    ### Launch ROS2 telemetry bridge
-    ros2 launch atlas_dsil_bridge telemetry.launch.py
+Within seconds, Atlas telemetry appears in ROS2:
 
+- `/atlas/status` → system health  
+- `/atlas/pps` → timing signal state  
+- `/atlas/sync_drift` → real-time synchronization error  
 
-Within seconds, Atlas telemetry becomes visible in ROS2:
+---
 
-- `/atlas/status`
-- `/atlas/pps`
-- `/atlas/sync_drift`
+### What this means
 
-You can immediately observe **timing behavior, synchronization state, and system health** — without modifying drivers or sensor firmware.
+**Before Atlas**
+
+• Independent sensor clocks  
+• Unpredictable timing offsets  
+• Difficult debugging  
+
+**With Atlas**
+
+• Unified hardware time base  
+• Deterministic sensor alignment  
+• Observable synchronization state  
+
+---
+
+### No integration risk
+
+- No driver changes required  
+- No sensor firmware modification  
+- Works with your existing ROS2 stack  
 
 ---
 
