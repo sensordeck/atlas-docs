@@ -67,9 +67,10 @@ Deterministic timing control via PPS or trigger signals
 Timing alignment via hardware event capture (e.g. data-ready, sync signals)  
 → High-confidence alignment through event correlation  
 
-• USB sensors  
-No direct timing control at the device level  
-→ System-level timing correlation and observability via DSIL SDK  
+• USB-based sensors (e.g., UVC cameras, Intel RealSense)
+No direct timing control at the device level due to internal sensor clocks and USB transport latency
+→ DSIL aligns sensor data to the Atlas time authority using system-level timestamp correlation and arrival-time modeling
+→ Provides unified timing observability and consistent multi-sensor alignment without modifying device firmware or drivers 
 
 • Network-based sensors (e.g. Ethernet LiDAR)  
 Operate with independent time domains (PTP or device clock)  
