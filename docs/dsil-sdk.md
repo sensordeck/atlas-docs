@@ -286,6 +286,6 @@ Anything beyond this becomes OEM-specific work.
 
 ## Next Steps
 
-- See **Sensor Synchronization** for timing details  
-- See **ROS2 Integration** for software integration  
-- See **Evaluation Kit Setup** for getting started  
+- See [**Sensor Synchronization**](/sensor-synchronization.md) for timing details  
+- See [**ROS2 Integration**](/ros2-integration.md) for software integration  
+- See [**Evaluation Kit Setup**](evaluation-kit-setup.md) for getting started  
