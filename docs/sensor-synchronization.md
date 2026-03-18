@@ -81,6 +81,8 @@ This allows robotics systems to achieve:
 • measurable and correctable timing where not  
 • full observability across the entire perception stack  
 
+Atlas does not require modification of sensor firmware or vendor drivers to achieve this integration model.
+
 ---
 
 ## Atlas Timing Architecture
