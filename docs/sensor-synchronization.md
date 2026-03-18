@@ -15,15 +15,12 @@ Modern robotics systems rely on multiple perception sensors operating simultaneo
 - GNSS
 - radar
 
-For perception, localization, and SLAM algorithms to work correctly, these sensors must share a **consistent timing reference**.
+For perception, localization, and SLAM pipelines to behave consistently, these sensors must share a **common timing reference**.
 
-Atlas establishes a **deterministic timing authority for the robot's perception sensor domain**.
+Atlas establishes a **deterministic timing authority for the perception sensor domain**.
 
-Instead of allowing each sensor to operate on independent internal clocks, Atlas introduces a **hardware synchronization boundary** that aligns sensor events before data enters the robot compute stack.
+Instead of allowing each sensor to operate on an independent internal clock, Atlas introduces a **hardware synchronization boundary** that aligns sensor timing before data enters the robot compute stack.
 
-This dramatically improves cross-sensor consistency and simplifies multi-sensor integration.
-
-Atlas defines the **timing authority for the robot's perception sensor domain**.  
 Robot control systems such as motor controllers or wheel encoders typically operate in a separate control timing domain and are outside the synchronization boundary managed by Atlas.
 
 ---
@@ -34,20 +31,62 @@ Without synchronization, sensor timestamps drift relative to each other.
 
 Typical problems include:
 
-- camera frames misaligned with LiDAR scans  
-- IMU readings offset from perception frames  
-- GNSS timestamps inconsistent with localization pipelines  
-- degraded SLAM accuracy  
-- difficult debugging of perception edge cases  
+- camera frames misaligned with LiDAR scans
+- IMU readings offset from perception frames
+- GNSS timestamps inconsistent with localization pipelines
+- degraded SLAM accuracy
+- difficult debugging of perception edge cases
 
 These problems often appear as:
 
-- localization drift  
-- unstable sensor fusion  
-- inconsistent replay results  
-- non-deterministic behavior between runs  
+- localization drift
+- unstable sensor fusion
+- inconsistent replay results
+- non-deterministic behavior between runs
 
 Atlas addresses this by establishing a **single timing authority for the sensor infrastructure**.
+
+---
+
+## Atlas Timing Model
+
+Atlas acts as a **time authority and synchronization coordinator** for the robot perception stack.
+
+It provides:
+
+- a unified timing reference
+- hardware timing interfaces such as PPS and trigger
+- system-level timestamp alignment through the DSIL SDK
+
+All sensor data is mapped into the Atlas time domain, even when device-level timing control is not available.
+
+---
+
+## From Timing Signals to Aligned Data (DSIL SDK)
+
+Atlas hardware establishes the timing reference, but synchronization is completed in software by the DSIL SDK.
+
+DSIL SDK builds a **unified time fabric** across all sensors by performing:
+
+• timestamp correlation across sensor data streams  
+• alignment of sensor data to the Atlas time authority  
+• normalization of different sensor timing domains  
+
+This process ensures that:
+
+- hardware-triggered sensors remain fully deterministic  
+- signal-based sensors are aligned using captured events  
+- USB and network sensors are mapped into the same time domain  
+
+Importantly, DSIL SDK does not modify sensor firmware or internal clocks.
+
+Instead, it **maps all sensor data into a consistent system time model**, making timing:
+
+• observable  
+• comparable  
+• correctable  
+
+This allows heterogeneous sensors to behave as a **coherent, time-aligned system** inside ROS2 or any host environment.
 
 ---
 
@@ -59,22 +98,22 @@ Not all sensors support deterministic timing control. Atlas accommodates this by
 
 ### Timing Integration Levels
 
-• Hardware-triggered sensors  
+• **Hardware-triggered sensors**  
 Deterministic timing control via PPS or trigger signals  
-→ Exact capture alignment under Atlas time authority  
+→ Exact capture alignment under Atlas time authority
 
-• Signal-exposed sensors  
-Timing alignment via hardware event capture (e.g. data-ready, sync signals)  
-→ High-confidence alignment through event correlation  
+• **Signal-exposed sensors**  
+Timing alignment via hardware event capture (for example data-ready or sync signals)  
+→ High-confidence alignment through event correlation
 
-• USB-based sensors (e.g., UVC cameras, Intel RealSense)  
+• **USB-based sensors** (for example UVC cameras, Intel RealSense)  
 No direct timing control due to internal device clocks and USB transport latency  
-→ DSIL aligns sensor data to the Atlas time authority using arrival-time correlation and offset modeling  
-→ Enables consistent cross-sensor alignment without requiring firmware or driver changes  
+→ The DSIL SDK aligns sensor data to the Atlas time authority using arrival-time correlation and offset modeling  
+→ Enables consistent cross-sensor alignment without requiring firmware or driver changes
 
-• Network-based sensors (e.g. Ethernet LiDAR)  
-Operate in independent time domains (PTP-enabled or free-running device clocks)  
-→ DSIL performs system-level timestamp alignment, cross-domain correlation, and timing observability  
+• **Network-based sensors** (for example Ethernet LiDAR)  
+Operate in independent time domains, including PTP-enabled or free-running device clocks  
+→ The DSIL SDK performs system-level timestamp alignment, cross-domain correlation, and timing observability  
 → Atlas acts as a timing reference layer without controlling the sensor data path or internal clock
 
 ---
@@ -83,9 +122,9 @@ Atlas ensures that all sensors participate in a **unified system time model**, e
 
 This allows robotics systems to achieve:
 
-• deterministic timing where supported  
-• measurable and correctable timing where not  
-• full observability across the entire perception stack  
+- deterministic timing where supported
+- measurable and correctable timing where not
+- full observability across the perception stack
 
 Atlas does not require modification of sensor firmware or vendor drivers to achieve this integration model.
 
@@ -99,15 +138,15 @@ Atlas introduces a **hardware timing layer** between sensors and the compute pla
   <img src="/img/Fig 16.png" width="60%" alt="Atlas timing architecture" />
 </p>
 
-Atlas becomes the **timing distribution hub** for the robot sensor infrastructure.
+Atlas becomes the **timing distribution hub** for the perception sensor infrastructure.
 
 It can ingest external timing references such as:
 
-- GNSS PPS  
-- system master clock  
-- external synchronization controller  
+- GNSS PPS
+- system master clock
+- external synchronization controller
 
-Atlas then redistributes synchronization signals to connected sensors, creating a **shared timing reference** across all devices.
+Atlas then redistributes synchronization signals to connected sensors, creating a **shared timing reference** across the sensor domain.
 
 ---
 
@@ -115,55 +154,40 @@ Atlas then redistributes synchronization signals to connected sensors, creating 
 
 Atlas introduces a deterministic timing boundary:
 
-- sensors operate in their native timing domain  
-- Atlas captures precise timing events in hardware  
-- timing relationships are preserved and made observable  
+- sensors operate in their native timing domain
+- Atlas captures precise timing events in hardware
+- timing relationships are preserved and made observable
 
-This ensures that all downstream data can be aligned to a common reference.
+This ensures that downstream data can be aligned to a common reference.
 
 ---
 
 ## Mechanics of Synchronization
 
-DSIL performs timestamp correction in software using hardware timing events captured by Atlas.
+The DSIL SDK performs timestamp correction in software using hardware timing events captured by Atlas.
 
 It applies a dynamic offset that maps:
 
 - raw sensor arrival time  
 → to  
-- Atlas hardware-captured synchronization event  
+- Atlas hardware-captured synchronization event
 
----
-
-## Design Principle: Non-Intrusive Synchronization
+This is a **system-level timing correction model**, not a device-level clock rewrite.
 
 Atlas does not modify sensor firmware or internal clocks.
 
 This ensures compatibility with:
 
-- standard UVC cameras  
-- serial sensors  
-- LiDAR drivers  
-- existing ROS2 drivers  
+- standard UVC cameras
+- serial sensors
+- LiDAR drivers
+- existing ROS2 drivers
 
 Atlas operates alongside existing drivers rather than replacing them.
 
 ---
 
-## What This Enables
-
-With deterministic timestamp alignment:
-
-- multi-sensor fusion becomes reliable  
-- timing jitter becomes measurable and correctable  
-- system behavior becomes observable  
-- debugging synchronization issues becomes tractable  
-
-Atlas converts timing from a hidden problem into a **visible system property**.
-
----
-
-# Timing Interfaces
+## Timing Interfaces
 
 Atlas provides dedicated hardware interfaces for synchronization.
 
@@ -174,25 +198,21 @@ Atlas provides dedicated hardware interfaces for synchronization.
 | SYNC_OUT | Output | Sensor synchronization signal |
 | TRIGGER_OUT | Output | Frame capture trigger |
 
-These signals allow Atlas to coordinate sensor sampling events.
+These interfaces allow Atlas to coordinate sampling and capture events across the sensor domain.
 
 ---
 
-# Electrical and Deployment Considerations
+## Electrical and Deployment Considerations
 
 Atlas synchronization interfaces are designed to provide deterministic timing signals while maintaining a clear electrical boundary for the reference platform.
 
-The Atlas reference hardware defines a **3.3V logic timing domain** for synchronization signals. This applies to the PPS and trigger interfaces used by the Atlas timing engine.
+The Atlas reference hardware defines a **3.3V logic timing domain** for synchronization signals. This applies to PPS and trigger interfaces used by the Atlas timing engine.
 
-Higher-voltage industrial trigger standards or differential signaling interfaces are **not directly supported by the Atlas reference platform**. These requirements are addressed through the Atlas **white-label OEM integration program**, where synchronization interfaces can be adapted to match the electrical characteristics of the target sensor stack.
+Higher-voltage industrial trigger standards or differential signaling interfaces are **not directly supported by the reference platform**. These requirements are addressed through the Atlas **white-label OEM integration program**, where synchronization interfaces can be adapted to the target sensor stack.
 
-This separation keeps the reference Atlas platform safe, predictable, and easy to integrate while allowing production deployments to tailor synchronization interfaces to real-world sensor requirements.
+This keeps the reference platform safe, predictable, and easy to integrate while allowing production deployments to tailor synchronization interfaces to real-world requirements.
 
----
-
-## Signal Electrical Specs
-
-Atlas reference synchronization signals operate using **3.3V logic-level interfaces**.
+### Signal Electrical Specs
 
 | Signal | Reference Platform Level | Standard Support in Atlas v1.0 | Notes |
 |------|------|------|------|
@@ -206,76 +226,23 @@ Atlas reference synchronization signals operate using **3.3V logic-level interfa
 
 Atlas synchronization I/O should be treated as **3.3V logic timing signals only**.
 
-Industrial trigger standards such as **5V, 12V, or differential synchronization interfaces** must not be connected directly to the Atlas reference hardware without appropriate signal conditioning.
+Industrial trigger standards such as **5V, 12V, or differential synchronization interfaces** must not be connected directly to Atlas reference hardware without proper signal conditioning.
 
----
+### Output Drive and Loading Guidance
 
-## Output Drive and Loading Guidance
-
-Atlas timing outputs are designed as **logic timing signals**, not as power outputs.
+Atlas timing outputs are designed as **logic timing signals**, not power outputs.
 
 PPS_OUT, SYNC_OUT, and TRIGGER_OUT are intended to drive **high-impedance sensor timing inputs** rather than multiple parallel loads.
 
-Practical guidance for the Atlas reference platform:
+Practical guidance for the reference platform:
 
 - connect each timing output to a compatible logic-level timing input
 - avoid directly daisy-chaining multiple sensors onto a single trigger line
 - use a trigger fanout or line-driver stage when one timing signal must drive multiple devices
 
-This is particularly important in multi-camera systems where a single trigger event may need to reach several cameras.
+In multi-camera systems, Atlas provides the **deterministic timing authority**, while the physical trigger distribution stage may be implemented as part of the target platform electrical design.
 
-In such systems, Atlas provides the **deterministic timing authority**, while the physical trigger distribution stage may be implemented as part of the electrical design of the target platform.
-
-For OEM deployments, trigger fanout, buffering, isolation, or differential conversion can be tailored to match the sensor topology and cabling environment.
-
----
-
-## Reference Connector Implementation
-
-On the Atlas reference board, synchronization I/O is exposed through **locking board connectors defined in the Atlas hardware reference design**.
-
-The synchronization interfaces are clearly labeled in board silkscreen and documented as part of the Atlas reference I/O specification.
-
-Connector documentation typically includes:
-
-- connector family
-- pitch and locking style
-- pin numbering
-- signal names
-- recommended mating housing or cable assembly
-
-This allows evaluation-kit users to prepare appropriate cables, terminals, and crimp tooling before hardware arrival.
-
-For production white-label deployments, connector selection may be customized to match the robot harness standard, environmental requirements, or sensor vendor cabling ecosystem.
-
----
-
-## Trigger Scheduling and Phase Offset Control
-
-Atlas provides deterministic trigger signals aligned to the system timing authority.
-
-The reference platform supports **synchronized capture events across multiple sensors** using shared trigger and synchronization signals.
-
-In some robotics systems, engineers intentionally stagger capture events to reduce interference. Example scenarios include:
-
-- staggering multiple cameras to reduce illumination conflicts
-- avoiding LiDAR optical interference
-- coordinating sensors with different exposure windows
-
-Advanced trigger orchestration such as **phase-offset scheduling** may be implemented during Atlas OEM integrations when required by the target sensor stack.
-
-Example concept:
-
-    Camera A trigger → 0 ms offset
-    Camera B trigger → 50 ms offset
-
-This approach allows multi-sensor systems to coordinate capture timing while maintaining a shared system timing authority.
-
-Atlas therefore serves as a **deterministic trigger distribution foundation**, while advanced trigger profiles may be tailored for specific deployments.
-
----
-
-## Cabling and Signal Integrity
+### Cabling and Signal Integrity
 
 Synchronization accuracy depends not only on the Atlas timing engine but also on the physical signaling environment between Atlas and connected sensors.
 
@@ -292,127 +259,89 @@ Atlas reference synchronization signals should be treated as **short-run 3.3V ti
 
 Recommended deployment practices include:
 
-- Using shielded cables where appropriate
-- Keeping synchronization runs short whenever possible
-- Routing timing lines away from high-current power paths
-- Maintaining clean grounding between Atlas and sensors
+- using shielded cables where appropriate
+- keeping synchronization runs short whenever possible
+- routing timing lines away from high-current power paths
+- maintaining clean grounding between Atlas and sensors
 
-In installations where sensors are mounted far from the compute platform (for example roof-mounted LiDAR or external camera rigs), OEM deployments may incorporate:
+Atlas timing specifications describe performance **at the Atlas board boundary**. End-to-end synchronization accuracy depends on the electrical implementation of the deployed platform.
 
-- Differential signaling
-- Dedicated line drivers
-- Signal isolation
-- Sensor-specific trigger conditioning
+---
 
-Atlas synchronization specifications describe timing performance **at the Atlas board boundary**.
-
-End-to-end synchronization accuracy across the full sensor system depends on the electrical implementation of the deployed platform.
-
-# PPS Timing Reference
+## PPS Timing Reference
 
 Many robotics systems use **PPS (Pulse-Per-Second)** as a global timing reference.
 
 Common PPS sources include:
 
 - GNSS receivers
-- External master clocks
-- Industrial timing systems
+- external master clocks
+- industrial timing systems
 
-Atlas can ingest PPS using:
+Atlas can ingest PPS using `PPS_IN`, then distribute this timing signal across the sensor infrastructure.
 
-    PPS_IN
-
-Atlas then distributes this timing signal across the sensor infrastructure.
-
-Typical PPS characteristics:
+Typical PPS characteristics include:
 
 - 1 Hz timing pulse
-- &lt;100 ns rise time
+- fast edge transition
 - deterministic hardware capture
 
 This allows Atlas to align sensor sampling with an external global time source.
 
 ---
 
-# Sensor Trigger Distribution
+## Operation With or Without External PPS
 
-Atlas distributes timing signals to connected sensors.
+Atlas supports two operating modes.
 
-Signals include:
+### External Time Authority
 
-### PPS_OUT
+An external PPS source provides the master clock.
 
-Standard PPS distribution for sensors that support PPS timing.
+Atlas ingests that timing reference and distributes it across the sensor domain.
 
-### SYNC_OUT
+### Internal Time Authority
 
-Synchronization signal used to align sensor clocks.
+If PPS is not available, Atlas acts as the timing source for the sensor group.
 
-Common uses include:
+Atlas generates synchronization signals internally, allowing robotics systems to maintain consistent timing even in indoor or PPS-unavailable environments.
 
-- Camera exposure alignment
+---
+
+## Trigger Distribution and Scheduling
+
+Atlas distributes timing signals to connected sensors through:
+
+- **PPS_OUT** for sensors that support PPS timing
+- **SYNC_OUT** for synchronization alignment
+- **TRIGGER_OUT** for capture-triggered sensors
+
+These signals are commonly used for:
+
+- camera exposure alignment
 - IMU sampling alignment
 - LiDAR frame timing reference
 
-### TRIGGER_OUT
+In some deployments, engineers may intentionally stagger capture events to reduce interference. Example scenarios include:
 
-Frame trigger signal for sensors that support hardware capture triggering.
+- staggering multiple cameras to reduce illumination conflicts
+- avoiding LiDAR optical interference
+- coordinating sensors with different exposure windows
 
-Examples include:
+Advanced trigger orchestration such as **phase-offset scheduling** may be implemented during OEM integrations when required by the target sensor stack.
 
-- Industrial cameras
-- Synchronized multi-camera systems
-- Triggered LiDAR sampling
+Example concept:
 
----
+    Camera A trigger → 0 ms offset
+    Camera B trigger → 50 ms offset
 
-# Atlas as Time Authority
-
-In many robotics systems, sensors operate with independent internal clocks.
-
-Atlas changes this model.
-
-Atlas acts as the **time authority for the perception sensor domain**.
-
-Typical timing hierarchy:
-
-<p align="center">
-  <img src="/img/Fig 17.png" width="60%" alt="Atlas timing hierarch" />
-</p>
-
-Atlas becomes the **single synchronization reference between sensors and compute**.
+Atlas therefore serves as a **deterministic trigger distribution foundation**, while advanced trigger profiles may be tailored for specific deployments.
 
 ---
 
-# Sensor Types Supported
+## Direct-to-Compute Sensors
 
-Atlas synchronization can support many perception sensor classes.
-
-### Cameras
-
-Industrial cameras often support hardware triggers or synchronization pulses.
-
-Atlas can align frame capture across multiple cameras.
-
-### LiDAR
-
-Some LiDAR systems support PPS alignment.
-
-Atlas can distribute PPS signals to these sensors.
-
-### IMU
-
-High-rate IMUs can align sampling with synchronization signals.
-
-### GNSS
-
-GNSS receivers provide PPS signals that serve as a global timing reference.
-
----
-
-# Synchronizing Sensors Connected Directly to Compute
-
-Some high-bandwidth perception sensors connect directly to the robot compute platform rather than passing through Atlas.
+Some high-bandwidth sensors connect directly to the robot compute platform rather than passing through Atlas.
 
 Examples include:
 
@@ -420,32 +349,39 @@ Examples include:
 - GMSL cameras
 - MIPI / CSI cameras
 
-These sensors often require high data bandwidth that exceeds typical USB or embedded interface limits.
-
-Atlas does not need to sit in the **data path** for these sensors to participate in system-wide synchronization.
-
-Instead, Atlas provides the **timing authority** for the perception stack.
-
-Typical synchronization architecture:
+These sensors may bypass the Atlas data path, but they can still participate in the Atlas timing domain.
 
 <p align="center">
   <img src="/img/Fig 18.png" width="60%" alt="Atlas synchronization architecture" />
 </p>
+
 In this model:
 
-- Sensors capture data based on Atlas timing signals
-- Data flows directly to the compute platform
-- DSIL aligns timestamps inside ROS2
+- sensors capture data based on Atlas timing signals or Atlas-referenced timing relationships
+- data flows directly to the compute platform
+- the DSIL SDK aligns timestamps inside ROS2 or the host software stack
 
-This allows **high-bandwidth sensors to remain directly connected to compute while still participating in the Atlas timing domain**.
-
-Atlas therefore acts as the **global synchronization authority for the perception stack**, even when sensors bypass the Atlas data path.
+This allows **high-bandwidth sensors to remain directly connected to compute while still participating in system-wide synchronization**.
 
 ---
 
-# Synchronization Accuracy
+## Atlas as Time Authority
 
-The Atlas timing architecture minimizes uncertainty between sensors.
+In many robotics systems, sensors operate with independent internal clocks.
+
+Atlas changes this model by acting as the **time authority for the perception sensor domain**.
+
+<p align="center">
+  <img src="/img/Fig 17.png" width="60%" alt="Atlas timing hierarchy" />
+</p>
+
+Atlas becomes the **single synchronization reference between sensors and compute**, even when some sensors bypass the Atlas data path.
+
+---
+
+## Synchronization Accuracy
+
+Atlas timing architecture minimizes uncertainty between sensors by combining hardware synchronization and software timestamp alignment.
 
 Typical characteristics:
 
@@ -453,35 +389,15 @@ Typical characteristics:
 |---------|--------------|
 | Trigger jitter | &lt;1 µs |
 | PPS distribution skew | &lt;1 µs |
-| DSIL timestamp correction | &lt;1 ms |
+| DSIL SDK timestamp correction | &lt;1 ms |
 
-Hardware synchronization ensures that sensor capture events remain tightly aligned.
+Hardware synchronization keeps sensor capture events tightly aligned.
 
-Software correction in DSIL ensures timestamps remain consistent when data enters ROS2.
-
----
-
-# Hardware Timing vs Software Timing
-
-A key design principle of Atlas is separating **hardware synchronization** from **software timestamp correction**.
-
-Hardware layer:
-
-- Captures PPS events
-- Distributes synchronization pulses
-- Aligns sensor capture events
-
-Software layer (DSIL):
-
-- Observes timing events
-- Calculates timestamp offsets
-- Corrects ROS2 message timestamps
-
-This hybrid approach preserves compatibility with existing drivers while improving timing consistency.
+The DSIL SDK ensures timestamps remain consistent when data enters ROS2 or the host software stack.
 
 ---
 
-# Timestamp Propagation into ROS2
+## Timestamp Propagation into ROS2
 
 Atlas timing events are exposed to the compute platform through the DSIL telemetry channel.
 
@@ -493,95 +409,30 @@ Example topics:
 | /atlas/sync | synchronization pulse |
 | /atlas/health | timing system state |
 
-The DSIL ROS2 node uses these timing signals to correct ROS2 message timestamps.
+The DSIL ROS2 node uses these timing signals to correct or interpret ROS2 message timestamps.
 
 This allows perception and localization pipelines to operate with **consistent time references**.
 
 ---
 
-# Operation Without External PPS
+## What This Enables
 
-Atlas can operate even without an external timing reference.
+With Atlas timing infrastructure in place:
 
-Two operating modes are supported.
+- multi-sensor fusion becomes more reliable
+- timing jitter becomes measurable and correctable
+- system behavior becomes observable
+- debugging synchronization issues becomes tractable
+- synchronized bring-up becomes simpler across mixed sensor stacks
 
-### External Time Authority
-
-GNSS or external PPS provides the master clock.
-
-Atlas distributes this clock to sensors.
-
-### Internal Time Authority
-
-If PPS is not available, Atlas acts as the timing source.
-
-Atlas generates synchronization signals for the sensor group.
-
-This allows robotics systems to maintain consistent timing even in indoor environments.
+Atlas converts timing from a hidden problem into a **visible system property**.
 
 ---
 
-# Deterministic Sensor Boundary
-
-Atlas establishes a **deterministic boundary between the sensor domain and the compute domain**.
-
-Before Atlas:
-
-    Sensors → Drivers → ROS2
-
-Timing relationships depend entirely on driver behavior.
-
-With Atlas:
-
-~~~
-    Sensors
-        │
-        ▼
-      Atlas
-        │
-        ▼
-      DSIL
-        │
-        ▼
-      ROS2
-~~~
-
-Timing relationships are anchored by Atlas hardware.
-
----
-
-# Why Robotics Engineers Care
-
-Sensor synchronization is one of the most difficult problems in multi-sensor robotics systems.
-
-Atlas solves several integration challenges:
-
-- inconsistent sensor timestamps
-- driver-level timing uncertainty
-- complex synchronization wiring
-- lack of system-level timing visibility
-
-By introducing a dedicated timing infrastructure, Atlas allows robotics teams to build **more deterministic perception systems**.
-
----
-
-# Atlas Synchronization Benefits
-
-Atlas provides several advantages for robotics integration:
-
-- improved sensor fusion accuracy
-- more consistent SLAM behavior
-- predictable sensor timing
-- simplified wiring for synchronized sensors
-- system-level timing visibility
-- faster multi-sensor bring-up
-
----
-
-# Summary
+## Summary
 
 Atlas establishes the **time authority for the robot perception sensor domain**.
 
-By introducing a hardware synchronization layer and exposing timing signals through DSIL, Atlas allows robotics systems to align sensor capture events and maintain consistent timestamps across perception pipelines.
+By introducing a hardware synchronization layer and exposing timing signals through the DSIL SDK, Atlas allows robotics systems to align sensor capture events and maintain consistent timestamps across perception pipelines.
 
 This transforms sensor synchronization from an ad-hoc engineering task into a **dedicated infrastructure capability**.
