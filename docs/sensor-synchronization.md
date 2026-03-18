@@ -370,4 +370,4 @@ Now that the synchronization problem is clear, the next step is to understand **
 
 Atlas establishes a physical timing boundary that enforces synchronization before data reaches the compute system.
 
-👉 Continue to [**Hardware Architecture**](
+👉 Continue to [**Hardware Architecture**](./hardware-architecture.md)
