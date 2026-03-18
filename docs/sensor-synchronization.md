@@ -68,12 +68,14 @@ Timing alignment via hardware event capture (e.g. data-ready, sync signals)
 → High-confidence alignment through event correlation  
 
 • USB-based sensors (e.g., UVC cameras, Intel RealSense)  
-No direct timing control at the device level due to internal sensor clocks and USB transport latency  
-→ DSIL aligns sensor data to the Atlas time authority using system-level timestamp correlation and arrival-time modeling & enables consistent cross-sensor alignment without requiring firmware or driver changes
+No direct timing control due to internal device clocks and USB transport latency  
+→ DSIL aligns sensor data to the Atlas time authority using arrival-time correlation and offset modeling  
+→ Enables consistent cross-sensor alignment without requiring firmware or driver changes  
 
 • Network-based sensors (e.g. Ethernet LiDAR)  
-Operate with independent time domains (PTP or device clock)  
-→ System-level coordination, timestamp alignment, and observability via DSIL SDK
+Operate in independent time domains (PTP-enabled or free-running device clocks)  
+→ DSIL performs system-level timestamp alignment, cross-domain correlation, and timing observability  
+→ Atlas acts as a timing reference layer without controlling the sensor data path or internal clock
 
 ---
 
