@@ -65,22 +65,22 @@ Atlas provides a reusable sensor infrastructure layer that scales across robot p
 
 Atlas documentation is organized into the following sections:
 
-### [Hardware Architecture](./hardware-architecture)
+### [Hardware Architecture](./hardware-architecture.md)
 Atlas hardware design, sensor aggregation, and system topology.
 
-### [DSIL SDK](./dsil-sdk)
+### [DSIL SDK](./dsil-sdk.md)
 Deterministic Sensor Integration Layer software stack and telemetry model.
 
-### [ROS2 Integration](./ros2-integration)
+### [ROS2 Integration](./ros2-integration.md)
 How Atlas integrates into ROS2 perception pipelines without driver changes.
 
-### [Sensor Synchronization](./sensor-synchronization)
+### [Sensor Synchronization](./sensor-synchronization.md)
 Detailed explanation of the Atlas timing model and synchronization mechanisms.
 
-### [Evaluation Kit Setup](./evaluation-kit-setup)
+### [Evaluation Kit Setup](./evaluation-kit-setup.md)
 Step-by-step guide to deploying and validating the Atlas system.
 
-### [White-Label OEM Integration Pilot Program](./oem-integration-pilot-program)
+### [White-Label OEM Integration Pilot Program](./oem-integration-pilot-program.md)
 How Atlas supports OEM customization and production-oriented robotics deployments.
 
 ---
@@ -89,5 +89,5 @@ How Atlas supports OEM customization and production-oriented robotics deployment
 
 Atlas provides additional materials for evaluation and deployment:
 
-- [Integration and Deployment FAQ](./integration-faq)
-- [Downloads](./downloads)
+- [Integration and Deployment FAQ](./integration-faq.md)
+- [Downloads](./downloads.md)
