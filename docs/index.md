@@ -2,6 +2,8 @@
 
 ### Deterministic Sensor Infrastructure for Robotics
 
+**Unify your IMU, GNSS, and LiDAR data with microsecond precision. Atlas is a high-throughput sensor gateway for deterministic robotics.**
+
 Atlas establishes a **hardware time authority and sensor infrastructure layer** for modern robotics systems.
 
 Instead of wiring sensors directly into the robot compute platform, Atlas creates a **dedicated integration layer** that synchronizes sensors, aggregates data streams, and delivers a unified perception pipeline.
@@ -10,15 +12,11 @@ Atlas allows robotics teams to treat **sensor integration as infrastructure**, e
 
 ---
 
-## Atlas Architecture
+## Designed for Real Robotics Systems
 
 <p align="center">
-<img src="/img/Catalog2.png" width="65%" alt="Atlas deterministic sensor backbone architecture" />
+<img src="/img/3cards.png" width="100%" alt="Atlas 3 cards" />
 </p>
-
-Atlas sits between the **sensor domain** and the **robot compute platform**.
-
-Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robot compute platform receives a **time-aligned, unified perception pipeline**.
 
 ---
 
@@ -58,6 +56,18 @@ Atlas exposes timing relationships, synchronization state, and sensor health thr
 
 ### 4. Cross-SKU Infrastructure
 Atlas provides a reusable sensor infrastructure layer that scales across robot platforms and product SKUs, eliminating repeated integration work and enabling faster product development cycles.
+
+---
+
+## Atlas Architecture
+
+<p align="center">
+<img src="/img/Catalog2.png" width="65%" alt="Atlas deterministic sensor backbone architecture" />
+</p>
+
+Atlas sits between the **sensor domain** and the **robot compute platform**.
+
+Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robot compute platform receives a **time-aligned, unified perception pipeline**.
 
 ---
 
