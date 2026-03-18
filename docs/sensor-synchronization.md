@@ -3,6 +3,16 @@ title: Sensor Synchronization
 sidebar_label: Sensor Synchronization
 ---
 
+## Where This Fits
+
+This page explains **why sensor synchronization is a fundamental problem in robotics systems**.
+
+Before understanding Atlas, it is important to understand why independent sensor timing leads to inconsistent system behavior.
+
+This is the starting point of the Atlas architecture.
+
+---
+
 # Sensor Synchronization
 
 ### From Independent Sensor Clocks → Unified Time Fabric
