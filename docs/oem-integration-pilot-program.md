@@ -30,28 +30,39 @@ The pilot provides:
 
 ---
 
+# Reference Platform and Readiness
+
+The Atlas OEM Integration Pilot is built on:
+
+• DSIL SDK v1.0 (user-space + ROS2-ready integration)  
+• Fusion V2 reference hardware platform  
+
+These provide a **validated baseline for timing, telemetry, and integration behavior**.
+
+The pilot accepts OEM-specific inputs, including:
+
+• sensor stack  
+• compute platform  
+• mechanical and power constraints  
+• software architecture  
+
+Atlas is not delivered as a fixed product at this stage.
+
+The Fusion V2 platform establishes the reference architecture, while the OEM pilot defines the production configuration.
+
+---
+
 # Why Atlas (vs Internal Development)
 
-Robotics teams often consider building a custom synchronization and sensor integration layer internally.
+Building a custom synchronization and integration layer typically results in:
 
-In practice, this typically leads to:
+• fragmented timing implementations  
+• inconsistent timestamp alignment  
+• limited observability  
+• repeated engineering effort  
+• long-term maintenance burden  
 
-• fragmented timing implementations across sensors  
-• inconsistent timestamp alignment strategies  
-• limited observability into synchronization state  
-• repeated engineering effort across robot programs  
-• increased long-term maintenance burden  
-
-Atlas provides a pre-integrated infrastructure layer that addresses these challenges at the system level.
-
-The OEM Integration Pilot allows teams to:
-
-• avoid building and maintaining custom timing infrastructure  
-• reduce integration complexity across heterogeneous sensors  
-• gain system-level visibility into synchronization behavior  
-• standardize sensor integration across current and future platforms  
-
-This allows internal engineering teams to focus on **robot behavior, autonomy, and product differentiation**, rather than rebuilding infrastructure.
+Atlas provides a system-level infrastructure layer that standardizes these capabilities, allowing teams to focus on autonomy and product differentiation.
 
 ---
 
@@ -64,16 +75,16 @@ Atlas includes a structured enablement program to ensure OEM teams can independe
 **Phase 1 — System Understanding (Weeks 1–2)**  
 • Atlas architecture and timing model  
 • DSIL SDK fundamentals  
-• interface and integration standards  
+• integration standards  
 
 **Phase 2 — Integration & Validation (Weeks 3–6)**  
-• IMU / GNSS / UART sensor integration  
-• PPS synchronization validation  
+• IMU / GNSS / UART integration  
+• PPS validation  
 • ROS2 / native integration  
 • debugging workflows  
 
 **Phase 3 — Production Readiness (Weeks 7–8)**  
-• system validation and stress testing  
+• system validation  
 • performance tuning  
 • failure analysis  
 
@@ -81,8 +92,8 @@ Atlas includes a structured enablement program to ensure OEM teams can independe
 
 Atlas does not own sensor drivers or firmware.
 
-Device-level drivers are owned by the OEM or sensor vendor.  
-Atlas provides system-level synchronization, integration, and observability.
+OEMs own device-level drivers.  
+Atlas provides synchronization, integration, and observability.
 
 ---
 
@@ -90,7 +101,7 @@ Atlas provides system-level synchronization, integration, and observability.
 
 | Phase | Focus | Deliverables |
 |---|---|---|
-| Phase 1 | Design Audit | sensor mapping, I/O plan, power review |
+| Phase 1 | Design Audit | sensor mapping, I/O, power review |
 | Phase 2 | Pilot Definition | hardware config, connector plan |
 | Phase 3 | Validation | sync verification, performance report |
 | Phase 4 | Production Planning | firmware packaging, supply planning |
@@ -99,13 +110,11 @@ Atlas provides system-level synchronization, integration, and observability.
 
 # What the Pilot Answers
 
-The pilot is designed to resolve the key uncertainties that block production adoption:
-
-• how Atlas fits into the mechanical and electrical architecture  
-• how Atlas integrates into the existing software stack  
-• how synchronization behaves under real system conditions  
-• how the system performs under power and thermal constraints  
-• what changes (if any) are required for production deployment  
+• integration into mechanical and electrical architecture  
+• software stack alignment  
+• synchronization behavior in real conditions  
+• power and thermal performance  
+• production adaptation requirements  
 
 ---
 
@@ -113,31 +122,31 @@ The pilot is designed to resolve the key uncertainties that block production ado
 
 Atlas provides:
 
-• STEP model and 2D drawings  
-• connector and mounting references  
-• board outline and keep-out guidance  
+• STEP and 2D drawings  
+• connector references  
+• mounting and layout guidance  
 
 ## Thermal
 
-• passive chassis mounting recommended  
-• airflow and thermal load review  
-• validation under real sensor load  
+• passive chassis mounting  
+• airflow review  
+• load validation  
 
 ## Environmental
 
-Atlas is not a sealed product. Final robustness depends on:
+Final robustness depends on:
 
-• enclosure design  
-• connector selection  
-• harness and mounting strategy  
+• enclosure  
+• connectors  
+• harness design  
 
 ---
 
 # Power System Integration
 
-## Pilot Focus
+## Focus
 
-• input voltage compatibility  
+• input compatibility  
 • sensor power budgeting  
 • protection and brownout behavior  
 • startup sequencing  
@@ -149,7 +158,7 @@ Atlas is not a sealed product. Final robustness depends on:
 |---|---|---|
 | Input | robot supply | surge, polarity |
 | 5V | sensor rail | current budget |
-| 3.3V | aux rail | noise sensitivity |
+| 3.3V | aux rail | noise |
 | PPS | timing | logic compatibility |
 
 ## Brownout Strategy
@@ -158,8 +167,8 @@ Atlas can:
 
 • preserve timing engine  
 • shed high-load sensors  
-• maintain telemetry visibility  
-• support controlled recovery  
+• maintain telemetry  
+• recover safely  
 
 ---
 
@@ -171,193 +180,215 @@ Atlas is a **system layer**, not a driver layer.
 
 • timing management  
 • telemetry routing  
-• system health monitoring  
+• system health  
 
 ## Host-Side
 
 • telemetry access  
-• synchronization state  
-• ROS2 or native integration  
+• sync state  
+• ROS2 / native integration  
 
 ## Supported Environments
 
 • Ubuntu / PREEMPT_RT  
 • ROS2  
 • non-ROS Linux  
-• optional Yocto / Buildroot discussion  
+• optional Yocto / Buildroot  
 
 ---
 
-# Software IP and Ownership
+# Software IP and Ownership Model
 
-Pilot scoping defines:
+## Atlas-Owned
 
-• provided code vs OEM-owned code  
-• modification rights  
-• redistribution boundaries  
-• SDK licensing model  
+• firmware (timing + telemetry engine)  
+• DSIL SDK core  
+
+Provided as binary (default) or source (optional).
+
+## OEM-Owned
+
+• sensor drivers  
+• application logic  
+• perception stack  
+
+## Modification Rights
+
+• host-side → fully modifiable  
+• SDK APIs → stable interfaces  
+• firmware → configurable, not modified unless agreed  
+
+Atlas is observable and configurable, not an opaque black box.
 
 ---
 
-# Time Synchronization Model
+# Firmware Lifecycle, LTS, and Escrow
 
-Atlas acts as a **deterministic timing boundary**.
+## LTS
 
-## Roles
+• bug fixes  
+• security updates  
+• compatibility updates  
 
-• timing authority  
-• PPS consumer  
-• synchronization coordinator  
+Typical support: **3–5 years (defined per agreement)**
 
-## Interfaces
+## Escrow (Optional)
 
-• PPS input  
-• PPS output  
-• trigger output  
+• source escrow  
+• release triggers  
+• lifecycle protection  
 
-## Validation Scope
+## EOL Planning
 
-• timestamp origin  
-• trigger alignment  
-• jitter / latency  
-• real-system behavior  
+• last-time-buy  
+• firmware freeze  
+• migration planning  
+
+---
+
+# Firmware Update and OTA Safety Model
+
+## Update Methods
+
+• host-assisted  
+• service-mode  
+• OEM OTA integration  
+
+## Rollback and Recovery
+
+• staged update  
+• rollback to last known-good  
+• integrity verification  
+• watchdog recovery  
+
+## Guarantees
+
+• no permanent bricking  
+• recovery without physical intervention (system dependent)  
+• update visibility via telemetry  
+
+---
+
+# Certification Roadmap
+
+## Target Certifications (Production)
+
+• CE  
+• FCC  
+• RoHS / REACH  
+
+## Process
+
+• ISO9001-aligned manufacturing (partner dependent)  
+• traceability  
+• production testing  
+
+## Pilot Scope
+
+• define certification requirements  
+• identify design constraints  
+• plan certification path  
+
+---
+
+# Commercial and Engagement Transparency
+
+During initial scoping:
+
+• pilot cost estimate provided  
+• NRE scope defined  
+• production licensing model outlined  
+
+Possible models:
+
+• per-unit royalty  
+• annual license (ARR)  
+• NRE + production pricing  
+
+This enables internal approval across engineering, finance, and procurement.
 
 ---
 
 # Sensor Integration Scope
 
-Atlas supports heterogeneous sensor systems across **two integration domains**.
+## Direct (via Atlas)
 
-## Directly Integrated Sensors (via Atlas)
-
-• USB cameras and USB LiDAR  
-• IMU and GNSS modules  
+• USB cameras / USB LiDAR  
+• IMU / GNSS  
 • UART / I2C / SPI sensors  
 
-These are connected physically through Atlas and participate in DSIL telemetry and timing.
-
----
-
-## Externally Connected Sensors (SBC-side)
+## External (SBC-side)
 
 • Ethernet LiDAR  
-• GMSL / FPD-Link cameras  
-• other high-bandwidth pipelines  
-
-These connect directly to the compute platform.
+• GMSL / FPD-Link  
+• high-bandwidth pipelines  
 
 Atlas does not sit in their data path.
 
----
-
-## Atlas System Role
-
-Atlas provides:
+## System Role
 
 • timing reference  
 • trigger coordination  
 • timestamp alignment  
-• synchronization observability  
+• observability  
 
-Atlas coordinates the system **without owning sensor data pipelines or drivers**.
+## High-End Systems
 
----
+Trigger-plane authority for:
 
-## High-End Sensor Systems
+• GMSL  
+• FPD-Link  
 
-Atlas can act as a **trigger-plane authority** for:
-
-• GMSL camera systems  
-• FPD-Link III camera systems  
-
-For sensors that do not support hardware trigger control (such as Ethernet LiDAR), Atlas operates as a **system-level timing reference and observability layer**.
-
-In these cases, Atlas provides:
-
-• synchronization coordination  
-• timestamp alignment across sensor domains  
-• system-level timing visibility  
-
-Atlas does not control the data path or internal clock of Ethernet-based sensors.
-
----
-
-## Capacity Review
-
-Pilot evaluates:
-
-• sensor count  
-• data paths  
-• bandwidth limits  
-• cable constraints  
+Ethernet LiDAR → coordination only (no trigger control)
 
 ---
 
 # Known Boundaries and Limitations
 
-Atlas is designed as a system-level timing and integration layer and does not replace all aspects of sensor infrastructure.
-
-Key boundaries include:
-
-• Atlas does not replace high-bandwidth data pipelines (USB3, Ethernet, GMSL)  
-• Atlas does not control internal sensor clocks for devices without sync interfaces  
-• Atlas does not own or maintain sensor drivers or vendor firmware  
-• synchronization performance depends on sensor capabilities and system architecture  
-
-These boundaries are explicitly reviewed during the pilot to ensure alignment with the target system.
+• does not replace high-bandwidth pipelines  
+• does not control internal sensor clocks  
+• does not own drivers  
+• performance depends on system architecture  
 
 ---
 
 # White Label Hardware Adaptation
 
-## Customization Levels
-
 | Level | Example | Impact |
 |---|---|---|
 | Minor | connector remap | low NRE |
-| Moderate | I/O / mounting change | scoped effort |
-| Major | new board design | full NRE |
+| Moderate | I/O changes | scoped |
+| Major | redesign | full NRE |
 
 ---
 
 # Reliability and Field Readiness
 
-## Validation Areas
+## Validation
 
 • uptime  
 • fault handling  
-• reconnection behavior  
+• reconnection  
 • thermal stability  
-• power stress response  
+• power stress  
 
-## Validation Plan
+## Plan
 
 • long-duration testing  
-• thermal stress  
-• power fault injection  
+• thermal validation  
+• fault injection  
 • recovery timing  
-
----
-
-# Firmware Update Strategy
-
-Pilot defines:
-
-• update method (host / OTA)  
-• rollback and recovery  
-• version control  
-• fleet-safe deployment  
 
 ---
 
 # Support Model
 
-• engineering communication channel  
-• scheduled sync meetings  
+• engineering channel  
+• sync meetings  
 • integration support  
 • validation review  
 
-The goal is to reduce integration uncertainty and enable internal engineering teams to make a confident adoption decision.
+Goal: enable confident adoption decision.
 
 ---
 
@@ -365,119 +396,82 @@ The goal is to reduce integration uncertainty and enable internal engineering te
 
 • integration plan  
 • mechanical package  
-• hardware configuration  
+• hardware definition  
 • software guidance  
 • validation results  
-• production planning package  
+• production plan  
 
 ---
 
 # Production Handoff
 
-Includes:
-
-• firmware delivery model  
+• firmware delivery  
 • software packaging  
-• support expectations  
 • supply planning  
-• lifecycle continuity  
+• lifecycle strategy  
 
 Optional:
 
-• firmware escrow  
-• LTS model  
-
----
-
-# Pilot to Production Transition
-
-The OEM Integration Pilot is structured to support a clear transition into production.
-
-This typically includes:
-
-• alignment on hardware configuration and supply model  
-• firmware and software packaging approach  
-• expected support and update model  
-• preliminary production volume and lead-time considerations  
-
-Commercial terms are not finalized during the pilot, but sufficient visibility is provided to support internal approval and planning.
+• escrow  
+• LTS  
 
 ---
 
 # Measuring Pilot Success
 
-Success criteria are defined jointly at the start of the pilot and serve as the acceptance basis for production readiness discussions.
+## Integration
+• sensors integrated  
+• system aligned  
 
-## Typical Success Metrics
+## Synchronization
+• stable timing  
+• acceptable jitter  
 
-### Integration Completeness
-• all target sensors successfully integrated  
-• Atlas integrated into mechanical, power, and software architecture  
-
-### Synchronization Performance
-• consistent timestamp alignment  
-• stable PPS / trigger behavior  
-• acceptable latency and jitter  
-
-### System Stability
+## Stability
 • no critical failures  
-• stable runtime behavior  
-• successful reconnection handling  
 
-### Power and Thermal Behavior
-• stable power operation  
-• no instability under load  
-• acceptable thermal performance  
+## Power / Thermal
+• stable operation  
 
-### Software Integration
-• telemetry accessible  
-• synchronization observable  
-• integration verified  
+## Software
+• telemetry + integration verified  
 
-### Deployment Readiness
-• no blocking issues  
-• clear production path  
-• engineering confidence  
+## Readiness
+• no blockers  
+• production path clear  
 
 ---
 
-The pilot concludes with a **clear engineering decision**:
+Outcome:
 
 • proceed to production  
 or  
-• define remaining gaps  
+• define gaps  
 
 ---
 
 # Scoping Clarification Matrix
 
-| Area | Why It Matters | Clarification |
+| Area | Why | Clarification |
 |---|---|---|
-| Hardware | cost & lead time | adaptation level |
-| Software IP | ownership | modification rights |
-| Commercial | decision gating | pricing model |
-| Firmware Update | field ops | OTA / rollback |
-| Reliability | deployment | validation targets |
+| Hardware | cost | adaptation |
+| Software IP | ownership | rights |
+| Commercial | approval | pricing |
+| Firmware | field ops | OTA |
+| Reliability | deployment | targets |
 
 ---
 
 # FAQ
 
 ## Does Atlas require ROS2?
-No. ROS2 is optional.
+No.
 
 ## Does Atlas replace drivers?
-No. Atlas does not own drivers.
+No.
 
-## Can Atlas work without hardware sync sensors?
-Yes, depending on system design.
-
-## Does Atlas support Ethernet LiDAR?
-Ethernet LiDAR connects directly to the SBC.  
-Atlas coordinates timing but does not process its data path.
-
-## What happens after pilot?
-Production planning and deployment alignment.
+## Ethernet LiDAR?
+Direct to SBC. Atlas coordinates only.
 
 ---
 
@@ -487,6 +481,5 @@ The Evaluation Kit proves the concept.
 
 The OEM Integration Pilot converts that into a **production-ready system architecture**.
 
-For engineering teams, this is not just validation.
-
+This is the decision point for adopting Atlas as a **long-term infrastructure layer**.
 It is the decision point for adopting Atlas as a **long-term sensor and timing infrastructure layer**.
