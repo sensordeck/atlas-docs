@@ -51,6 +51,38 @@ Atlas addresses this by establishing a **single timing authority for the sensor 
 
 ---
 
+## Sensor Timing Integration Model
+
+Atlas is designed to operate across heterogeneous sensor stacks with different timing capabilities.
+
+Not all sensors support deterministic timing control. Atlas accommodates this by providing multiple levels of timing integration.
+
+### Timing Integration Levels
+
+• **Hardware-triggered sensors**  
+Deterministic timing control via PPS or trigger signals  
+→ Exact capture alignment under Atlas time authority  
+
+• **Signal-exposed sensors**  
+Timing alignment via hardware event capture (e.g. data-ready, sync signals)  
+→ High-confidence alignment through event correlation  
+
+• **USB and network-based sensors**  
+No direct timing control at the device level  
+→ System-level timing correlation and observability via DSIL SDK
+
+---
+
+Atlas ensures that all sensors participate in a **unified system time model**, even when device-level control is not available.
+
+This allows robotics systems to achieve:
+
+• deterministic timing where supported  
+• measurable and correctable timing where not  
+• full observability across the entire perception stack  
+
+---
+
 ## Atlas Timing Architecture
 
 Atlas introduces a **hardware timing layer** between sensors and the compute platform.
