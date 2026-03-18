@@ -287,86 +287,92 @@ This interface model defines a **clear hardware boundary** between the sensor su
 
 Atlas Fusion V2 supports multiple sensor integration models to balance plug-and-play usability, ecosystem scalability, and OEM customization.
 
----
-
-### 1. Certified Sensor Group (Descriptor-Based Integration)
-
-This category includes sensors that integrate with Atlas using **standard interface descriptors** without requiring Atlas-owned drivers or firmware.
-
-Atlas does not take ownership of sensor-side software. Instead, integration relies on:
-
-- standard USB (UVC), CDC, or protocol-compliant interfaces  
-- sensor vendor compliance with interface specifications  
-- ecosystem partnership and certification  
-
-**Key characteristics**
-
-- no custom driver or firmware required from Atlas  
-- plug-and-play compatibility at the system level  
-- vendor-driven compliance and validation  
-- scalable ecosystem expansion through certification  
-
-**Typical examples**
-
-- USB UVC cameras  
-- USB LiDAR devices  
-- standard-compliant USB or serial sensors  
+Note: "Plug-and-play" refers to integration simplicity, not timing determinism.  
+The level of timing control depends on sensor hardware capabilities.
 
 ---
 
-### 2. Pre-Built Driver / Firmware Plug-and-Play Sensors
+### 1. Descriptor-Based Integration (Certified Sensor Model)
 
-This category includes commonly used sensors that Atlas supports with **pre-integrated firmware, drivers, or reference implementations**.
+This category includes sensors that integrate with Atlas using standard interfaces and descriptor-based integration models, without requiring Atlas-owned drivers or firmware.
 
-These integrations are maintained to accelerate development for widely adopted sensor types.
+Atlas does not take ownership of sensor-side software. Integration relies on:
 
-**Key characteristics**
+• standard interfaces (USB UVC, CDC, UART, etc.)  
+• sensor vendor compliance with interface specifications  
+• optional validation through Atlas testing  
 
-- ready-to-use integration with minimal setup  
-- reference firmware or driver support available  
-- optimized for common robotics use cases  
+Key characteristics
 
-**Typical examples**
+• no custom driver or firmware required from Atlas  
+• plug-and-play at the system integration level  
+• scalable without ongoing maintenance burden  
+• timing behavior depends on sensor capabilities (not enforced by Atlas)  
 
-- IMU sensors  
-- GNSS modules  
-- commonly used serial or I2C-based sensors  
+Typical examples
+
+• USB UVC cameras  
+• USB LiDAR devices  
+• standard-compliant USB or serial sensors  
+
+---
+
+### 2. Pre-Validated Sensor Integrations (Reference Implementations)
+
+This category includes a small set of commonly used sensors that Atlas supports with pre-validated reference implementations.
+
+These are provided to accelerate evaluation and early-stage development.
+
+Key characteristics
+
+• ready-to-use integration with minimal setup  
+• reference firmware, configuration, or examples provided  
+• maintained as part of Atlas validation scope (limited set)  
+• plug-and-play experience, but timing determinism depends on sensor type  
+
+Typical examples
+
+• IMU sensors (UART / SPI / I2C)  
+• GNSS modules with PPS support  
+• selected reference sensors from the Atlas evaluation kit  
 
 ---
 
 ### 3. White-Label OEM Integration Sensors
 
-This category covers sensors integrated through **custom OEM or white-label designs** based on the Atlas hardware architecture.
+This category covers sensors integrated through custom OEM or white-label designs based on the Atlas hardware architecture.
 
-OEM teams can extend Atlas to support additional sensors by modifying hardware, interfaces, or firmware as needed.
+OEM teams extend Atlas to support additional sensors through hardware and software adaptation.
 
-**Key characteristics**
+Key characteristics
 
-- full flexibility for custom sensor integration  
-- hardware and firmware co-design possible  
-- tailored to specific deployment requirements  
+• full flexibility for production system integration  
+• hardware and firmware co-design supported  
+• timing behavior can be optimized based on sensor capabilities  
+• required for proprietary or non-standard interfaces  
 
-**Typical customization areas**
+Typical customization areas
 
-- interface adaptation (SPI, I2C, UART, proprietary links)  
-- power requirements and control logic  
-- timing synchronization behavior  
-- connector types and mechanical integration  
+• interface adaptation (SPI, I2C, UART, proprietary links)  
+• power requirements and control logic  
+• timing synchronization behavior  
+• connector types and mechanical integration  
 
 ---
 
 ## Integration Model Summary
 
-Atlas supports a layered sensor integration strategy:
+Atlas follows a layered integration strategy:
 
-- **Certified sensors** for scalable, plug-and-play ecosystem growth  
-- **Pre-built integrations** for rapid development with common devices  
-- **OEM customization** for production-specific requirements  
+• Descriptor-based integration for scalable, low-friction adoption  
+• Pre-validated sensors for fast evaluation and prototyping  
+• OEM customization for production deployment  
 
-This approach enables Atlas to function as both:
+This allows Atlas to function as:
 
-- an open integration platform  
-- and a production-ready hardware foundation for robotics systems
+• a flexible integration platform  
+• a deterministic timing infrastructure layer  
+• a production-ready hardware foundation for robotics systems
 
 ---
 
