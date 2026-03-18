@@ -59,17 +59,21 @@ Not all sensors support deterministic timing control. Atlas accommodates this by
 
 ### Timing Integration Levels
 
-• **Hardware-triggered sensors**  
+• Hardware-triggered sensors  
 Deterministic timing control via PPS or trigger signals  
 → Exact capture alignment under Atlas time authority  
 
-• **Signal-exposed sensors**  
+• Signal-exposed sensors  
 Timing alignment via hardware event capture (e.g. data-ready, sync signals)  
 → High-confidence alignment through event correlation  
 
-• **USB and network-based sensors**  
+• USB sensors  
 No direct timing control at the device level  
-→ System-level timing correlation and observability via DSIL SDK
+→ System-level timing correlation and observability via DSIL SDK  
+
+• Network-based sensors (e.g. Ethernet LiDAR)  
+Operate with independent time domains (PTP or device clock)  
+→ System-level coordination, timestamp alignment, and observability via DSIL SDK
 
 ---
 
