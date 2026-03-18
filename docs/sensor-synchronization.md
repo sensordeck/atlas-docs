@@ -132,21 +132,66 @@ Atlas does not require modification of sensor firmware or vendor drivers to achi
 
 ## Atlas Timing Architecture
 
-Atlas introduces a **hardware timing layer** between sensors and the compute platform.
+Atlas introduces a **combined hardware and software timing layer** between sensors and the compute platform.
 
 <p align="center">
   <img src="/img/Fig 16.png" width="60%" alt="Atlas timing architecture" />
 </p>
 
-Atlas becomes the **timing distribution hub** for the perception sensor infrastructure.
+Atlas timing architecture operates in two tightly integrated layers:
+
+---
+
+### Hardware Layer (Atlas Fusion V2)
+
+Atlas acts as the **timing distribution hub** for the perception sensor infrastructure.
 
 It can ingest external timing references such as:
 
-- GNSS PPS
-- system master clock
-- external synchronization controller
+- GNSS PPS  
+- system master clock  
+- external synchronization controller  
 
-Atlas then redistributes synchronization signals to connected sensors, creating a **shared timing reference** across the sensor domain.
+Atlas then redistributes synchronization signals to connected sensors, including:
+
+- PPS_OUT  
+- SYNC_OUT  
+- TRIGGER_OUT  
+
+This establishes a **shared timing reference** across the sensor domain and enables deterministic capture where supported.
+
+---
+
+### Software Layer (DSIL SDK)
+
+While Atlas hardware establishes the timing reference, synchronization is completed in software.
+
+The DSIL SDK builds a **unified time fabric** across all sensors by performing:
+
+- timestamp correlation across sensor data streams  
+- alignment of sensor data to the Atlas time authority  
+- normalization of heterogeneous sensor timing domains  
+
+This ensures that:
+
+- hardware-triggered sensors remain fully deterministic  
+- signal-based sensors are aligned using captured events  
+- USB and network sensors are mapped into the same time domain  
+
+DSIL does not modify sensor firmware or internal clocks.
+
+Instead, it **maps all sensor data into a consistent system time model**, making timing:
+
+- observable  
+- comparable  
+- correctable  
+
+---
+
+### End-to-End Timing Flow
+
+The complete timing architecture can be summarized as:
+
 
 ---
 
@@ -372,7 +417,7 @@ In many robotics systems, sensors operate with independent internal clocks.
 Atlas changes this model by acting as the **time authority for the perception sensor domain**.
 
 <p align="center">
-  <img src="/img/Fig 17.png" width="60%" alt="Atlas timing hierarchy" />
+  <img src="/img/Fig 17.png" width="100%" alt="Atlas timing hierarchy" />
 </p>
 
 Atlas becomes the **single synchronization reference between sensors and compute**, even when some sensors bypass the Atlas data path.
