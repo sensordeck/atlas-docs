@@ -361,3 +361,13 @@ Atlas converts sensor synchronization from:
 into:
 
 > a **scalable, observable, system-level capability**
+>
+> ---
+
+## What Comes Next
+
+Now that the synchronization problem is clear, the next step is to understand **how Atlas solves this at the hardware level**.
+
+Atlas establishes a physical timing boundary that enforces synchronization before data reaches the compute system.
+
+👉 Continue to [**Hardware Architecture**](
