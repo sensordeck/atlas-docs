@@ -4,7 +4,15 @@ sidebar_label: ROS2 Integration
 description: Deterministic Sensor Integration for ROS2 Robotics Systems
 ---
 
-# ROS2 Integration
+## Where This Fits
+
+This page shows **how Atlas and DSIL integrate into existing ROS2-based robotics systems**.
+
+After understanding the hardware and software layers, this section demonstrates how Atlas can be deployed without modifying existing drivers or perception pipelines.
+
+This is where Atlas becomes immediately usable.
+
+---
 
 ### Deterministic Sensor Integration for ROS2 Robotics Systems
 
@@ -412,4 +420,18 @@ Built on:
 
 - hardware timing engine  
 - synchronization model  
-- telemetry system  
+- telemetry system
+
+---
+
+## What Comes Next
+
+At this point, you have seen how Atlas:
+
+- defines a hardware timing boundary  
+- converts timing into usable data  
+- integrates into ROS2 systems  
+
+The next step is to evaluate Atlas in your own environment.
+
+👉 Request the [**Atlas Evaluation Kit**](./evaluation-kit-setup.md)
