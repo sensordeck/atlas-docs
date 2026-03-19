@@ -13,8 +13,6 @@ This is the starting point of the Atlas architecture.
 
 ---
 
-# Sensor Synchronization
-
 ### From Independent Sensor Clocks → Unified Time Fabric
 
 Modern robotics systems rely on multiple perception sensors operating simultaneously:
