@@ -1,7 +1,6 @@
 ---
 title: DSIL SDK
 sidebar_label: DSIL SDK
-description: The Deterministic Sensor Integration Layer (DSIL) SDK provides timing-aware telemetry, timestamp alignment, and ROS2-facing software abstraction for Atlas Fusion V2.
 ---
 
 ## Where This Fits
