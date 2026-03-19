@@ -13,8 +13,6 @@ This is where the problem becomes a physical system.
 
 ---
 
-# Hardware Architecture
-
 Atlas Fusion V2 provides a **deterministic sensor backbone** for robotics systems.
 
 It consolidates sensor connectivity, power distribution, and timing into a single hardware layer between sensors and the robot compute platform.
