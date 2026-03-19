@@ -1,3 +1,8 @@
+---
+title: Atlas Evaluation Kit
+sidebar_label: Atlas Evaluation Kit
+---
+
 ## Where This Fits
 
 This page is the final step in the Atlas documentation flow.
