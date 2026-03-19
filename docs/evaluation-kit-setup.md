@@ -537,4 +537,4 @@ Atlas replaces recurring engineering effort with a reusable infrastructure layer
 
 If Atlas meets your system requirements, the next step is to begin an OEM integration pilot.
 
-👉 Contact us to start an [**Atlas OEM / White-Label Integration Program**]（./oem-integration-pilot-program.md)
+👉 Contact us to start an [**Atlas OEM / White-Label Integration Program**](./oem-integration-pilot-program.md)
