@@ -556,3 +556,9 @@ The OEM Integration Pilot converts that into a **production-ready system archite
 
 This is the decision point for adopting Atlas as a **long-term infrastructure layer**.
 It is the decision point for adopting Atlas as a **long-term sensor and timing infrastructure layer**.
+
+## Next Step
+
+Still have integration questions?
+
+👉 See the [Integration FAQ](./docs/integration-faq.md)
