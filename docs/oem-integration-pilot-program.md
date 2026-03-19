@@ -535,19 +535,6 @@ The goal is to eliminate ambiguity and ensure that the decision to deploy Atlas 
 
 ---
 
-# FAQ
-
-## Does Atlas require ROS2?
-No.
-
-## Does Atlas replace drivers?
-No.
-
-## Ethernet LiDAR?
-Direct to SBC. Atlas coordinates only.
-
----
-
 # Final Positioning
 
 The Evaluation Kit proves the concept.
@@ -557,7 +544,267 @@ The OEM Integration Pilot converts that into a **production-ready system archite
 This is the decision point for adopting Atlas as a **long-term infrastructure layer**.
 It is the decision point for adopting Atlas as a **long-term sensor and timing infrastructure layer**.
 
+---
+
+# Executive FAQ — OEM Pilot Decision
+
+### Key Questions from Engineering Leadership Before Committing to Atlas
+
+This section addresses the critical questions typically raised by CTOs, VP Engineering, and cross-functional leadership when evaluating whether to proceed with the Atlas OEM Pilot Program.
+
+The goal is to clarify **risk, ROI, integration impact, and production readiness**.
+
+---
+
+## Strategic Fit
+
+### How does Atlas fit into our robotics architecture?
+
+Atlas becomes the **sensor infrastructure layer** beneath your compute stack.
+
+It standardizes:
+
+- sensor connectivity  
+- power distribution  
+- timing synchronization  
+
+This allows your existing software stack (ROS2, perception, SLAM) to remain unchanged while improving system reliability and scalability.
+
+---
+
+### Is this a short-term tool or a long-term platform decision?
+
+Atlas is designed as a **long-term infrastructure layer**.
+
+Adopting Atlas during the pilot phase enables:
+
+- reuse across multiple robot SKUs  
+- consistent sensor integration architecture  
+- reduced future hardware redesign cycles  
+
+---
+
+## Risk Assessment
+
+### What is the integration risk?
+
+Low.
+
+Atlas is:
+
+- non-intrusive to software  
+- compatible with existing sensors  
+- deployable alongside current architecture  
+
+The pilot program is specifically structured to **de-risk integration before production commitment**.
+
+---
+
+### What happens if Atlas does not meet our expectations?
+
+The OEM pilot is designed as a **bounded evaluation phase**.
+
+Outcomes:
+
+- validated integration → proceed to production  
+- identified gaps → addressed through customization  
+- misalignment → no production commitment required  
+
+This ensures **no forced lock-in at pilot stage**.
+
+---
+
+### Are we dependent on Atlas long-term?
+
+Atlas introduces a standardized hardware layer, but:
+
+- it does not control your software stack  
+- it does not replace your compute platform  
+- it does not require proprietary sensor firmware  
+
+This reduces long-term dependency risk compared to vertically integrated solutions.
+
+---
+
+## Engineering Impact
+
+### How much engineering effort is required from our team?
+
+Minimal during pilot phase.
+
+Typical involvement:
+
+- hardware connection  
+- ROS2 validation  
+- system-level testing  
+
+Atlas team supports:
+
+- integration guidance  
+- system tuning  
+- issue resolution  
+
+---
+
+### Will this disrupt our current development timeline?
+
+No.
+
+Atlas integrates **in parallel** with your existing system.
+
+Your team can:
+
+- validate Atlas without stopping current development  
+- compare results directly against existing architecture  
+
+---
+
+### Do we need to redesign our sensors or software?
+
+No.
+
+Atlas is compatible with:
+
+- existing sensors  
+- existing ROS2 drivers  
+- existing perception pipelines  
+
+---
+
+## ROI and Business Value
+
+### What measurable benefits should we expect?
+
+Atlas reduces:
+
+- integration complexity  
+- wiring and harness cost  
+- engineering iteration cycles  
+
+Atlas improves:
+
+- system reliability  
+- timing consistency  
+- scalability across product lines  
+
+---
+
+### How does Atlas reduce long-term cost?
+
+Without Atlas:
+
+- each robot SKU requires custom integration  
+- sensor wiring and power must be re-engineered  
+- synchronization must be solved repeatedly  
+
+With Atlas:
+
+- one standardized integration model  
+- reusable architecture across products  
+- reduced engineering and maintenance overhead  
+
+---
+
+### Why not build this internally?
+
+Building internally requires:
+
+- multiple hardware revisions  
+- custom synchronization architecture  
+- firmware + software stack development  
+- long-term maintenance  
+
+Atlas provides a **ready-to-deploy infrastructure layer**, allowing your team to focus on:
+
+- autonomy  
+- perception  
+- product differentiation  
+
+---
+
+## Production Readiness
+
+### What happens after a successful pilot?
+
+Next steps:
+
+1. Hardware customization (if required)  
+2. Mechanical and thermal validation  
+3. Production design finalization  
+4. Certification (CE/FCC/RoHS)  
+5. Volume manufacturing  
+
+---
+
+### Can Atlas be adapted to our production requirements?
+
+Yes.
+
+Customization options include:
+
+- connector types  
+- board form factor  
+- power configuration  
+- synchronization interface  
+
+---
+
+### Is Atlas ready for scaling to production volumes?
+
+Yes.
+
+Atlas is designed to transition from:
+
+- evaluation → pilot → production  
+
+with a consistent architecture.
+
+Manufacturing can be aligned with:
+
+- your preferred vendors  
+- your certification requirements  
+- your supply chain strategy  
+
+---
+
+## Decision Framework
+
+### What decision should we make after the pilot?
+
+At the end of the OEM pilot, teams typically evaluate:
+
+- integration simplicity  
+- system stability  
+- performance improvement  
+- engineering effort reduction  
+
+If Atlas demonstrates clear value, the next step is **production integration**.
+
+---
+
+## Final Executive Question
+
+### Why should we move forward now?
+
+Because delaying adoption means:
+
+- continued fragmented sensor integration  
+- repeated engineering effort  
+- increasing system complexity as sensors scale  
+
+Atlas provides a **clear path to standardizing sensor infrastructure early**, reducing long-term cost and risk.
+
+---
+
 ## Next Step
+
+Ready to move forward?
+
+- Engage in the **OEM Pilot Program**
+- Validate Atlas in your system
+- Define your production integration path
+
+**Atlas = Sensor Infrastructure Layer for Scalable Robotics Systems**
 
 Still have integration questions?
 
