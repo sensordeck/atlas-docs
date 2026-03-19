@@ -1,3 +1,20 @@
+## Where This Fits
+
+This page is the final step in the Atlas documentation flow.
+
+After understanding:
+
+- the synchronization problem  
+- the Atlas hardware architecture  
+- the DSIL software layer  
+- the ROS2 integration model  
+
+you are now ready to evaluate Atlas in your own robotics system.
+
+The purpose of the Atlas Evaluation Kit is not to explore a concept, but to **validate deterministic sensor integration in a real environment**.
+
+This is where Atlas moves from architecture to measurable system behavior.
+
 # Atlas Evaluation Kit Setup
 
 The Atlas Evaluation Kit allows robotics teams to validate deterministic multi-sensor synchronization using a real sensor stack.
@@ -464,3 +481,55 @@ Please include all components originally provided in the kit.
 We appreciate the time engineering teams spend evaluating new infrastructure.
 
 Even when Atlas is not the right fit today, the feedback from evaluation programs helps improve future platform development.
+
+---
+
+## What Comes Next
+
+By completing this evaluation, you have validated that Atlas:
+
+- establishes a deterministic timing boundary  
+- simplifies sensor integration  
+- integrates without modifying your existing stack  
+
+At this stage, Atlas is no longer a prototype component.
+
+It is ready to be integrated into your production system.
+
+---
+
+## OEM Integration Path
+
+Atlas is designed to transition directly from evaluation into OEM deployment.
+
+You can integrate Atlas into your product in three ways:
+
+- use Atlas as a reference integration platform  
+- embed Atlas into your system architecture  
+- adopt Atlas through a white-label (OEM) integration program  
+
+Atlas eliminates the need to redesign:
+
+- sensor wiring architecture  
+- timing synchronization systems  
+- onboard power distribution  
+
+---
+
+## Why Teams Move to Production
+
+After evaluation, robotics teams typically proceed because:
+
+- the integration model requires no driver changes  
+- deterministic timing improves system reliability  
+- system architecture becomes simpler and more scalable  
+
+Atlas replaces recurring engineering effort with a reusable infrastructure layer.
+
+---
+
+## Next Step
+
+If Atlas meets your system requirements, the next step is to begin an OEM integration pilot.
+
+👉 Contact us to start an 【**Atlas OEM / White-Label Integration Program**】（./oem-integration-pilot-program.md)
