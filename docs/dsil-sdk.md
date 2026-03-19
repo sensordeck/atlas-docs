@@ -4,6 +4,16 @@ sidebar_label: DSIL SDK
 description: The Deterministic Sensor Integration Layer (DSIL) SDK provides timing-aware telemetry, timestamp alignment, and ROS2-facing software abstraction for Atlas Fusion V2.
 ---
 
+## Where This Fits
+
+This page explains **how Atlas hardware capabilities are translated into usable software behavior**.
+
+After Atlas establishes timing at the hardware level, DSIL converts that timing into structured data, synchronized timestamps, and system observability.
+
+This is where hardware becomes infrastructure.
+
+---
+
 # Deterministic Sensor Integration Layer (DSIL) SDK
 
 > The DSIL SDK is the software layer that allows a robotics team to evaluate Atlas quickly, validate timing behavior, and confidently adopt it into a production system.
@@ -284,8 +294,10 @@ Anything beyond this becomes OEM-specific work.
 
 ---
 
-## Next Steps
+---
 
-- See [**Sensor Synchronization**](/sensor-synchronization.md) for timing details  
-- See [**ROS2 Integration**](/ros2-integration.md) for software integration  
-- See [**Evaluation Kit Setup**](evaluation-kit-setup.md) for getting started  
+## What Comes Next
+
+With DSIL providing synchronized data and system visibility, the next step is to see **how Atlas integrates into real robotics systems**.
+
+👉 Continue to [**ROS2 Integration**](./ros2-integration.md)
