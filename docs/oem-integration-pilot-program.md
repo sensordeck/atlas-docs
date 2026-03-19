@@ -805,7 +805,3 @@ Ready to move forward?
 - Define your production integration path
 
 **Atlas = Sensor Infrastructure Layer for Scalable Robotics Systems**
-
-Still have integration questions?
-
-👉 See the [Integration FAQ](./docs/integration-faq.md)
