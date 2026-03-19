@@ -1,3 +1,18 @@
+---
+title: Hardware Architecture
+sidebar_label: Hardware Architecture
+---
+
+## Where This Fits
+
+This page describes **how Atlas implements sensor synchronization at the hardware level**.
+
+After understanding the synchronization problem, this section explains how Atlas establishes a **sensor domain boundary** that unifies timing, power, and connectivity.
+
+This is where the problem becomes a physical system.
+
+---
+
 # Hardware Architecture
 
 Atlas Fusion V2 provides a **deterministic sensor backbone** for robotics systems.
@@ -396,8 +411,12 @@ Atlas Fusion V2 is designed for integration into mobile and industrial robotics 
 
 ---
 
-## Next Steps
+---
 
-- See **Sensor Synchronization** for timing details  
-- See **DSIL SDK** for software integration  
-- See **Evaluation Kit Setup** for getting started  
+## What Comes Next
+
+Atlas hardware establishes timing authority, but hardware alone is not sufficient.
+
+The next step is to understand how this timing becomes usable inside a robotics software stack.
+
+👉 Continue to [**DSIL SDK**](./dsil-sdk.md)
