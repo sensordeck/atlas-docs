@@ -108,8 +108,6 @@ Learn why independent sensor timestamps lead to inconsistent perception, SLAM in
 
 👉 Defines the **problem space**
 
-→ /sensor-synchronization
-
 ---
 
 ## 2. [Hardware Architecture](./hardware-architecture.md)
@@ -119,8 +117,6 @@ See how Atlas solves synchronization at the physical level.
 Atlas establishes a **sensor domain boundary** that unifies timing, power, and connectivity across all sensors.
 
 👉 Defines the **system architecture**
-
-→ /hardware-architecture
 
 ---
 
@@ -132,8 +128,6 @@ DSIL converts hardware timing into synchronized ROS2 timestamps, structured tele
 
 👉 Defines the **infrastructure layer**
 
-→ /dsil-sdk
-
 ---
 
 ## 4. [ROS2 Integration](./ros2-integration.md)
@@ -143,8 +137,6 @@ Deploy Atlas into your existing robotics stack.
 Atlas integrates without modifying drivers or pipelines, enabling immediate adoption.
 
 👉 Defines the **integration model**
-
-→ /ros2-integration
 
 ---
 
