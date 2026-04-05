@@ -546,4 +546,4 @@ At this point, you have seen how Atlas:
 
 The next step is to evaluate Atlas in your own environment.
 
-👉 Request the [**Atlas Evaluation Kit**](./evaluation-kit-setup.md)
+👉 Request the [**Atlas Evaluation Kit**](./evaluation-kit-setup.md) **NOW!**
