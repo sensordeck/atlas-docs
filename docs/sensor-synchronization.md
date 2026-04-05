@@ -13,15 +13,15 @@ This is the starting point of the Atlas architecture.
 
 ---
 
-### From Independent Sensor Clocks → Unified Time Fabric
+## From Independent Sensor Clocks → Unified Time Fabric
 
 Modern robotics systems rely on multiple perception sensors operating simultaneously:
 
-- cameras
-- LiDAR
-- IMU
-- GNSS
-- radar
+- cameras  
+- LiDAR  
+- IMU  
+- GNSS  
+- radar  
 
 Each of these sensors operates on its **own internal clock**.
 
@@ -78,14 +78,12 @@ This allows all sensors — regardless of interface or capability — to partici
 
 ## System Model
 
-Atlas introduces a clean separation between sensing and compute:
-
 <p align="center">
   <img src="/img/Fig 22.png" width="100%" alt="System Model" />
 </p>
 
 - **Atlas hardware** defines and distributes time  
-- **DSIL SDK** correlates and aligns all incoming data  
+- **DSIL SDK** aligns and normalizes all incoming data  
 - **Host systems (ROS2 / SBC)** receive already time-consistent data  
 
 This removes the need for each sensor or driver to solve synchronization independently.
@@ -94,37 +92,39 @@ This removes the need for each sensor or driver to solve synchronization indepen
 
 ## Timing Integration Reality
 
-Not all sensors support deterministic timing control.
+Not all sensors provide the same level of timing visibility or control.
 
-Atlas is designed to work across real-world heterogeneous sensor stacks.
+In real-world systems, sensor timestamps originate from **different levels of time reliability**.
 
-### Timing Integration Levels
+### Levels of Time Reliability
 
-**Hardware-triggered sensors**  
-Deterministic timing via PPS or trigger  
-→ Exact capture alignment under Atlas time authority  
+**Hardware-aligned sensors**  
+Sensors that can directly follow external timing signals (PPS / trigger / sync)  
+→ Deterministic capture aligned to Atlas time authority  
 
-**Signal-exposed sensors**  
-Alignment via hardware event capture (data-ready, sync lines)  
-→ High-confidence correlation  
+**Signal-observable sensors**  
+Sensors exposing timing-related signals (data-ready, sync, cadence)  
+→ High-confidence correlation to Atlas timing events  
 
-**USB-based sensors (UVC, depth cameras, etc.)**  
-No direct timing control due to internal clocks and USB latency  
-→ DSIL performs arrival-time correlation and offset modeling  
-
-**Network-based sensors (Ethernet LiDAR, PTP devices)**  
-Independent or distributed time domains  
-→ DSIL performs cross-domain correlation and alignment  
+**Transport-based sensors**  
+Sensors where timing is only visible at data arrival (USB, Ethernet, etc.)  
+→ Timing must be inferred and corrected in software  
 
 ---
 
-Atlas ensures all sensors participate in a **unified system time model**, even when direct timing control is not available.
+Atlas is designed to work across all of these scenarios.
+
+Instead of requiring all sensors to support hardware triggering, Atlas ensures that:
+
+> All sensors participate in a **unified system time model**, regardless of their native timing capability.
 
 ---
 
 ## How Synchronization Actually Works
 
 Atlas synchronization is completed through **hardware capture + software alignment**.
+
+---
 
 ### Step 1 — Hardware Timing Boundary
 
@@ -138,28 +138,31 @@ This establishes a **shared timing reference across sensors**.
 
 ---
 
-### Step 2 — Timestamp Correlation and Alignment (DSIL SDK)
+### Step 2 — Timestamp Alignment (DSIL SDK)
 
 The DSIL SDK builds a **unified time fabric** by:
 
 - correlating timestamps across sensor data streams  
-- aligning sensor data to the Atlas time authority  
+- aligning all data to the Atlas time authority  
 - normalizing heterogeneous timing domains  
 
 ---
 
-### Mechanics of Synchronization
+### What “Correction” Means
 
-DSIL applies a **dynamic offset model**:
+Correction does **not** mean modifying sensors.
 
-- raw sensor arrival time  
-→ mapped to  
-- Atlas hardware-captured timing event  
+Instead:
+
+- sensors continue operating in their native timing domain  
+- Atlas defines the authoritative system time  
+- DSIL aligns each sensor’s data to that time  
 
 This is:
 
-- **system-level correction**  
-- not modification of sensor firmware or clocks  
+- **system-level time alignment**  
+- not firmware modification  
+- not driver replacement  
 
 This ensures compatibility with:
 
@@ -185,8 +188,6 @@ Most importantly:
 ---
 
 ## Atlas Timing Architecture
-
-Atlas introduces a **combined hardware + software timing system**.
 
 <p align="center">
   <img src="/img/Fig 16.png" width="60%" alt="Atlas timing architecture" />
@@ -239,11 +240,11 @@ Some sensors bypass Atlas data path:
 - GMSL cameras  
 - MIPI / CSI cameras  
 
-These sensors can still participate in synchronization.
-
 <p align="center">
   <img src="/img/Fig 18.png" width="60%" alt="Atlas synchronization architecture" />
 </p>
+
+These sensors still participate in synchronization:
 
 - capture follows Atlas timing signals or relationships  
 - data flows directly to compute  
@@ -253,11 +254,11 @@ These sensors can still participate in synchronization.
 
 ## Atlas as Time Authority
 
-Atlas acts as the **single timing reference** for the perception system.
-
 <p align="center">
   <img src="/img/Fig 17.png" width="100%" alt="Atlas timing hierarchy" />
 </p>
+
+Atlas acts as the **single timing reference** for the perception system.
 
 Even when sensors use different transport paths, they share:
 
@@ -270,12 +271,12 @@ Even when sensors use different transport paths, they share:
 
 | Property | Typical Value |
 |---------|--------------|
-| Trigger jitter | &lt;1 µs |
-| PPS distribution skew | &lt;1 µs |
-| DSIL timestamp alignment | &lt;1 ms |
+| Trigger jitter | <1 µs |
+| PPS distribution skew | <1 µs |
+| DSIL timestamp alignment | <1 ms |
 
 - hardware ensures tight capture alignment  
-- DSIL ensures consistent system timestamps  
+- software ensures consistent system timestamps  
 
 ---
 
@@ -350,7 +351,7 @@ By combining:
 
 - hardware timing distribution  
 - precise event capture  
-- DSIL-based correlation and alignment  
+- DSIL-based alignment  
 
 Atlas converts sensor synchronization from:
 
@@ -359,12 +360,12 @@ Atlas converts sensor synchronization from:
 into:
 
 > a **scalable, observable, system-level capability**
->
-> ---
+
+---
 
 ## What Comes Next
 
-Now that the synchronization problem is clear, the next step is to understand **how Atlas solves this at the hardware level**.
+Now that the synchronization problem is clear, the next step is to understand how Atlas solves this at the hardware level.
 
 Atlas establishes a physical timing boundary that enforces synchronization before data reaches the compute system.
 
