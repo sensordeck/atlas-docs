@@ -5,210 +5,306 @@ sidebar_label: DSIL SDK
 
 ## Where This Fits
 
-This page explains **how Atlas hardware capabilities are translated into usable software behavior**.
+This page explains **how Atlas hardware timing becomes usable software behavior**.
 
-After Atlas establishes timing at the hardware level, DSIL converts that timing into structured data, synchronized timestamps, and system observability.
+Atlas defines time at the hardware level.
 
-This is where hardware becomes infrastructure.
+The DSIL SDK turns that into:
+
+- synchronized timestamps  
+- observable system state  
+- usable data inside Linux and ROS2  
+
+This is where timing becomes infrastructure.
 
 ---
 
 # Deterministic Sensor Integration Layer (DSIL) SDK
 
-> The DSIL SDK is the software layer that allows a robotics team to evaluate Atlas quickly, validate timing behavior, and confidently adopt it into a production system.
->
-> Atlas Fusion V2 defines the timing boundary in hardware. DSIL turns that boundary into structured, timing-aware data for Linux, ROS2, and robotics software.
+> The DSIL SDK converts heterogeneous sensor timing into a **single, usable time model**.
+
+Atlas establishes the timing boundary.  
+DSIL makes that timing:
+
+- consistent  
+- observable  
+- usable by robotics software  
 
 ---
 
-## Why It Matters
+## The Core Problem DSIL Solves
 
-In many robotics systems, the hardware may already be connected, but the software stack still lacks:
+In real robotics systems, sensors do not agree on time.
 
-- trustworthy timing visibility
-- synchronization state visibility
-- board-level health awareness
-- a clean path from hardware events into ROS2
+Each sensor may produce timestamps from different sources:
 
-That gap creates real integration pain:
+- hardware-triggered timing  
+- internal device clocks  
+- transport arrival time (USB / Ethernet)  
 
-- engineers spend time reverse-engineering timestamps
-- sensor fusion behavior becomes harder to trust
-- system debugging depends on custom scripts and ad hoc logging
-- every new robot program repeats the same integration work
+These timestamps are **not directly comparable**.
 
-DSIL exists to remove that software burden.
+This leads to:
 
-As a result:
+- unstable sensor fusion  
+- inconsistent replay behavior  
+- difficult debugging  
+- repeated integration effort across programs  
 
-- timing becomes observable  
-- synchronization becomes verifiable  
-- system state becomes inspectable  
+Most systems work around this problem.
 
----
-
-## Primary Value
-
-DSIL sits between Atlas telemetry and the robot application layer.
-
-It gives the host system a clean way to consume:
-
-- timing-aware metadata
-- synchronization state
-- sensor health visibility
-- board power and runtime status
-- structured telemetry over a standard host interface
-
-This is what allows Atlas to move from **hardware capability** to **deployable infrastructure**.
+DSIL solves it at the system level.
 
 ---
 
-## DSIL SDK v1.0 — Public Core Specification
+## What DSIL Does
 
-DSIL SDK v1.0 defines the **final public software boundary** of the Atlas platform.
+DSIL performs one core function:
 
-It is not a broad roadmap.
+> **Normalize all sensor data into a common Atlas time domain**
 
-It is the **stable, production-ready definition** of how Atlas integrates into the robot compute stack.
+To achieve this, DSIL:
 
----
+### 1. Interprets Sensor Time
 
-## DSIL SDK v1.0 Capability Architecture
-
-DSIL SDK v1.0 is organized into four core capability domains, each representing a distinct layer of value delivered to robotics systems.
-
----
-
-### 1. Time Correlation & Alignment Engine
-
-This domain defines the core timing intelligence of DSIL.
-
-It transforms raw sensor data arrival into timing-aware data aligned with Atlas hardware events.
-
-Includes:
-
-- timestamp correlation and alignment engine  
-- synchronization-aware timestamp mapping to ROS2 (`header.stamp`)  
-
-Primary value:
-
-- Converts non-deterministic sensor data into a deterministic timing domain  
-- Enables consistent multi-sensor temporal alignment  
+- evaluates timing signals, patterns, and behavior  
+- understands how each sensor expresses time  
 
 ---
 
-### 2. System Observability
+### 2. Builds a Time Relationship to Atlas
 
-This domain exposes the internal state of the sensor infrastructure to software.
-
-Includes:
-
-- sync source and sync state model  
-- sensor health visibility  
-- board power visibility (hardware-dependent)  
-
-Primary value:
-
-- Makes timing, synchronization, and system health visible to the robot compute stack  
-- Enables engineers to verify system correctness without custom debugging tools  
+- correlates sensor data with hardware timing events  
+- tracks timing behavior over time  
+- continuously refines alignment  
 
 ---
 
-### 3. Telemetry Transport & Decoding
+### 3. Produces Corrected System Time
 
-This domain defines how Atlas communicates with the host system.
+DSIL converts:
 
-Includes:
+raw sensor timestamp / arrival time to **Atlas-aligned timestamp**
 
-- stable CDC telemetry transport (`/dev/ttyACM0`)  
-- runtime telemetry decoding  
 
-Primary value:
 
-- Provides a standardized, driver-free communication channel  
-- Ensures consistent and structured data delivery to host software  
+This produces a **consistent time reference across all sensors**.
 
 ---
 
-### 4. Developer Tooling & Platform Support
+### 4. Exposes Timing as System Data
 
-This domain enables integration, validation, and deployment within robotics environments.
+DSIL makes timing observable:
 
-Includes:
-
-- command-line interface (CLI) tools  
-- ROS2 monitoring integration  
-- documented message schemas  
-- documented installation flow  
-- supported Ubuntu and Jetson-class deployment path  
-
-Primary value:
-
-- Reduces integration effort and time-to-first-success  
-- Provides a reference software layer for evaluating and deploying Atlas  
+- time offset  
+- drift behavior  
+- synchronization state  
+- timing confidence  
 
 ---
 
-## What v1.0 Must Accomplish
+## DSIL Timing Model
 
-DSIL SDK v1.0 completes the core Atlas value proposition by making the sensor infrastructure observable, verifiable, and usable within a standard robotics software stack.
+DSIL treats every sensor stream as a **time-mapping problem**.
 
-It must enable:
+Each sensor has:
 
-- **Deterministic timing awareness** — sensor data is aligned to a consistent hardware timing domain  
-- **Synchronization transparency** — the system exposes timing source and synchronization state to software  
-- **System observability** — sensor activity, system health, and power status are visible without custom tooling  
-- **Immediate ROS2 usability** — data and telemetry are accessible through standard ROS2 workflows  
+- a native timing domain  
+- a relationship to Atlas time  
 
-This defines the **minimum complete system behavior** required for Atlas to be usable in real-world robotics deployments.
+DSIL continuously maintains:
+
+sensor time to **Atlas time**
+
+
+This mapping may be:
+
+- directly tied to hardware timing  
+- inferred from observable behavior  
+- estimated from transport timing patterns  
 
 ---
 
-## Device Interface:
+## What “Correction” Means
 
-Atlas exposes telemetry through a standard Linux CDC device:
+DSIL does **not** modify sensors.
 
+It does not:
+
+- rewrite firmware  
+- override device clocks  
+- replace drivers  
+
+Instead:
+
+- sensors operate normally  
+- Atlas defines system time  
+- DSIL aligns data into that time  
+
+This ensures:
+
+- compatibility with existing drivers  
+- no disruption to pipelines  
+- minimal integration friction  
+
+---
+
+## What DSIL Produces
+
+Each sensor stream becomes:
+
+- aligned to a common time reference  
+- comparable across sensors  
+- observable in timing quality  
+
+---
+
+### Example Output
+
+```yaml
+sensor: front_camera
+raw_timestamp_ns: 1712241000123456789
+atlas_timestamp_ns: 1712241000122356789
+time_offset_ns: -1100000
+drift_estimate_ns: 42000
+sync_state: tracking
+confidence: medium
+```
+
+## What DSIL Enables
+
+With DSIL:
+
+- all sensors operate under a **shared time model**  
+- timing differences become **visible and measurable**  
+- fusion pipelines receive **consistent input data**  
+- replay becomes **deterministic and repeatable**  
+
+Most importantly:
+
+> Time becomes a **reliable system property**, not an assumption
+
+---
+
+## System Observability
+
+DSIL exposes internal system state to the host:
+
+- synchronization source and state  
+- sensor timing behavior  
+- system timing health  
+- board-level telemetry  
+
+This allows engineers to:
+
+- verify synchronization in real time  
+- debug timing issues without custom tooling  
+- trust system behavior across deployments  
+
+---
+
+## Device Interface
+
+Atlas exposes DSIL telemetry through a standard Linux device:
 
 /dev/ttyACM0
 
-
-No custom kernel modules are required.
+- no custom kernel modules required
+- no driver modification required
 
 ---
 
-## Software Requirements
+## Supported Host Systems (SBC Requirements)
 
-Minimum environment:
+DSIL runs on standard Linux-based robotics compute platforms.
+
+**Minimum Environment**
 
 | Component | Requirement |
-|------|------|
+|----------|------------|
 | OS | Ubuntu 22.04 LTS |
 | Kernel | Linux 5.15+ |
 | ROS | ROS2 Humble |
 | Dependencies | libusb-1.0-0, python3-serial |
-| ROS Packages | ros-humble-desktop |
 
 ---
 
-## Product Boundary Definition
+**Supported Platforms**
 
-Atlas DSIL has only **two public software stages**:
+NVIDIA Jetson (Orin Nano, Xavier, Orin NX)
+ARM SBCs (RK3588 class)
+x86 Linux systems
 
-### DSIL SDK v1.0
-The finalized public core platform.
+Requirement:
 
-### DSIL SDK v0.1
-Evaluation software (covered in the Evaluation Kit section).
+Any system supporting USB CDC devices can run DSIL.
 
 ---
 
-### What Comes After v1.0
+## Integration Model
 
-Anything beyond the v1.0 boundary becomes:
+DSIL runs entirely in **user space**.
 
-**White-Label OEM Pilot DSIL SDK (VX)**
+It does not require:
 
-This includes:
+- kernel drivers
+- device tree changes
+- real-time OS modifications
+
+This enables:
+
+- fast bring-up
+- low integration risk
+- compatibility with existing stacks
+
+---
+
+## Integration Philosophy
+
+DSIL is designed to **augment**, not replace, existing systems.
+
+- sensor drivers remain unchanged
+- perception pipelines remain intact
+- DSIL runs alongside existing software
+
+It adds:
+
+- timing consistency
+- system visibility
+- infrastructure capability
+
+---
+
+## Strategic Role of DSIL
+
+Without DSIL:
+
+> every robot program rebuilds sensor timing logic from scratch
+
+With DSIL:
+
+> timing becomes reusable infrastructure across products
+
+This transforms integration from:
+
+> custom engineering effort per robot
+
+into:
+
+> scalable, repeatable system architecture
+
+---
+
+## Product Boundary
+
+DSIL has a clear public boundary:
+
+- **DSIL SDK v1.0** — production platform
+- **DSIL SDK v0.1** — evaluation software
+
+Beyond that:
+
+→ OEM-specific deployments (White-Label Integration)
 
 - Customer-specific Atlas PCB variants  
 - Custom sensor bundles  
@@ -228,29 +324,50 @@ while reserving deeper engineering work for **OEM pilot programs**.
 
 ---
 
-## Integration Philosophy
+## What DSIL Does NOT Do
 
-DSIL is designed to **augment**, not replace, existing robotics software.
+DSIL does not:
 
-- Standard sensor drivers remain unchanged  
-- DSIL operates alongside them  
-- Timing and system visibility are added as a separate layer  
+- replace sensor drivers
+- force sensors into one interface
+- claim determinism where none exists
+- require custom perception software
 
-This avoids disruption to existing perception and control pipelines.
+It works with real-world systems as they are.
 
 ---
 
-## Strategic Role of DSIL
+## Relationship to ROS2
 
-For robotics teams, DSIL changes the integration model from:
+DSIL operates below the **ROS2 application layer**.
 
-**custom sensor plumbing per robot**
+It ensures that ROS2 receives:
 
-to:
+- corrected timestamps
+- synchronization state
+- observable timing behavior
 
-**reusable deterministic sensor infrastructure across product lines**
+ROS2 nodes remain unchanged — but their data becomes trustworthy.
 
-That is the long-term value of Atlas.
+---
+
+## Summary
+
+DSIL converts Atlas hardware timing into **usable system behavior**.
+
+By:
+
+- normalizing heterogeneous sensor timing
+- aligning data to a shared time authority
+- exposing timing as observable system data
+
+DSIL turns synchronization from:
+
+> hidden, inconsistent behavior
+
+into:
+
+> a **deterministic and inspectable system capability**
 
 ---
 
@@ -290,8 +407,6 @@ The public boundary is intentionally simple:
 - DSIL SDK v0.1 — evaluation software  
 
 Anything beyond this becomes OEM-specific work.
-
----
 
 ---
 
