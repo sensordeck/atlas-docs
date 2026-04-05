@@ -311,66 +311,20 @@ Inspect timing:
 ```bash
 ros2 topic echo /atlas/time_offset/lidar
 ```
----
-
-## Power Health Observability 
-
-Atlas provides **real-time system power visibility inside ROS2**.
-
-This is not estimation.
-
-This is **direct hardware truth exposed as data**.
 
 ---
 
-## The Problem Today
+## Power Health Observability
 
-In most robotics systems, power debugging looks like this:
+Atlas extends system observability beyond timing.
 
-- engineers use multimeters  
-- issues are reproduced manually  
-- failures are diagnosed in the field  
-- no historical data is available  
-
-Even worse:
-
-- power issues are **invisible in software**  
-- each SKU requires custom debug setups  
-- no reusable observability exists across products  
-
-This leads to:
-
-- long bring-up cycles  
-- hard-to-reproduce failures  
-- wasted engineering time  
-
----
-
-## What Atlas Changes
-
-Atlas exposes **power rails and fault signals directly into ROS2**.
-
-No smart PMIC required.
-
-No complex firmware.
-
-No estimation.
-
-Just:
-
-> **measured voltage + real fault signals**
-
----
-
-## ROS2 Power Health Topic
-
-Single unified interface:
+In addition to `/atlas/time_offset/*`, Atlas exposes:
 
 ```bash
 /atlas/power_health
 ```
 
----
+This provides **direct visibility into system power behavior inside ROS2**.
 
 ## Example Message
 
@@ -392,109 +346,68 @@ usb_ports:
   port3_fault: false
 ```
 
-## What This Enables
+---
+
+## Why This Matters
+
+In most robotics systems:
+
+- power debugging requires on-site measurement  
+- failures are difficult to reproduce  
+- no software-level visibility exists  
+
+More importantly:
+
+> **power instability is often the root cause of timing instability**
+
+But traditional systems cannot prove this.
+
+---
+
+## What Atlas Enables
 
 ### Remote Debugging
 
-Engineers can now:
-
-- inspect system voltage remotely  
-- detect brownout or instability  
-- identify failing USB devices  
+- inspect voltage and faults remotely  
 - diagnose field issues without physical access  
 
 ---
 
 ### Faster Bring-Up
 
-Instead of probing with tools:
-
-- voltage is already available in ROS2  
-- faults are already exposed  
-- no manual measurement required  
+- no multimeter required  
+- voltage and fault data already available in ROS2  
 
 ---
 
-### Cross-SKU Observability
+### Cross-SKU Consistency
 
-**Traditional approach:**
-
-- every robot → custom power debugging  
-- no reuse across products  
-
-**With Atlas:**
-
-- same `/atlas/power_health` interface  
-- consistent across all SKUs  
+- same `/atlas/power_health` interface across all systems  
 - reusable debugging workflows  
+- no per-SKU custom instrumentation  
 
 ---
 
-## Why This Is Unique
+## Timing + Power Together
 
-**Typical systems today:**
-
-- no software-visible power data  
-- no standardized telemetry  
-- debugging requires hardware tools  
-
-**Atlas provides:**
-
-- unified power telemetry  
-- real-time ROS2 integration  
-- system-wide observability  
-
----
-
-## Design Philosophy
-
-Atlas power health follows strict principles:
-
-- no smart regulators required  
-- no current sensing complexity  
-- no estimation algorithms  
-
-Only:
-
-- ADC voltage measurement  
-- digital fault signals  
-
-This ensures:
-
-- reliability  
-- simplicity  
-- production scalability  
-
----
-
-## What OEM Teams Gain
-
-### Without Atlas
-
-- debugging = physical + manual  
-- failures = hard to reproduce  
-- integration = repeated per SKU  
-
-### With Atlas
-
-- debugging = remote + software-driven  
-- failures = observable and logged  
-- integration = standardized  
-
----
-
-## Combined with Time Authority
-
-Power issues often cause timing instability.
-
-Atlas provides both:
+Atlas exposes both dimensions:
 
 - `/atlas/time_offset/*` → timing truth  
 - `/atlas/power_health` → power truth  
 
-Together:
+This allows engineers to directly correlate:
 
-> **complete system observability**
+> timing instability ↔ power instability  
+
+---
+
+## Summary
+
+Power is no longer invisible hardware behavior.
+
+It becomes:
+
+> **observable, structured ROS2 data — aligned with time authority**
 
 ---
 
