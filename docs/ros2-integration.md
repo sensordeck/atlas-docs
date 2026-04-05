@@ -313,6 +313,191 @@ ros2 topic echo /atlas/time_offset/lidar
 ```
 ---
 
+## Power Health Observability 
+
+Atlas provides **real-time system power visibility inside ROS2**.
+
+This is not estimation.
+
+This is **direct hardware truth exposed as data**.
+
+---
+
+## The Problem Today
+
+In most robotics systems, power debugging looks like this:
+
+- engineers use multimeters  
+- issues are reproduced manually  
+- failures are diagnosed in the field  
+- no historical data is available  
+
+Even worse:
+
+- power issues are **invisible in software**  
+- each SKU requires custom debug setups  
+- no reusable observability exists across products  
+
+This leads to:
+
+- long bring-up cycles  
+- hard-to-reproduce failures  
+- wasted engineering time  
+
+---
+
+## What Atlas Changes
+
+Atlas exposes **power rails and fault signals directly into ROS2**.
+
+No smart PMIC required.
+
+No complex firmware.
+
+No estimation.
+
+Just:
+
+> **measured voltage + real fault signals**
+
+---
+
+## ROS2 Power Health Topic
+
+Single unified interface:
+
+```bash
+/atlas/power_health
+```
+
+---
+
+## Example Message
+
+```yaml id="power-msg"
+vin_voltage: 24.1
+v5_sys: 5.02
+v5_usb: 5.01
+v3v3: 3.30
+
+vin_fault: false
+v5_sys_fault: false
+
+usb_ports:
+  port1_enabled: true
+  port1_fault: false
+  port2_enabled: true
+  port2_fault: false
+  port3_enabled: true
+  port3_fault: false
+```
+
+## What This Enables
+
+### Remote Debugging
+
+Engineers can now:
+
+- inspect system voltage remotely  
+- detect brownout or instability  
+- identify failing USB devices  
+- diagnose field issues without physical access  
+
+---
+
+### Faster Bring-Up
+
+Instead of probing with tools:
+
+- voltage is already available in ROS2  
+- faults are already exposed  
+- no manual measurement required  
+
+---
+
+### Cross-SKU Observability
+
+**Traditional approach:**
+
+- every robot → custom power debugging  
+- no reuse across products  
+
+**With Atlas:**
+
+- same `/atlas/power_health` interface  
+- consistent across all SKUs  
+- reusable debugging workflows  
+
+---
+
+## Why This Is Unique
+
+**Typical systems today:**
+
+- no software-visible power data  
+- no standardized telemetry  
+- debugging requires hardware tools  
+
+**Atlas provides:**
+
+- unified power telemetry  
+- real-time ROS2 integration  
+- system-wide observability  
+
+---
+
+## Design Philosophy
+
+Atlas power health follows strict principles:
+
+- no smart regulators required  
+- no current sensing complexity  
+- no estimation algorithms  
+
+Only:
+
+- ADC voltage measurement  
+- digital fault signals  
+
+This ensures:
+
+- reliability  
+- simplicity  
+- production scalability  
+
+---
+
+## What OEM Teams Gain
+
+### Without Atlas
+
+- debugging = physical + manual  
+- failures = hard to reproduce  
+- integration = repeated per SKU  
+
+### With Atlas
+
+- debugging = remote + software-driven  
+- failures = observable and logged  
+- integration = standardized  
+
+---
+
+## Combined with Time Authority
+
+Power issues often cause timing instability.
+
+Atlas provides both:
+
+- `/atlas/time_offset/*` → timing truth  
+- `/atlas/power_health` → power truth  
+
+Together:
+
+> **complete system observability**
+
+---
+
 ## Runtime Characteristics
 
 Atlas operates as a deterministic infrastructure layer with minimal overhead.
