@@ -271,9 +271,9 @@ Even when sensors use different transport paths, they share:
 
 | Property | Typical Value |
 |---------|--------------|
-| Trigger jitter | <1 µs |
-| PPS distribution skew | <1 µs |
-| DSIL timestamp alignment | <1 ms |
+| Trigger jitter | &lt;1 µs |
+| PPS distribution skew | &lt;1 µs |
+| DSIL timestamp alignment | &lt;1 ms |
 
 - hardware ensures tight capture alignment  
 - software ensures consistent system timestamps  
