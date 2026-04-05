@@ -110,8 +110,6 @@ Sensors exposing timing-related signals (data-ready, sync, cadence)
 Sensors where timing is only visible at data arrival (USB, Ethernet, etc.)  
 → Timing must be inferred and corrected in software  
 
----
-
 Atlas is designed to work across all of these scenarios.
 
 Instead of requiring all sensors to support hardware triggering, Atlas ensures that:
