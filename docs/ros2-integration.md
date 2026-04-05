@@ -6,173 +6,218 @@ description: Deterministic Sensor Integration for ROS2 Robotics Systems
 
 ## Where This Fits
 
-This page shows **how Atlas and DSIL integrate into existing ROS2-based robotics systems**.
+This page shows **how Atlas timing appears inside ROS2 systems**.
 
-After understanding the hardware and software layers, this section demonstrates how Atlas can be deployed without modifying existing drivers or perception pipelines.
+Atlas does not replace ROS2.
 
-This is where Atlas becomes immediately usable.
+It provides a **deterministic time foundation beneath it**.
 
 ---
 
-### Deterministic Sensor Integration for ROS2 Robotics Systems
+## The Problem: ROS2 Assumes Time Is Already Correct
 
-Modern robotics systems rely on ROS2 to build perception, localization, and navigation pipelines.
+ROS2 is a powerful middleware.
 
-ROS2 provides a powerful middleware layer — but it assumes that **sensor timestamps are already correct**.
+But it assumes:
 
-In real-world systems, this assumption breaks.
+> sensor timestamps are already correct
 
-Sensors operate on independent clocks:
+In real systems, they are not.
+
+Sensors operate on independent timing sources:
 
 - USB cameras introduce jitter  
-- LiDAR runs on internal timing  
+- LiDAR runs on internal clocks  
 - IMU and GNSS drift independently  
 
-The result:
+This leads to:
 
 - inconsistent timestamps  
 - sensor misalignment  
-- degraded SLAM and perception performance  
-- difficult debugging and system validation  
+- degraded fusion and SLAM  
+- difficult debugging  
 
-Atlas addresses this problem by introducing a **deterministic timing foundation** beneath ROS2.
-
----
-
-## The Gap: What ROS2 Does Not Solve
-
-ROS2 is a middleware — not a timing authority.
-
-ROS2 does not provide:
-
-- cross-sensor clock alignment  
-- hardware timestamping  
-- deterministic capture coordination  
-- synchronization state visibility  
-
-ROS2 trusts timestamps.
-
-Atlas makes timestamps trustworthy.
+ROS2 does not solve this.
 
 ---
 
-## What Teams Do Today
+## What Atlas + DSIL Changes
 
-Without a unified timing system, robotics teams typically build custom solutions:
+Atlas introduces a **hardware-backed time authority**.
 
-- driver-level timestamp adjustments  
-- PPS wiring and trigger experiments  
-- per-sensor synchronization logic  
-- post-processing alignment pipelines  
+DSIL maps all sensor data into that time.
 
-These approaches are:
+Instead of fixing time inside each driver:
 
-- fragile  
-- non-portable  
-- difficult to debug  
-- repeated for every robot platform  
+- Atlas defines system time  
+- DSIL aligns all data  
+- ROS2 receives consistent timestamps  
 
-Atlas eliminates this repeated engineering effort.
+No driver rewrites required.
 
 ---
 
-## What Atlas + DSIL Does
+## What Stays the Same
 
-Atlas introduces a **hardware-backed timing boundary** for the perception sensor domain.
+You keep your existing ROS2 stack:
 
-The Deterministic Sensor Integration Layer (DSIL) SDK exposes this timing into ROS2.
-
-- Sensors connect to Atlas  
-- Atlas aligns timing at the hardware level  
-- DSIL converts telemetry into ROS2 topics  
-- ROS2 consumes synchronized data without modification  
-
-Atlas does **not replace ROS2 drivers**.
-
-Instead, it provides:
-
-- a deterministic timing backbone  
-- a sensor telemetry layer  
-- synchronization visibility  
-
-This allows robotics teams to adopt Atlas **without rewriting their perception stack**.
-
----
-
-## Quick Start: Running Atlas in ROS2
-
-A typical ROS2 integration with Atlas requires only launching the DSIL telemetry bridge alongside existing ROS2 drivers.
-
-```bash
-ros2 launch atlas_dsil_bridge telemetry.launch.py
-```
-
-After launch, Atlas telemetry becomes available as ROS2 topics.
-
-Verify with:
-
-```bash
-ros2 topic list
-```
-
-Example output:
-
-```
-/imu/data
-/gps/fix
-/atlas/pps
-/atlas/sync
-/atlas/health
-```
-
-Robotics applications can subscribe using standard ROS2 tools:
-
-```bash
-ros2 topic echo /imu/data
-```
-
-Atlas integrates directly into the ROS2 graph without modifying existing drivers.
-
----
-
-## Integration Philosophy
-
-Atlas follows a **non-intrusive integration model**.
-
-Atlas does not modify or replace:
-
-- ROS2 sensor drivers  
-- camera pipelines  
+- camera drivers  
 - LiDAR drivers  
-- navigation stacks  
+- IMU drivers  
+- GNSS drivers  
+- serial nodes  
 
-Instead, Atlas runs alongside ROS2 as an **infrastructure layer**.
+No custom ecosystem required.
 
-Compatible with:
+---
 
-- NVIDIA Isaac ROS  
-- Nav2  
-- SLAM frameworks  
-- perception pipelines  
-- custom robotics stacks  
+## What Changes
+
+The meaning of time becomes **deterministic and observable**.
+
+Instead of trusting raw timestamps:
+
+- time is **normalized to Atlas time**  
+- offsets become **visible**  
+- drift becomes **measurable**  
+- synchronization becomes **observable**  
+
+ROS2 now receives:
+
+- corrected timestamps  
+- time offset per sensor  
+- drift trend  
+- synchronization state  
+- timing confidence  
+
+Time Becomes Visible in ROS2. **This is where Atlas changes everything**.
+
+Instead of guessing timing issues, you can see them directly:
+
+```yaml
+/atlas/time_offset/front_camera: -1.1 ms
+/atlas/time_offset/lidar: 3.2 ms
+/atlas/time_offset/imu: -0.4 ms
+```
+
+And not just offset — **behavior over time**:
+
+```yaml
+sensor: lidar_top
+tier: 2
+offset_ms: 3.2
+drift_ms_per_sec: 0.02
+confidence: high
+sync_state: locked
+```
+This is the difference:
+
+| Without Atlas           | With Atlas          |
+| ----------------------- | ------------------- |
+| “Fusion seems unstable” | Offset = +3.2 ms    |
+| “Maybe sensor drift?”   | Drift = 0.02 ms/sec |
+| “Hard to debug”         | Sync state = locked |
+
+Atlas turns **invisible timing problems into observable data**.
+
+---
+
+## The 3 Timing Tiers in ROS2
+
+Not all sensors have the same time quality.
+
+DSIL exposes this explicitly.
+
+---
+
+### Tier 1 — Authority Time
+
+Sensors tied to hardware timing (PPS / trigger / sync).
+
+ROS2 receives:
+
+- timestamps anchored to hardware events  
+- minimal drift  
+- highest confidence  
+
+Result:
+
+- strongest fusion accuracy  
+- deterministic replay  
+
+---
+
+### Tier 2 — Derived Time
+
+Sensors with observable timing behavior.
+
+DSIL builds a correlation model.
+
+ROS2 receives:
+
+- corrected timestamps  
+- tracked drift  
+- stable alignment  
+
+Result:
+
+- practical synchronization without firmware changes  
+
+---
+
+### Tier 3 — Transport Time
+
+Sensors where only arrival time is visible.
+
+DSIL estimates timing behavior.
+
+ROS2 receives:
+
+- corrected timestamps  
+- offset + drift visibility  
+- lower confidence  
+
+Result:
+
+- usable timing instead of blind arrival timestamps  
+
+---
+
+## Timing Drift (Critical)
+
+DSIL continuously tracks:
+
+- offset (current difference)  
+- drift (rate of change)  
+
+This enables:
+
+- detection of unstable sensors  
+- real-time timing validation  
+- better debugging  
 
 ---
 
 ## Mechanics of Synchronization
 
-DSIL performs **timestamp correction in software using hardware timing events captured by Atlas**.
+DSIL performs **timestamp correction using hardware timing events captured by Atlas**.
 
 <p align="center">
   <img src="/img/Fig 14.png" width="60%" alt="Atlas mechanics of synchronization" />
 </p>
 
-DSIL applies a **dynamic offset to ROS2 message header timestamps**, mapping raw sensor arrival time to the Atlas hardware-captured synchronization event.
+Core mapping:
 
-Importantly:
+raw sensor arrival time → Atlas hardware timing event
 
-Atlas does **not modify sensor firmware or internal clocks**.
+DSIL applies a **dynamic offset to ROS2 message headers**.
 
-This ensures compatibility with:
+Important:
+
+- sensor firmware is NOT modified  
+- sensor clocks are NOT changed  
+
+Compatible with:
 
 - UVC cameras  
 - serial sensors  
@@ -181,29 +226,50 @@ This ensures compatibility with:
 
 ---
 
-## What You Get in ROS2
+## ROS2 Topics
 
-Atlas exposes a structured set of ROS2 topics.
+### Standard Sensor Topics (Unchanged)
 
-### Sensor Data
-
+- `/camera/image_raw`  
 - `/imu/data`  
 - `/gps/fix`  
+- `/lidar/points`  
 
-### Timing and Synchronization
+---
 
-- `/atlas/pps`  
-- `/atlas/sync`  
+### Atlas Observability Topics
 
-### System Observability
-
+- `/atlas/time/status`  
+- `/atlas/time/source`  
+- `/atlas/time_offset/<sensor>`  
+- `/atlas/sync/events`  
 - `/atlas/health`  
 
-These provide:
+---
 
-- corrected timestamps  
-- synchronization state visibility  
-- system health monitoring
+### Recommended Timing Metadata
+
+Each sensor can expose:
+
+- sensor name
+- time source tier
+- raw timestamp
+- corrected timestamp
+- current offset
+- drift trend
+- confidence
+- sync state
+
+Example:
+
+```yaml
+sensor: lidar_top
+tier: 2
+offset_ms: 3.2
+drift_ms_per_sec: 0.02
+confidence: high
+sync_state: locked
+```
 
 ---
 
@@ -217,13 +283,34 @@ These provide:
 | Synchronization pulse | /atlas/sync | std_msgs/Bool |
 | System health | /atlas/health | diagnostic_msgs/DiagnosticStatus |
 
-Atlas telemetry integrates directly into existing ROS2 pipelines:
+Atlas integrates directly into:
 
 - SLAM  
 - sensor fusion  
 - navigation  
 - diagnostics  
 
+---
+
+## Quick Start
+
+Launch DSIL:
+
+```bash
+ros2 launch atlas_dsil_bridge telemetry.launch.py
+```
+
+List topics:
+
+```bash
+ros2 topic list
+```
+
+Inspect timing:
+
+```bash
+ros2 topic echo /atlas/time_offset/lidar
+```
 ---
 
 ## Runtime Characteristics
@@ -240,10 +327,11 @@ Atlas operates as a deterministic infrastructure layer with minimal overhead.
 | `/gps/fix` | 1–10 Hz | Sensor dependent |
 | `/atlas/health` | 1–5 Hz | System status |
 
-Typical DSIL performance:
-
-- < 1 ms message latency  
-- negligible additional jitter  
+Performance
+- < 1 ms latency overhead
+- negligible jitter
+- < 2% CPU (Jetson Orin Nano)
+- < 20 MB memory
 
 ---
 
@@ -258,9 +346,46 @@ DSIL runs entirely in **user-space**, preserving compute resources for perceptio
 
 ---
 
+## Atlas Telemetry Channel
+
+Atlas communicates via **USB CDC**:
+
+```
+/dev/ttyACM0
+```
+
+Carries:
+
+- IMU data  
+- GNSS data  
+- PPS events  
+- synchronization metadata  
+- system health  
+
+---
+
+## DSIL ROS2 Node
+
+Example:
+
+```
+dsil_telemetry_node
+```
+
+
+Responsibilities:
+
+- decode telemetry stream  
+- publish ROS2 messages  
+- apply timestamp correction  
+- expose sync events  
+- monitor system health  
+
+---
+
 ## TF2 and Coordinate Frames
 
-Atlas acts as a natural **sensor aggregation reference frame**.
+Atlas acts as the **sensor aggregation reference frame**.
 
 <p align="center">
   <img src="/img/Fig 15.png" width="60%" alt="Atlas frame structure" />
@@ -268,14 +393,14 @@ Atlas acts as a natural **sensor aggregation reference frame**.
 
 Typical setup:
 
-- `atlas_link` represents board location  
-- sensor frames defined relative to Atlas  
+- `atlas_link` as reference frame  
+- sensors defined relative to Atlas  
 
 Supports:
 
-- static transform publishers  
-- URDF integration  
-- consistent physical-to-logical mapping  
+- TF2  
+- URDF  
+- static transforms  
 
 ---
 
@@ -285,142 +410,129 @@ Supports:
   <img src="/img/Fig 13.png" width="60%" alt="Atlas ROS2 Integration" />
 </p>
 
-Atlas introduces a **deterministic timing reference** that improves cross-sensor alignment across the ROS2 system.
+Atlas introduces a **deterministic timing boundary** across the system.
 
 ---
 
-## Atlas Telemetry Channel
+## Multi-Sensor Alignment
 
-Atlas communicates with the compute platform via a **USB CDC telemetry channel**.
+### Without Atlas
 
-Example device:
+- drift across sensors  
+- inconsistent timestamps  
+- degraded fusion  
 
-```
-/dev/ttyACM0
+### With Atlas
 
-
-Carries:
-
-- IMU data  
-- GNSS updates  
-- PPS events  
-- synchronization metadata  
-- system health  
-
----
-
-## DSIL ROS2 Node
-
-Example node:
-
-```
-dsil_telemetry_node
-
-
-Responsibilities:
-
-- decode telemetry stream  
-- publish ROS2 messages  
-- apply timestamp alignment  
-- expose sync events  
-- monitor system health  
+- shared time authority  
+- PPS alignment  
+- deterministic timing  
 
 ---
 
 ## ROS2 Driver Compatibility
 
-Atlas works alongside existing ROS2 drivers.
+Atlas works with existing drivers:
 
-| Sensor | ROS2 Driver |
+| Sensor | Driver |
 |---|---|
 | USB Cameras | usb_cam |
 | Ouster LiDAR | ouster_ros |
 | Velodyne LiDAR | velodyne_driver |
 | IMU | microstrain_inertial_driver |
 
-Atlas adds:
-
-- synchronization metadata  
-- timing reference  
-- health telemetry  
-
----
-
-## Multi-Sensor Alignment
-
-Without Atlas:
-
-- timestamp drift  
-- inconsistent sensor timing  
-- degraded SLAM accuracy  
-
-With Atlas:
-
-- deterministic trigger events  
-- PPS alignment  
-- consistent timestamps  
+No driver changes required.
 
 ---
 
 ## Minimal Integration Requirements
-
-Atlas requires:
 
 - Linux system  
 - ROS2 installed  
 - USB connection  
 - DSIL SDK  
 
-No kernel drivers required.
+No kernel modifications required.
 
 ---
 
 ## Why ROS2 Engineers Adopt Atlas
 
-Without Atlas:
+### Without Atlas
 
 - repeated integration effort  
 - fragile synchronization  
-- inconsistent timing  
-- limited observability  
+- invisible timing errors  
+- long debugging cycles  
 
-With Atlas:
+### With Atlas
 
 - deterministic sensor timing  
-- unified telemetry  
-- simplified architecture  
-- faster deployment  
+- observable system behavior  
+- faster bring-up  
+- reproducible results  
 
-Atlas converts sensor integration from:
+Atlas converts:
 
-**custom engineering work → deployable infrastructure**
+> **custom integration → deployable infrastructure**
 
 ---
 
 ## System Boundary
 
-Atlas handles:
+### Atlas handles:
 
-- perception sensor timing  
+- sensor timing  
 - synchronization  
 - telemetry  
 
-Atlas does not handle:
+### Atlas does NOT handle:
 
-- motor control loops  
-- real-time actuation systems  
+- motor control  
+- real-time actuation loops  
 
 ---
 
-## Where This Fits in DSIL SDK
+## Integration Principles
 
-ROS2 integration is the **interface layer** of DSIL.
+Atlas is:
 
-Built on:
+- non-intrusive  
+- deterministic  
+- observable  
+- tier-aware  
 
-- hardware timing engine  
-- synchronization model  
-- telemetry system
+This means:
+
+- drivers stay unchanged  
+- time is corrected consistently  
+- timing quality is explicit  
+- engineers can trust the data  
+
+---
+
+## Why This Matters
+
+Engineers are not asking for “time authority”.
+
+They are asking:
+
+- why fusion is unstable  
+- why replay is inconsistent  
+- why debugging takes days  
+- why sensor swaps break behavior  
+
+Atlas provides a **direct, measurable answer**.
+
+---
+
+## Summary
+
+Atlas does not replace ROS2.
+
+It makes ROS2 sensor data:
+
+> **deterministic, observable, and trustworthy**
 
 ---
 
