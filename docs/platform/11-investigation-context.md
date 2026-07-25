@@ -7,21 +7,21 @@ sidebar_label: Investigation Context™
 
 ## Overview
 
-Investigation Context™ 是 Atlas Runtime Governance™ 中统一的调查上下文对象。
+Investigation Context™ is the unified investigation context object in Atlas Runtime Governance™.
 
-它将 Runtime Investigation 所需的证据、历史知识和调查信息组织成一个完整的调查视图，使工程师无需在多个系统、多个日志和多个调查记录之间来回切换。
+It organizes the evidence, historical knowledge, and investigation information required for Runtime Investigation into a complete investigation view, eliminating the need for engineers to constantly switch between multiple systems, logs, and investigation records.
 
-Investigation Context 不产生新的运行时数据，也不生成调查结论。
+Investigation Context does not produce new runtime data, nor does it generate investigation conclusions.
 
-它负责组织调查信息。
+It is responsible for organizing investigation information.
 
 ---
 
 # Why Investigation Context?
 
-一次 Runtime Investigation 往往涉及多个独立来源。
+A Runtime Investigation often involves multiple independent sources.
 
-例如：
+For example:
 
 - REF Ticket
 - Evidence Pack
@@ -30,9 +30,9 @@ Investigation Context 不产生新的运行时数据，也不生成调查结论�
 - Runtime Surface Coverage
 - Investigation Questions
 
-如果这些信息彼此独立，工程师需要不断切换不同系统。
+If this information remains independent, engineers must constantly switch between different systems.
 
-Investigation Context 将它们组织为统一入口。
+Investigation Context organizes them into a unified entry point.
 
 ---
 
@@ -55,15 +55,15 @@ REF Ticket
         Investigation Context
 ```
 
-Investigation Context 是调查对象。
+Investigation Context is the investigation object.
 
-不是调查结果。
+Not the investigation result.
 
 ---
 
 # Investigation Context Components
 
-一个 Investigation Context 可以包括：
+An Investigation Context may include:
 
 ```text
 Investigation Context
@@ -79,17 +79,17 @@ Investigation Context
 └── Context Metadata
 ```
 
-所有内容均为引用或组织。
+All content consists of references or organization.
 
-不复制 Runtime Dataset。
+Does not duplicate Runtime Dataset.
 
 ---
 
 # REF Information
 
-记录本次调查的基础信息。
+Records the basic information for this investigation.
 
-例如：
+For example:
 
 - REF Identifier
 - Incident Summary
@@ -99,15 +99,15 @@ Investigation Context
 - Reported Time
 - Admission Information
 
-REF Information 用于建立调查背景。
+REF Information establishes the investigation background.
 
 ---
 
 # Evidence Pack References
 
-Investigation Context 引用一个或多个 Evidence Pack。
+Investigation Context references one or more Evidence Packs.
 
-例如：
+For example:
 
 ```text
 Investigation Context
@@ -117,19 +117,19 @@ Investigation Context
         └── Candidate EP-C02
 ```
 
-Evidence Pack 保持独立生命周期。
+Evidence Packs maintain independent lifecycles.
 
-Context 不复制 Evidence。
+Context does not duplicate Evidence.
 
 ---
 
 # Runtime Timeline
 
-Investigation Context 引用 Runtime Timeline。
+Investigation Context references Runtime Timeline.
 
-Timeline 用于帮助工程师理解事件发展顺序。
+Timeline helps engineers understand the sequence of event development.
 
-例如：
+For example:
 
 ```text
 Pre-Guard
@@ -143,15 +143,15 @@ Recovery
 Post-Guard
 ```
 
-Timeline 本身不解释事件。
+Timeline itself does not interpret events.
 
 ---
 
 # Runtime Surface Coverage
 
-Investigation Context 可以引用 Runtime Surface Coverage。
+Investigation Context may reference Runtime Surface Coverage.
 
-例如：
+For example:
 
 | Runtime Surface | Coverage |
 |-----------------|----------|
@@ -162,17 +162,17 @@ Investigation Context 可以引用 Runtime Surface Coverage。
 | ROS Topic | ✓ |
 | Power | ✗ |
 
-Surface Coverage 用于说明证据覆盖范围。
+Surface Coverage indicates evidence coverage scope.
 
-不表示问题已经定位。
+Does not indicate that the issue has been located.
 
 ---
 
 # Historical RGA Candidates
 
-Investigation Context 可以包含 Historical Recall 的结果。
+Investigation Context may contain Historical Recall results.
 
-例如：
+For example:
 
 ```text
 Historical RGA
@@ -182,17 +182,17 @@ Historical RGA
         └── Weak Candidate
 ```
 
-Context 保存的是候选结果。
+Context preserves candidate results.
 
-不是调查结论。
+Not investigation conclusions.
 
 ---
 
 # Candidate Investigation Paths
 
-Investigation Context 可以引用多个推荐调查路径。
+Investigation Context may reference multiple recommended investigation paths.
 
-例如：
+For example:
 
 ```text
 Path A
@@ -205,34 +205,34 @@ Path C
 Review Sensor Runtime
 ```
 
-Context 可以提供多个 Investigation Path。
+Context may provide multiple Investigation Paths.
 
-最终由工程师选择。
+The engineer makes the final selection.
 
 ---
 
 # Investigation Questions
 
-Investigation Context 可以保存调查过程中需要回答的问题。
+Investigation Context may preserve questions that need to be answered during the investigation process.
 
-例如：
+For example:
 
-- 是否发生 Driver Restart？
-- Runtime Timeline 是否连续？
-- 是否出现 Runtime Timeout？
-- 是否已有 Historical Pattern？
+- Did a Driver Restart occur?
+- Is the Runtime Timeline continuous?
+- Did a Runtime Timeout occur?
+- Is there an existing Historical Pattern?
 
-这些问题帮助调查聚焦。
+These questions help focus the investigation.
 
-不是自动分析结果。
+Not automatic analysis results.
 
 ---
 
 # Runtime Metadata
 
-Context 可以引用与调查相关的运行时元数据。
+Context may reference runtime metadata relevant to the investigation.
 
-例如：
+For example:
 
 - Runtime Configuration
 - Deployment Metadata
@@ -240,15 +240,15 @@ Context 可以引用与调查相关的运行时元数据。
 - Runtime Environment
 - Export Metadata
 
-Metadata 用于帮助理解调查背景。
+Metadata helps understand the investigation background.
 
 ---
 
 # Context Metadata
 
-Context 本身可以保存元数据。
+Context itself may preserve metadata.
 
-例如：
+For example:
 
 - Context Identifier
 - Creation Time
@@ -256,15 +256,15 @@ Context 本身可以保存元数据。
 - Referenced Historical RGA
 - Context Version
 
-用于管理 Context 生命周期。
+Used to manage Context lifecycle.
 
 ---
 
 # Context Reuse
 
-同一个 Investigation Context 可以服务多个调查参与者。
+The same Investigation Context can serve multiple investigation participants.
 
-例如：
+For example:
 
 ```text
 Investigation Context
@@ -274,112 +274,112 @@ Investigation Context
           └── Sensor Manufacturer FAE
 ```
 
-所有角色引用同一个 Context。
+All roles reference the same Context.
 
-避免重复组织调查信息。
+Avoids duplicating investigation information organization.
 
 ---
 
 # Context Evolution
 
-随着 Investigation 推进，Context 可以持续更新。
+As the Investigation progresses, Context can be continuously updated.
 
-例如：
+For example:
 
 ```text
 Context v1
       │
       ▼
-新增 Historical RGA
+Add Historical RGA
       │
       ▼
 Context v2
       │
       ▼
-新增 Investigation Path
+Add Investigation Path
       │
       ▼
 Context v3
 ```
 
-Context 是持续演进的调查对象。
+Context is a continuously evolving investigation object.
 
-不是一次性生成的文档。
+Not a one-time generated document.
 
 ---
 
 # Investigation Context vs Evidence Pack
 
-Evidence Pack 保存：
+Evidence Pack preserves:
 
 - Runtime Evidence
 - Runtime Timeline
 - Runtime Surface Observation
 
-Investigation Context 保存：
+Investigation Context preserves:
 
-- 调查引用关系
-- 历史知识引用
+- Investigation reference relationships
+- Historical knowledge references
 - Investigation Path
 - Investigation Questions
 
-Evidence Pack 回答：
+Evidence Pack answers:
 
-> 发生了什么？
+> What happened?
 
-Investigation Context 回答：
+Investigation Context answers:
 
-> 我们现在基于哪些证据和知识开展调查？
+> What evidence and knowledge are we currently using to conduct the investigation?
 
 ---
 
 # Investigation Context vs Historical RGA
 
-Historical RGA 保存：
+Historical RGA preserves:
 
-- 历史调查知识
+- Historical investigation knowledge
 - IR
 - LL
 - Investigation Pattern
 
-Investigation Context 保存：
+Investigation Context preserves:
 
-- 当前调查
-- 当前引用
-- 当前 Investigation Path
-- 当前 Historical Recall
+- Current investigation
+- Current references
+- Current Investigation Path
+- Current Historical Recall
 
-Historical RGA 是知识资产。
+Historical RGA is a knowledge asset.
 
-Investigation Context 是当前调查工作空间。
+Investigation Context is the current investigation workspace.
 
 ---
 
 # Design Principles
 
-Investigation Context 遵循以下原则：
+Investigation Context follows these principles:
 
-- 不保存 Runtime Dataset
-- 不复制 Evidence Pack
-- 不复制 Historical RGA
-- 统一组织调查对象
-- 支持多个 Evidence Pack
-- 支持多个 Historical RGA
-- 支持持续演进
-- 不自动生成 Root Cause
-- 不自动生成 Investigation Result
+- Does not preserve Runtime Dataset
+- Does not duplicate Evidence Pack
+- Does not duplicate Historical RGA
+- Unifies investigation object organization
+- Supports multiple Evidence Packs
+- Supports multiple Historical RGA
+- Supports continuous evolution
+- Does not automatically generate Root Cause
+- Does not automatically generate Investigation Result
 
 ---
 
 # Summary
 
-Investigation Context™ 是 Runtime Investigation 的统一调查上下文。
+Investigation Context™ is the unified investigation context for Runtime Investigation.
 
-它将 REF、Evidence Pack、Historical RGA、Runtime Timeline 和调查信息组织成一个完整的调查视图，使 OEM 与 Sensor Manufacturer 能够围绕同一调查上下文协同工作，而无需重复整理运行时证据或历史知识。
+It organizes REF, Evidence Pack, Historical RGA, Runtime Timeline, and investigation information into a complete investigation view, enabling OEM and Sensor Manufacturer to collaborate around the same investigation context without repeatedly organizing runtime evidence or historical knowledge.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Investigation Tier Candidate™
 - Sensor Engagement Pack™
