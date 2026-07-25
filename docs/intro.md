@@ -3,7 +3,7 @@ id: intro
 title: Atlas Runtime Governance
 sidebar_label: Atlas Runtime Governance
 slug: /
-description: Atlas 面向机器人 OEM 与传感器厂商，建立跨 SKU、跨平台、跨场景、可持续复用的运行时证据、调查与组织记忆基础设施。
+description: Atlas provides robot OEMs and sensor manufacturers with sustainable, reusable runtime evidence, investigation, and organizational memory infrastructure across SKUs, platforms, and scenarios.
 hide_title: true
 toc_min_heading_level: 2
 toc_max_heading_level: 2
@@ -11,16 +11,16 @@ toc_max_heading_level: 2
 
 # Atlas Runtime Governance
 
-**机器人运行时智能与调查基础设施**
+**Runtime Intelligence & Investigation Infrastructure for Robotics**
 
-Atlas 天枢面向机器人 OEM 与传感器厂商，持续观察 Sensor 到 SBC 之间的运行时环境，把原本分散、短暂、难以复用的数据，转化为可调查证据、可复用知识和可持续增长的组织能力。
+Designed for robot OEMs and sensor manufacturers, Atlas continuously observes the runtime environment between sensors and SBCs. It transforms fragmented, ephemeral, and hard-to-reuse data into investigable evidence, reusable knowledge, and continuously growing organizational capabilities.
 
 > **From before deployment to after deployment.**  
 > **Observe. Understand. Investigate. Improve. Reuse.**
 
-Atlas 不替代 ROS 2、传感器驱动、Fleet Management、工单系统或现有研发工具链。
+Atlas does not replace ROS 2, sensor drivers, Fleet Management, ticketing systems, or existing R&D toolchains.
 
-Atlas 建立的是机器人行业此前缺失的一层：
+Atlas builds the missing layer in the robotics industry:
 
 > **Runtime Sensor Governance Infrastructure™**
 
@@ -28,33 +28,33 @@ Atlas 建立的是机器人行业此前缺失的一层：
 
 ---
 
-## 机器人进入真实世界之后，问题才真正开始
+## The Real Problems Begin After Robots Enter the Real World
 
-机器人上线后，会持续面对研发环境中难以完整覆盖的运行时变化：
+Once deployed, robots continuously face runtime dynamics that can hardly be fully covered in R&D environments:
 
-- 不同光照、反射、遮挡、温度、振动与湿度条件
-- 不同电源质量、线束状态、总线负载与通信环境
-- 不同 Linux、Driver、Firmware、ROS 与 Host Platform 组合
-- 不同 Robot SKU、Sensor SKU 与部署场景
-- 不同客户现场的操作方式、维护条件与系统负载
+- Diverse lighting, reflection, occlusion, temperature, vibration, and humidity conditions
+- Varying power supply quality, wiring harness states, bus loads, and communication environments
+- Combinations of different Linux, Driver, Firmware, ROS, and Host Platforms
+- Diverse Robot SKUs, Sensor SKUs, and deployment scenarios
+- Varying operational habits, maintenance conditions, and system loads across customer sites
 
-同一款机器人、同一款传感器、同一套软件，在不同现场可能表现出完全不同的运行时行为。
+The same robot model, same sensor model, and same software stack can exhibit completely different runtime behaviors across different operational sites.
 
-真正昂贵的，不只是一次运行时执行失效。
+What is truly expensive is not just a single runtime execution failure.
 
-真正昂贵的是：
+What is truly expensive is:
 
-> **每一次 Runtime Execution Failure（REF），都重新收集日志、重新解释现场、重新寻找证据、重新排查。**
+> **Every Runtime Execution Failure (REF) requires collecting logs from scratch, re-interpreting the site, re-discovering evidence, and troubleshooting all over again.**
 
-调查完成后，经验又散落在工单、邮件、聊天记录、个人电脑和工程师记忆中。
+Once an investigation is completed, the lessons learned remain scattered across tickets, emails, chat logs, local PCs, and individual memory.
 
-下一次相似事件发生，组织再次从零开始。
+When a similar incident occurs next time, the organization starts from square one again.
 
 ---
 
-## Atlas 把一次性排查，变成可持续治理
+## Atlas Turns One-Off Troubleshooting into Sustainable Governance
 
-Atlas 将运行时事件组织为一条完整的证据与知识链：
+Atlas organizes runtime events into a complete evidence and knowledge chain:
 
 ```text
 Atlas Agent
@@ -65,38 +65,38 @@ Persist
     ↓
 Retain
     ↓
-Evidence Pack (证据包)
+Evidence Pack
     ↓
-Historical RGA Recall (历史排查案例召回）
+Historical RGA Recall
     ↓
 OEM / Sensor Investigation
     ↓
-IR  (Investigation Result 调查结果) / LL (Lesson Learned 经验沉淀）
+IR (Investigation Result) / LL (Lesson Learned)
     ↓
-Assist Vault （运行时知识资产库）
+Assist Vault (Runtime Knowledge Asset Library)
     ↓
 Future REF Reuse
 ```
 
-Atlas 不只是帮助团队关闭一个工单。
+Atlas does more than just help teams close a ticket.
 
-Atlas 让每一次调查都产生新的组织资产，并成为下一次调查的起点。
+Atlas ensures that every investigation generates new organizational assets and serves as the starting point for the next one.
 
 ---
 
-## Atlas 的核心价值
+## Core Value of Atlas
 
-### Evidence-Driven，不靠意见推动调查
+### Evidence-Driven, Not Driven by Opinions
 
-Atlas 将异常前后的运行时数据组织为统一 Evidence Pack。
+Atlas organizes runtime data before and after an anomaly into a unified Evidence Pack.
 
-团队围绕同一份有时间窗口、有来源、有边界、有完整性记录的证据开展调查，而不是围绕不同版本的日志反复争论。
+Teams conduct investigations around a single piece of evidence with defined time windows, sources, boundaries, and integrity records, rather than arguing back and forth over different log versions.
 
-### Historical First，不从零开始
+### Historical First, Never Start from Zero
 
-每一次 REF 都优先召回 Historical RGA。
+Every REF prioritizes recalling Historical RGA (Runtime Governance Analysis/Asset).
 
-调查团队可以参考过去已经完成的：
+The investigation team can refer to previously completed:
 
 - Investigation Result
 - Lesson Learned
@@ -106,114 +106,114 @@ Atlas 将异常前后的运行时数据组织为统一 Evidence Pack。
 - Recovery Pattern
 - Why Retrieved
 
-历史案例不会自动升级为当前事件的根因结论，但会为工程师提供更快、更有边界的调查入口。
+Historical cases do not automatically become the root-cause conclusion for current incidents, but they provide engineers with faster, bounded investigation entry points.
 
-### Cross-Team Collaboration，统一 OEM 与 Sensor 的调查上下文
+### Cross-Team Collaboration, Unifying Investigation Context for OEMs and Sensor Vendors
 
-Atlas 在 OEM Tier 1、Tier 2、Tier 3 与 Sensor FAE 之间建立统一的证据和调查上下文。
+Atlas establishes a unified evidence and investigation context across OEM Tier 1, Tier 2, Tier 3, and Sensor FAEs.
 
-OEM 不再向传感器厂发送零散日志。
+OEMs no longer send fragmented logs to sensor vendors.
 
-Sensor FAE 不再从头猜测现场发生了什么。
+Sensor FAEs no longer guess what happened on site from scratch.
 
-双方围绕同一 REF、同一 Evidence Pack 和同一历史上下文开展协作。
+Both sides collaborate around the exact same REF, Evidence Pack, and historical context.
 
-### Reusable Knowledge，让工程经验持续增值
+### Reusable Knowledge, Continuously Appreciating Engineering Experience
 
-调查完成后，IR、LL 与 RGA 被结构化保存。
+After an investigation concludes, IR, LL, and RGA are saved in a structured manner.
 
-新的调查结果可以服务：
+New investigation results can serve:
 
-- 下一个 REF
-- 下一个 Robot SKU
-- 下一个 Sensor SKU
-- 下一个 Host Platform
-- 下一个部署场景
-- 下一个客户项目
+- The next REF
+- The next Robot SKU
+- The next Sensor SKU
+- The next Host Platform
+- The next deployment scenario
+- The next customer project
 
-Atlas 将一次性的工程成本，转化为可持续复用的组织能力。
+Atlas turns one-off engineering costs into sustainably reusable organizational capabilities.
 
 ### Your Data, Your Control
 
-客户原始数据、Evidence Pack 与内部调查资产始终由客户控制。
+Customer raw data, Evidence Packs, and internal investigation assets remain under customer control at all times.
 
-Atlas 支持私有部署、保留策略、导出策略、访问边界与去标识化复用。
+Atlas supports private deployment, retention policies, export policies, access boundaries, and anonymized reuse.
 
-共享的不是客户数据。
+What is shared is not customer data.
 
-共享的是经过授权的调查能力与组织经验。
+What is shared is authorized investigation capability and organizational experience.
 
 ---
 
-## 跨 SKU、跨平台、跨场景
+## Cross-SKU, Cross-Platform, Cross-Scenario
 
-Atlas 不是为单一机器人、单一传感器或单一客户问题编写的项目型 Glue Code。
+Atlas is not a piece of project-based glue code written for a single robot, single sensor, or single customer issue.
 
-Atlas 使用统一的 Runtime Governance Model，在产品差异之上保持一致的证据结构、调查流程和历史资产模型。
+Using a unified Runtime Governance Model, Atlas maintains a consistent evidence structure, investigation process, and historical asset model on top of product differences.
 
-### 跨 Robot SKU
+### Cross-Robot SKU
 
-同一 OEM 可以逐步扩展到不同机器人型号，而不需要为每个 SKU 重新构建一套调查系统。
+The same OEM can gradually scale to different robot models without building a new investigation system for every SKU.
 
-### 跨 Sensor SKU
+### Cross-Sensor SKU
 
-同一传感器厂商可以在统一治理框架下管理 LiDAR、Camera、IMU、GNSS、Radar 等不同产品。
+The same sensor vendor can manage diverse products such as LiDAR, Camera, IMU, GNSS, and Radar under a unified governance framework.
 
-### 跨 Host Platform
+### Cross-Host Platform
 
-Atlas 可适配 x86、NVIDIA Jetson、ARM SBC、ROS 2 与客户自定义运行环境。
+Atlas adapts to x86, NVIDIA Jetson, ARM SBC, ROS 2, and custom customer runtime environments.
 
-### 跨部署场景
+### Cross-Deployment Scenario
 
-餐厅、酒店、医院、商场、仓库、工厂与户外环境可以使用统一治理框架，同时保留各自的 Runtime Profile 与 Investigation Context。
+Restaurants, hotels, hospitals, shopping malls, warehouses, factories, and outdoor environments can share a unified governance framework while retaining their respective Runtime Profiles and Investigation Contexts.
 
-> **Atlas 的目标不是让每个项目多一个脚本。**
+> **Atlas’s goal is not to add another script to every project.**
 >
-> **Atlas 的目标是让整个组织拥有一套可以持续扩展的运行时治理基础设施。**
+> **Atlas’s goal is to empower the entire organization with a continuously scalable runtime governance infrastructure.**
 
 ---
 
-## 两条产品线，一个治理平台
+## Two Product Lines, One Governance Platform
 
 ### [Atlas Runtime Sensor Governance™](/products/runtime-sensor-governance)
 
-**面向传感器厂商**
+**For Sensor Manufacturers**
 
-帮助 Sensor CTO、FAE Lead、Firmware、Driver、Validation 与 Product Team 建立跨 OEM、跨产品、跨场景的运行时治理能力。
+Empowers Sensor CTOs, FAE Leads, Firmware, Driver, Validation, and Product Teams to build runtime governance capabilities across OEMs, products, and scenarios.
 
-重点价值包括：
+Key value includes:
 
-- 建立 Sensor Runtime Profiles
-- 沉淀 Historical Sensor RGA
-- 提升 FAE 调查效率
-- 统一 OEM 协同调查材料
-- 复用跨客户、跨项目的调查经验
-- 将现场问题转化为产品改进输入
+- Establishing Sensor Runtime Profiles
+- Accumulating Historical Sensor RGA
+- Improving FAE investigation efficiency
+- Unifying OEM collaborative investigation materials
+- Reusing investigation experience across customers and projects
+- Turning field issues into product improvement inputs
 
 ### [Atlas Runtime Investigation™](/products/runtime-investigation)
 
-**面向机器人 OEM**
+**For Robot OEMs**
 
-帮助 CTO、Engineering VP、Tier 1、Tier 2、Tier 3 与 Customer Support 建立标准化、可运营、可衡量的运行时调查体系。
+Empowers CTOs, Engineering VPs, Tier 1, Tier 2, Tier 3, and Customer Support teams to build a standardized, operable, and measurable runtime investigation system.
 
-重点价值包括：
+Key value includes:
 
-- 统一运行时证据
-- 缩短 Investigation Time
-- 降低 Tier 3 重复投入
-- 提升 Historical RGA Reuse
-- 建立组织级 Assist Vault
-- 让每一次 REF 都产生长期价值
+- Unifying runtime evidence
+- Shortening Investigation Time
+- Reducing repetitive Tier 3 workload
+- Increasing Historical RGA Reuse
+- Establishing an enterprise-grade Assist Vault
+- Making every REF yield long-term value
 
 ---
 
-## 不同角色为什么需要 Atlas
+## Why Different Roles Need Atlas
 
 ### CTO / Engineering VP
 
-Atlas 将运行时调查从不可见的工程消耗，转化为可以衡量的治理能力。
+Atlas transforms runtime investigation from invisible engineering overhead into measurable governance capabilities.
 
-管理层可以持续观察：
+Management can continuously track:
 
 - REF Trend
 - Median Time to Closure
@@ -226,29 +226,29 @@ Atlas 将运行时调查从不可见的工程消耗，转化为可以衡量的�
 
 ### OEM Tier 1
 
-Tier 1 可以使用统一 Intake 与 Evidence Reference 完成事件接收和升级，不再依赖自由文本描述和临时截图。
+Tier 1 can process event intake and escalation using unified Intake and Evidence References, no longer relying on free-text descriptions or ad-hoc screenshots.
 
 ### OEM Tier 2
 
-Tier 2 可以从完整 Investigation Context 和 Historical RGA 开始调查，减少日志整理、时间对齐和重复排查。
+Tier 2 can start investigations with complete Investigation Context and Historical RGA, reducing time spent on log aggregation, time alignment, and repetitive troubleshooting.
 
 ### OEM Tier 3
 
-Tier 3 只参与真正需要深度工程判断的少数事件，而不是长期承担证据收集和重复分析。
+Tier 3 engages only in the few incidents that truly require deep engineering judgment, rather than being bogged down long-term by evidence gathering and redundant analysis.
 
 ### Sensor CTO / FAE Lead
 
-传感器厂可以围绕统一 Sensor Engagement Pack 开展调查，建立跨 OEM、跨 SKU、跨项目持续复用的 Sensor RGA。
+Sensor vendors can conduct investigations around a unified Sensor Engagement Pack, building Sensor RGA that is sustainably reusable across OEMs, SKUs, and projects.
 
 ### Sensor FAE
 
-FAE 可以在明确的时间窗口、Runtime Surface、OEM Context 与历史调查路径基础上工作，不再从零理解客户现场。
+FAEs can work with explicit time windows, Runtime Surfaces, OEM Contexts, and historical investigation paths, no longer having to decipher customer sites from scratch.
 
 ---
 
-## Atlas 守护的运行时边界
+## Runtime Boundaries Guarded by Atlas
 
-Atlas 专注于机器人系统中最容易被忽略、但运行时问题高发的边界：
+Atlas focuses on the boundary within robotic systems that is most easily overlooked yet sees a high incidence of runtime issues:
 
 ```text
 Sensor
@@ -262,7 +262,7 @@ SBC
 ROS Topic / Application Input
 ```
 
-Atlas 持续观察并组织：
+Atlas continuously observes and organizes:
 
 - Sensor Runtime
 - Power
@@ -274,24 +274,24 @@ Atlas 持续观察并组织：
 - ROS Topic
 - Application Input
 
-Atlas 不负责：
+Atlas does NOT:
 
-- 自动确认 Root Cause
-- 自动分配责任
-- 自动生成最终 Investigation Result
-- 替代工程师作出最终技术判断
+- Automatically confirm Root Causes
+- Automatically assign liabilities
+- Automatically generate final Investigation Results
+- Replace engineers in making final technical judgments
 
-Atlas 负责组织证据、召回历史、建立上下文并缩小调查范围。
+Atlas is responsible for organizing evidence, recalling history, establishing context, and narrowing down the investigation scope.
 
-IR 与 LL 始终由获得授权的工程师完成。
+IR and LL are always completed by authorized engineers.
 
 ---
 
-## 从 Pilot 到组织级基础设施
+## From Pilot to Enterprise Infrastructure
 
-Atlas 以企业级定制化项目交付。
+Atlas is delivered through enterprise-grade customized engagements.
 
-典型路径为：
+The typical path is:
 
 ```text
 Pilot
@@ -305,38 +305,38 @@ Cross-SKU Expansion
 Organization-wide Runtime Governance
 ```
 
-Atlas 可以从一个 Robot Model、一个 Sensor Product 或一个高频 REF 场景开始，逐步扩展到：
+Atlas can start from a single Robot Model, Sensor Product, or high-frequency REF scenario, and gradually expand to:
 
-- 更多 Robot SKU
-- 更多 Sensor SKU
-- 更多 Host Platform
-- 更多客户现场
-- 更多调查团队
-- 更完整的 Historical RGA
-- 更成熟的组织治理指标
-
----
-
-## 最终目标
-
-Atlas 的最终目标，不只是更快关闭一次事故。
-
-Atlas 要帮助机器人企业与传感器厂商建立一种新的组织能力：
-
-> **每一次 REF 都从历史开始。**
->
-> **每一个新案例都增加未来能力。**
->
-> **每一次调查都让整个组织更强。**
-
-工程师继续创造新的机器人、新的传感器和新的产品。
-
-Atlas 负责持续观察运行时、组织证据、保存历史，并让过去的工程经验不断创造新的价值。
+- More Robot SKUs
+- More Sensor SKUs
+- More Host Platforms
+- More customer sites
+- More investigation teams
+- More comprehensive Historical RGA
+- More mature organizational governance metrics
 
 ---
 
-## 继续了解
+## The Ultimate Goal
 
-- [了解 Atlas Runtime Sensor Governance™](/products/runtime-sensor-governance)
-- [了解 Atlas Runtime Investigation™](/products/runtime-investigation)
-- [访问 SensorDeck 官方网站](https://sensordeck.tech)
+The ultimate goal of Atlas is not just closing an incident faster.
+
+Atlas aims to help robotics companies and sensor manufacturers build a new organizational capability:
+
+> **Every REF starts from history.**
+>
+> **Every new case enhances future capability.**
+>
+> **Every investigation makes the entire organization stronger.**
+
+Engineers continue to create new robots, sensors, and products.
+
+Atlas continuously observes runtime, organizes evidence, preserves history, and enables past engineering experience to continuously generate new value.
+
+---
+
+## Learn More
+
+- [Explore Atlas Runtime Sensor Governance™](/products/runtime-sensor-governance)
+- [Explore Atlas Runtime Investigation™](/products/runtime-investigation)
+- [Visit Official SensorDeck Website](https://sensordeck.tech)
