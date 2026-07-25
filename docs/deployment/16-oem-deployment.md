@@ -7,9 +7,9 @@ sidebar_label: OEM Deployment
 
 ## Overview
 
-Atlas Runtime Governance™ 可以接入已有机器人车队，也可以从单机、离线或试点环境开始部署。
+Atlas Runtime Governance™ can be integrated into existing robot fleets, or deployed starting from a single robot, offline, or pilot environment.
 
-OEM 不需要替换现有的：
+OEMs do not need to replace their existing:
 
 - Fleet Management
 - Cloud Server
@@ -17,7 +17,7 @@ OEM 不需要替换现有的：
 - Log Platform
 - Customer Support System
 
-Atlas 作为独立的 Runtime Governance Layer，连接机器人现场、运行时证据、调查流程和 Historical RGA。
+As an independent Runtime Governance Layer, Atlas connects the robot site, runtime evidence, investigation workflows, and Historical RGA.
 
 ```text
 Deployment Runtime
@@ -38,17 +38,17 @@ Runtime Investigation
 Historical RGA
 ```
 
-为了最大化 Atlas 的调查价值，OEM 部署前应完成三项基础准备：
+To maximize the investigation value of Atlas, OEMs should complete three foundational preparations prior to deployment:
 
-1. 建立 System 与 Sensor Runtime Surface Coverage  
-2. 预构建 OEM Historical RGA  
-3. 协同 Sensor Factory 预构建 Sensor Historical RGA  
+1. Establish System and Sensor Runtime Surface Coverage  
+2. Pre-build OEM Historical RGA  
+3. Collaboratively Pre-build Sensor Historical RGA with Sensor Factories  
 
 ---
 
 # Minimum Deployment Requirements
 
-Atlas 的最小部署条件包括：
+The minimum deployment requirements for Atlas include:
 
 ```text
 Runtime Compute
@@ -64,13 +64,13 @@ Export Path
 Investigation Owner
 ```
 
-这些条件不依赖特定 Cloud、数据库或机器人平台。
+These conditions do not depend on a specific Cloud, database, or robotics platform.
 
 ---
 
 # Runtime Surface Requirements
 
-Atlas 观察的 Runtime Surface 分为两层：
+The Runtime Surface observed by Atlas is divided into two layers:
 
 ```text
 System Surface
@@ -79,27 +79,27 @@ System Surface
 Sensor Surface
 ```
 
-System Surface 是机器人运行时的主要治理边界。
+The System Surface is the main governance boundary for robot runtime.
 
-Sensor Surface 是传感器及其底层接口的运行时边界。
+The Sensor Surface is the runtime boundary for sensors and their underlying interfaces.
 
-两类 Surface 应进入同一 Runtime Timeline。
+Both types of Surfaces should enter the same Runtime Timeline.
 
 ---
 
 # 1. System Surface Requirements
 
-System Surface 用于观察机器人主系统是否正确接收、承载和传递 Sensor Runtime Data。
+The System Surface is used to observe whether the main robot system correctly receives, handles, and transfers Sensor Runtime Data.
 
-建议优先接入以下 Surface。
+It is recommended to prioritize integrating the following Surfaces.
 
 ---
 
 ## Power Surface
 
-Power Surface 用于观察供电状态和复位事件。
+The Power Surface is used to observe power supply status and reset events.
 
-建议包括：
+Recommended inclusions:
 
 - Main Power State
 - Sensor Rail State
@@ -110,20 +110,20 @@ Power Surface 用于观察供电状态和复位事件。
 - Overcurrent Event
 - Power Enable State
 
-典型调查问题：
+Typical investigation questions:
 
-- Sensor 是否因供电波动掉线？
-- SBC、Hub 或 Sensor 是否发生复位？
-- 多个 Sensor 是否在同一时间失效？
-- Runtime Failure 是否与 Power Event 同步？
+- Did the Sensor drop offline due to power fluctuations?
+- Did a reset occur on the SBC, Hub, or Sensor?
+- Did multiple Sensors fail at the same time?
+- Did the Runtime Failure synchronize with a Power Event?
 
 ---
 
 ## Linux Runtime Surface
 
-Linux Runtime Surface 用于观察主机操作系统的运行状态。
+The Linux Runtime Surface is used to observe the operational status of the host operating system.
 
-建议包括：
+Recommended inclusions:
 
 - Kernel Event
 - Device Enumeration
@@ -138,21 +138,21 @@ Linux Runtime Surface 用于观察主机操作系统的运行状态。
 - Kernel Warning
 - System Restart
 
-典型调查问题：
+Typical investigation questions:
 
-- Sensor 掉线前是否出现 Kernel Event？
-- Driver 是否重启？
-- CPU 或 Memory Pressure 是否造成数据中断？
-- Device 是否从 Linux 中消失？
-- Network Interface 是否发生 Link Transition？
+- Did a Kernel Event occur before the Sensor dropped offline?
+- Did the Driver restart?
+- Did CPU or Memory Pressure cause data interruption?
+- Did the Device disappear from Linux?
+- Did the Network Interface undergo a Link Transition?
 
 ---
 
 ## Communication Surface
 
-Communication Surface 用于观察 Sensor 与 SBC 之间的数据通道。
+The Communication Surface is used to observe the data channels between the Sensor and the SBC.
 
-建议根据机器人架构接入：
+Recommended inclusions based on robot architecture:
 
 - Ethernet
 - USB
@@ -166,7 +166,7 @@ Communication Surface 用于观察 Sensor 与 SBC 之间的数据通道。
 - PPS
 - Synchronization Signal
 
-建议记录：
+Recommended recordings:
 
 - Link State
 - Packet Rate
@@ -182,9 +182,9 @@ Communication Surface 用于观察 Sensor 与 SBC 之间的数据通道。
 
 ## Driver Surface
 
-Driver Surface 用于观察 Sensor Driver 的运行状态。
+The Driver Surface is used to observe the operational status of the Sensor Driver.
 
-建议包括：
+Recommended inclusions:
 
 - Driver Process State
 - Driver Start / Stop
@@ -197,15 +197,15 @@ Driver Surface 用于观察 Sensor Driver 的运行状态。
 - Firmware Communication State
 - Driver Version
 
-Driver Surface 连接底层设备状态与上层 Runtime Output。
+The Driver Surface connects underlying device status with upper-layer Runtime Output.
 
 ---
 
 ## ROS / Application Surface
 
-ROS 或 Application Surface 用于观察机器人应用实际接收到的数据。
+The ROS or Application Surface is used to observe the data actually received by the robot application.
 
-建议包括：
+Recommended inclusions:
 
 - ROS Node State
 - ROS Topic Frequency
@@ -217,20 +217,20 @@ ROS 或 Application Surface 用于观察机器人应用实际接收到的数据�
 - Runtime State Transition
 - Health Flag
 
-典型调查问题：
+Typical investigation questions:
 
-- Sensor 仍在线，但 ROS Topic 是否停止？
-- Driver 有数据，但 Application Callback 是否中断？
-- Topic Frequency 是否在事件前下降？
-- 多个 Topic 是否同时发生异常？
+- Is the Sensor still online, but the ROS Topic stopped?
+- Is there data from the Driver, but the Application Callback interrupted?
+- Did the Topic Frequency drop prior to the event?
+- Did multiple Topics experience anomalies simultaneously?
 
 ---
 
 ## Robot Runtime State
 
-建议记录与 REF 相关的机器人运行状态。
+It is recommended to record robot operating states related to the REF.
 
-例如：
+For example:
 
 - Navigation State
 - Localization State
@@ -242,23 +242,23 @@ ROS 或 Application Surface 用于观察机器人应用实际接收到的数据�
 - Stop Command
 - Recovery State
 
-这些状态用于建立 Runtime Investigation Context。
+These states are used to establish the Runtime Investigation Context.
 
-Atlas 不用它们自动判断 Root Cause。
+Atlas does not use them to automatically infer Root Cause.
 
 ---
 
 # 2. Sensor Surface Requirements
 
-Sensor Surface 聚焦 Sensor 自身及其直接 Runtime Output。
+The Sensor Surface focuses on the Sensor itself and its direct Runtime Output.
 
-每一种 Sensor 应至少建立一个明确的 Surface Definition。
+At least one clear Surface Definition should be established for each type of Sensor.
 
 ---
 
 ## Sensor Identity
 
-建议记录：
+Recommended recordings:
 
 - Sensor Type
 - Manufacturer
@@ -269,15 +269,15 @@ Sensor Surface 聚焦 Sensor 自身及其直接 Runtime Output。
 - Interface Type
 - Sensor Identifier
 
-Sensor Identifier 可以采用内部匿名 ID。
+An internal anonymous ID can be used for the Sensor Identifier.
 
-不要求向外部公开 Serial Number。
+Publicly disclosing the Serial Number to external parties is not required.
 
 ---
 
 ## Sensor Runtime State
 
-建议包括：
+Recommended inclusions:
 
 - Online / Offline
 - Initialized / Not Initialized
@@ -293,7 +293,7 @@ Sensor Identifier 可以采用内部匿名 ID。
 
 ## Sensor Data Surface
 
-根据 Sensor 类型记录关键 Runtime Output。
+Record key Runtime Output based on the Sensor type.
 
 ### LiDAR
 
@@ -349,7 +349,7 @@ Sensor Identifier 可以采用内部匿名 ID。
 
 ## Sensor Timing Surface
 
-建议记录：
+Recommended recordings:
 
 - Sensor Timestamp
 - Host Timestamp
@@ -361,13 +361,13 @@ Sensor Identifier 可以采用内部匿名 ID。
 - Timestamp Jump
 - Timestamp Drift
 
-时间同步越完整，Cross-stream Investigation 的价值越高。
+The more complete the time synchronization, the higher the value of Cross-stream Investigation.
 
 ---
 
 # Recommended Minimum Surface Set
 
-为了形成最小可用 Evidence Chain，建议一款关键 Sensor 至少覆盖：
+To form a minimum viable Evidence Chain, it is recommended that a key Sensor covers at least:
 
 ```text
 Sensor Runtime
@@ -383,7 +383,7 @@ Driver
 ROS Topic / Application Input
 ```
 
-例如，LiDAR 的最小覆盖可以是：
+For example, the minimum coverage for LiDAR could be:
 
 ```text
 LiDAR Stream
@@ -399,7 +399,7 @@ LiDAR Driver
 Point Cloud Topic
 ```
 
-Camera 的最小覆盖可以是：
+The minimum coverage for a Camera could be:
 
 ```text
 Camera Stream
@@ -415,27 +415,27 @@ Camera Driver
 Image Topic
 ```
 
-未接入的 Surface 必须明确标记为：
+Unintegrated Surfaces must be explicitly marked as:
 
 ```text
 Not Observed
 ```
 
-不能推断为正常。
+They cannot be inferred as normal.
 
 ---
 
 # Unified Time Requirement
 
-所有 System Surface 与 Sensor Surface 必须进入统一 Runtime Timeline。
+All System Surfaces and Sensor Surfaces must enter a unified Runtime Timeline.
 
-最低要求：
+Minimum requirements:
 
-- Host System Clock 可用
-- Observation 可以排序
-- Sensor 与 Host Timestamp 可以关联
+- Host System Clock is available
+- Observations can be sorted
+- Sensor and Host Timestamps can be associated
 
-推荐增强：
+Recommended enhancements:
 
 - NTP
 - PTP
@@ -444,32 +444,32 @@ Not Observed
 - Frame Sequence
 - Packet Sequence
 
-Atlas 不要求所有设备都具备硬件同步。
+Atlas does not require all devices to possess hardware synchronization.
 
-但必须记录可用的时间来源和时间精度。
+However, available time sources and time precision must be recorded.
 
 ---
 
 # OEM Historical RGA Pre-build
 
-对于 OEM 而言，最有价值的 Atlas Deployment 不是从空 Historical Repository 开始。
+For OEMs, the most valuable Atlas Deployment does not start from an empty Historical Repository.
 
-建议在正式运行前预构建一批 OEM Historical RGA。
+It is recommended to pre-build a set of OEM Historical RGAs before official operation.
 
-这些 RGA 来自：
+These RGAs originate from:
 
-- 已关闭的客户投诉
-- 已完成的现场调查
-- 已知 Runtime Failure
-- 内部测试案例
-- 已验证的排查经验
-- 已解决的 Sensor / System Integration Issue
+- Closed customer complaints
+- Completed site investigations
+- Known Runtime Failures
+- Internal test cases
+- Verified troubleshooting experience
+- Resolved Sensor / System Integration Issues
 
 ---
 
 # Why Pre-build OEM Historical RGA?
 
-如果没有 Historical RGA：
+If there is no Historical RGA:
 
 ```text
 New REF
@@ -478,7 +478,7 @@ New REF
 Start From Zero
 ```
 
-如果已经预构建 Historical RGA：
+If Historical RGA has been pre-built:
 
 ```text
 New REF
@@ -493,15 +493,15 @@ Known Investigation Path
 Faster Narrowing
 ```
 
-Historical RGA Pre-build 是 Atlas 从第一天产生调查价值的关键。
+Pre-building OEM Historical RGA is key to Atlas generating investigation value from Day One.
 
 ---
 
 # Recommended OEM RGA Coverage
 
-OEM Historical RGA 应优先覆盖高频、高成本和安全相关的 REF。
+OEM Historical RGA should prioritize covering high-frequency, high-cost, and safety-related REFs.
 
-建议从以下类型开始：
+It is recommended to start from the following types:
 
 - Unexpected Stop
 - Obstacle Miss
@@ -512,9 +512,9 @@ OEM Historical RGA 应优先覆盖高频、高成本和安全相关的 REF。
 - Fall
 - Manipulation Failure
 
-不要求首批覆盖全部 REF。
+Covering all REFs in the first batch is not required.
 
-建议选择：
+It is recommended to select:
 
 ```text
 One Robot Model
@@ -528,9 +528,9 @@ Five to Ten Historical Cases
 
 # OEM RGA Should Cover System-level Cases
 
-OEM Historical RGA 可以覆盖多个 Sensor 与多个 System Surface。
+OEM Historical RGA can cover multiple Sensors and multiple System Surfaces.
 
-例如：
+For example:
 
 ```text
 Unexpected Stop
@@ -543,7 +543,7 @@ Unexpected Stop
 └── Navigation State
 ```
 
-或者：
+Or:
 
 ```text
 Localization Failure
@@ -556,7 +556,7 @@ Localization Failure
 └── Localization Process
 ```
 
-OEM RGA 可以包含：
+OEM RGA can include:
 
 - Single-sensor Issue
 - Multi-sensor Interaction
@@ -571,7 +571,7 @@ OEM RGA 可以包含：
 
 # OEM Historical RGA Minimum Fields
 
-每一个预构建 OEM Historical RGA 建议至少包含：
+Each pre-built OEM Historical RGA is recommended to contain at least:
 
 ```text
 OEM Historical RGA
@@ -590,13 +590,13 @@ OEM Historical RGA
 └── Authorization Metadata
 ```
 
-如果历史事件没有完整 Evidence Pack，也可以先建立：
+If historical events lack a complete Evidence Pack, you can first establish:
 
 ```text
 Mode B Historical RGA
 ```
 
-仅保留：
+Retaining only:
 
 - Runtime Signature
 - Investigation Pattern
@@ -604,25 +604,25 @@ Mode B Historical RGA
 - IR
 - LL
 
-后续新 REF 仍可进行 Partial Recall。
+Subsequent new REFs can still undergo Partial Recall.
 
 ---
 
 # Most Valuable OEM Pre-build Cases
 
-优先级最高的历史案例通常具有以下特征：
+The highest-priority historical cases usually possess the following characteristics:
 
-- 曾多次发生
-- 消耗大量 Tier 3 工时
-- 涉及多个团队
-- 曾升级到 Sensor Factory
-- 曾形成 Engineering War Room
-- 已有明确 Investigation Path
-- 已有可复用 Lesson Learned
+- Have occurred multiple times
+- Consume large amounts of Tier 3 labor hours
+- Involve multiple teams
+- Have been escalated to the Sensor Factory
+- Have required an Engineering War Room
+- Have a clear Investigation Path
+- Have reusable Lessons Learned
 
-不应只选择最严重的事件。
+Do not select only the most severe events.
 
-高频重复事件通常具有更高的短期 ROI。
+High-frequency repetitive events typically offer higher short-term ROI.
 
 ---
 
@@ -650,16 +650,16 @@ Create Historical RGA
 Import into OEM RGA Repository
 ```
 
-建议由以下人员共同完成：
+It is recommended to complete this jointly by:
 
 - Tier 2 Engineer
 - Tier 3 Engineer
 - Customer Support Lead
 - Product Owner
 
-Atlas 负责标准化结构。
+Atlas is responsible for standardizing the structure.
 
-工程人员负责确认 IR 与 LL。
+Engineering personnel are responsible for confirming IR and LL.
 
 ---
 
@@ -676,21 +676,21 @@ Atlas 负责标准化结构。
 | IR Boundary | OEM Runtime Investigation | Sensor Investigation |
 | Repository | OEM Private RGA Repository | Sensor Private RGA Repository |
 
-双方不共享整个 Historical Repository。
+Neither side shares the entire Historical Repository.
 
-在具体协作中通过 Sensor Engagement Pack 引用同一 OEM Evidence Pack。
+In specific collaborations, they reference the same OEM Evidence Pack through the Sensor Engagement Pack.
 
 ---
 
 # Deployment Infrastructure
 
-Atlas 可以适配三种常见 OEM 基础设施。
+Atlas can adapt to three common OEM infrastructures.
 
 ---
 
 ## Existing Fleet Cloud
 
-适用于已有：
+Applicable to environments with existing:
 
 - Fleet Management
 - Cloud Server
@@ -715,7 +715,7 @@ OEM Cloud / Headquarters
   └── Historical RGA Repository
 ```
 
-Atlas 可以复用：
+Atlas can reuse:
 
 - Existing Robot-to-cloud Transport
 - REST API
@@ -724,13 +724,13 @@ Atlas 可以复用：
 - Object Storage
 - Internal File Service
 
-不要求替换 OEM 现有 Cloud。
+Replacing the OEM's existing Cloud is not required.
 
 ---
 
 ## Headquarters Server Only
 
-适用于没有完整 Fleet Cloud，但具备总部服务器的 OEM。
+Applicable to OEMs that lack a full Fleet Cloud but possess a headquarters server.
 
 ```text
 Robot
@@ -745,7 +745,7 @@ Scheduled / Manual Export
 Headquarters Server
 ```
 
-可通过：
+Upload can be completed via:
 
 - Wi-Fi
 - LAN
@@ -754,13 +754,11 @@ Headquarters Server
 - Docking Station
 - Removable Storage
 
-完成上传。
-
 ---
 
 ## No Existing Infrastructure
 
-适用于：
+Applicable to:
 
 - Early-stage OEM
 - Pilot Project
@@ -784,7 +782,7 @@ Manual Export
 Investigation Workstation
 ```
 
-最小配置包括：
+The minimum configuration includes:
 
 - Atlas Agent
 - Local Runtime Dataset
@@ -792,13 +790,13 @@ Investigation Workstation
 - Investigation Workstation
 - Historical RGA Repository
 
-OEM 不需要先建设 Cloud 或数据库。
+The OEM does not need to build a Cloud or database first.
 
 ---
 
 # Storage and Export Requirements
 
-Atlas Agent 最低需要支持：
+The Atlas Agent minimally needs to support:
 
 - Continuous Persist
 - Rolling Buffer
@@ -806,7 +804,7 @@ Atlas Agent 最低需要支持：
 - Dataset Lock
 - Time-range Export
 
-建议起始策略：
+Recommended starting strategy:
 
 ```text
 rolling_buffer_hours: 48
@@ -814,7 +812,7 @@ overwrite_policy: circular
 dataset_lock_on_ref: enabled
 ```
 
-支持的 Export Mode 包括：
+Supported Export Modes include:
 
 - Online Upload
 - Scheduled Upload
@@ -826,7 +824,7 @@ dataset_lock_on_ref: enabled
 
 # OEM Information Required
 
-OEM 部署时建议提供：
+It is recommended that the OEM provides the following information during deployment:
 
 ## Robot Information
 
@@ -871,9 +869,9 @@ OEM 部署时建议提供：
 - Sensor FAE Contact
 - Data Authorization Policy
 
-OEM 不需要提供算法源码。
+The OEM is not required to provide algorithm source code.
 
-Atlas 只观察获得授权的 Runtime Surface。
+Atlas only observes authorized Runtime Surfaces.
 
 ---
 
@@ -913,19 +911,19 @@ Fleet and ROI Expansion
 
 ## Phase 1 — Surface Mapping
 
-选择：
+Select:
 
 - One Robot Model
 - One Critical Sensor
 - One Common REF
 
-完成 System 与 Sensor Surface Mapping。
+Complete System and Sensor Surface Mapping.
 
 ---
 
 ## Phase 2 — OEM RGA Pre-build
 
-建议导入：
+It is recommended to import:
 
 - Five to Ten Historical Cases
 - Three to Five REF Types
@@ -936,7 +934,7 @@ Fleet and ROI Expansion
 
 ## Phase 3 — Agent Deployment
 
-确认：
+Confirm:
 
 - Observe
 - Persist
@@ -949,7 +947,7 @@ Fleet and ROI Expansion
 
 ## Phase 4 — Investigation Pilot
 
-验证：
+Verify:
 
 - REF Intake
 - Historical Recall
@@ -963,7 +961,7 @@ Fleet and ROI Expansion
 
 ## Phase 5 — Fleet and ROI
 
-扩展到：
+Expand to:
 
 - Multiple Robot Models
 - Multiple Sensors
@@ -977,7 +975,7 @@ Fleet and ROI Expansion
 
 # Maximum-value Deployment
 
-Atlas 的最大价值来自三项能力同时建立：
+The maximum value of Atlas stems from building three capabilities simultaneously:
 
 ```text
 Complete Runtime Surface Coverage
@@ -987,13 +985,13 @@ Pre-built Historical RGA
 Continuous Runtime Investigation
 ```
 
-仅部署 Agent，可以获得 Runtime Evidence。
+Deploying only the Agent yields Runtime Evidence.
 
-加入 OEM Historical RGA，可以让 OEM Investigation 从历史经验开始。
+Adding OEM Historical RGA allows OEM Investigations to start from historical experience.
 
-加入 Sensor Historical RGA，可以让 Sensor FAE 从产品与环境经验开始。
+Adding Sensor Historical RGA enables Sensor FAEs to start from product and environment experience.
 
-三者结合，才能实现：
+Combining all three achieves:
 
 - Faster Investigation
 - Higher RGA Reuse
@@ -1005,9 +1003,9 @@ Continuous Runtime Investigation
 
 # Summary
 
-OEM Deployment 不仅是安装 Atlas Agent。
+OEM Deployment is more than just installing the Atlas Agent.
 
-完整部署包括三个核心基础：
+A complete deployment includes three core foundations:
 
 ```text
 1. System and Sensor Runtime Surface Coverage
@@ -1017,21 +1015,21 @@ OEM Deployment 不仅是安装 Atlas Agent。
 3. Sensor Historical RGA Pre-build
 ```
 
-System Surface 应覆盖 Power、Linux、Communication、Driver、ROS 和 Robot Runtime State。
+The System Surface should cover Power, Linux, Communication, Driver, ROS, and Robot Runtime State.
 
-Sensor Surface 应覆盖 Sensor State、Data Output、Timing、Interface、Firmware 和 Driver。
+The Sensor Surface should cover Sensor State, Data Output, Timing, Interface, Firmware, and Driver.
 
-OEM Historical RGA 聚焦机器人级、多 Sensor 和 System Runtime Investigation。
+OEM Historical RGA focuses on robot-level, multi-Sensor, and System Runtime Investigation.
 
-Sensor Historical RGA 聚焦 Sensor 产品本身，并覆盖不同机器人、不同场景和已知 CE Environment Disturbance。
+Sensor Historical RGA focuses on the Sensor product itself, covering different robots, scenarios, and known CE Environment Disturbances.
 
-Atlas 将现场运行数据、OEM 调查经验和 Sensor FAE 产品知识连接为持续运行的 Runtime Governance Infrastructure。
+Atlas connects on-site operational data, OEM investigation experience, and Sensor FAE product knowledge into a continuously operating Runtime Governance Infrastructure.
 
-核心工程团队继续创造新产品。
+Core engineering teams continue to create new products.
 
-Atlas 负责组织证据、记住过去，并让过去持续创造价值。
+Atlas is responsible for organizing evidence, remembering the past, and letting past experience continuously create value.
 
-# 下一步阅读
+# Next Steps
 
 - Sensor Manufacturer Deployment
 - Pilot Deployment™
