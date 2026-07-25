@@ -5,71 +5,71 @@ sidebar_label: Why Atlas
 
 # Why Atlas?
 
-## 一个真实的问题
+## A Real Problem
 
-机器人已经广泛应用于餐厅、酒店、医院、仓库和工厂。
+Robots are already widely deployed across restaurants, hotels, hospitals, warehouses, and factories.
 
-当机器人发生异常时，工程团队通常都会问同一个问题：
+When an anomaly occurs in a robot, engineering teams almost always ask the exact same question:
 
-> **到底发生了什么？**
+> **What on earth actually happened?**
 
-然而，大多数团队面对的是大量运行时数据，而不是清晰的调查线索。
+However, what most teams face is a massive wall of runtime data, rather than clear diagnostic leads.
 
-例如：
+For example:
 
-- ROS Log
-- ROS Bag
+- ROS Logs
+- ROS Bags
 - Sensor Raw Data
-- Linux Kernel Log
-- Driver Log
-- Network Packet
-- CPU / Memory
+- Linux Kernel Logs
+- Driver Logs
+- Network Packets
+- CPU / Memory Metrics
 - Camera Images
 - LiDAR Point Clouds
 
-这些数据往往达到数 GB 甚至数十 GB。
+This data frequently reaches gigabytes or even tens of gigabytes.
 
-真正困难的不是数据不足，而是如何在有限时间内找到真正与事件相关的证据。
+The real challenge is not a lack of data, but how to find true, event-relevant evidence within a limited timeframe.
 
 ---
 
-# 传统调查方式
+# Traditional Investigation Approaches
 
-大多数运行时问题仍然依赖人工排查：
+Most runtime issues still rely on manual troubleshooting:
 
 ```text
-收到客户反馈
+Receive Customer Feedback
         │
         ▼
-收集日志
+Collect Logs
         │
         ▼
-人工分析
+Manual Analysis
         │
         ▼
-反复沟通
+Repeated Communication
         │
         ▼
-定位问题
+Locate Issue
 ```
 
-这种方式通常存在几个问题：
+This approach typically suffers from several inherent problems:
 
-- 数据来源分散
-- 不同工程师调查方法不同
-- 调查时间长
-- 历史经验难以复用
-- 相同问题不断重复出现
+- Dispersed data sources
+- Inconsistent investigation methods across different engineers
+- Lengthy investigation cycles
+- Difficulty in reusing historical experience
+- Identical issues repeatedly resurfacing
 
-调查结束后，知识往往停留在个人，而没有沉淀为组织资产。
+Once an investigation concludes, the knowledge often remains locked inside individual heads rather than compounding into organizational assets.
 
 ---
 
-# Atlas 的解决方案
+# The Atlas Solution
 
-Atlas 并不是新的日志工具。
+Atlas is not just another logging tool.
 
-Atlas 建立了一套标准化的运行时调查流程。
+Atlas establishes a standardized runtime investigation workflow.
 
 ```text
 Runtime Event
@@ -96,28 +96,28 @@ Lesson Learned (LL)
 Knowledge Reuse
 ```
 
-Atlas 将分散的数据组织成统一的调查证据，并将调查结果持续沉淀为组织能力。
+Atlas organizes fragmented data into unified evidence for investigation, while continuously transforming investigation conclusions into organizational capability.
 
 ---
 
-# Atlas 带来的改变
+# What Atlas Changes
 
-传统模式：
+Traditional Pattern:
 
 ```text
-事故
+Incident
     ↓
-调查
+Investigation
     ↓
-结束
+End
 ```
 
-Atlas 模式：
+Atlas Pattern:
 
 ```text
-事故
+Incident
     ↓
-调查
+Investigation
     ↓
 IR
     ↓
@@ -125,99 +125,99 @@ LL
     ↓
 Historical RGA
     ↓
-下一次调查直接复用
+Direct Reuse in Next Investigation
 ```
 
-每一次调查，都会提升组织未来的调查效率。
+Every investigation directly elevates the organization's future investigation efficiency.
 
 ---
 
-# 为什么历史经验重要？
+# Why Historical Experience Matters
 
-许多运行时问题都会重复发生。
+Many runtime issues recur continuously.
 
-例如：
+For example:
 
-- USB 断连
-- Ethernet 丢包
-- Camera Frame Drop
-- LiDAR Timeout
+- USB Disconnections
+- Ethernet Packet Drops
+- Camera Frame Drops
+- LiDAR Timeouts
 - PPS Drift
-- CPU Overload
+- CPU Overloads
 - Memory Pressure
-- Driver Crash
+- Driver Crashes
 
-如果每一次都重新开始调查，工程团队会不断重复相同工作。
+If every incident triggers a brand-new investigation from scratch, engineering teams end up continuously repeating identical work.
 
-Atlas 会优先召回 Historical RGA，帮助工程师快速判断是否存在相似案例，从已有经验开始调查，而不是从零开始。
-
----
-
-# Atlas 的价值
-
-## 对 CTO
-
-- 建立统一的运行时治理体系
-- 降低调查成本
-- 积累组织知识资产
-- 提高工程团队效率
+Atlas prioritizes recalling Historical RGAs, enabling engineers to quickly evaluate whether similar cases exist—allowing them to start from accumulated experience rather than square one.
 
 ---
 
-## 对研发工程师
+# The Value of Atlas
 
-- 更快定位问题
-- 减少重复排查
-- 使用统一调查流程
-- 更容易复用历史经验
+## For CTOs
 
----
-
-## 对 Sensor Manufacturer
-
-- 使用统一 Evidence Pack 与 OEM 协作
-- 提高跨团队调查效率
-- 降低沟通成本
+- Establish a unified runtime governance architecture
+- Reduce overall investigation overhead
+- Compound organizational knowledge assets
+- Boost engineering team efficiency
 
 ---
 
-## 对 OEM
+## For R&D Engineers
 
-- 建立标准 Runtime Investigation Workflow
-- 缩短 Runtime Execution Failure（REF）调查时间
-- 提高产品稳定性
+- Accelerate issue localization
+- Eliminate repetitive troubleshooting
+- Standardize investigation procedures
+- Seamlessly reuse historical experience
 
 ---
 
-# Atlas 的定位
+## For Sensor Manufacturers
 
-Atlas 不是：
+- Collaborate with OEMs using unified Evidence Packs
+- Streamline cross-organizational investigation efficiency
+- Lower communication overhead
 
-- 日志分析工具
-- AI 自动诊断工具
-- ROS 替代方案
+---
 
-Atlas 是机器人行业的 **Runtime Governance Infrastructure（运行时治理基础设施）**。
+## For OEMs
 
-它连接运行时证据、调查流程和组织知识，使每一次调查都成为未来能力的一部分。
+- Establish a standard Runtime Investigation Workflow
+- Cut down Runtime Execution Failure (REF) investigation times
+- Elevate product fleet stability
+
+---
+
+# The Positioning of Atlas
+
+Atlas is NOT:
+
+- A log analysis tool
+- An automated AI diagnostic engine
+- A ROS replacement
+
+Atlas is the robotics industry's **Runtime Governance Infrastructure**.
+
+It bridges runtime evidence, investigation workflows, and organizational knowledge—ensuring every investigation becomes a building block for future operational capability.
 
 ---
 
 # Summary
 
-Atlas 的价值并不是产生更多数据。
+The value of Atlas is not in generating more data.
 
-Atlas 的价值在于：
+The value of Atlas lies in:
 
-- 组织运行时证据
-- 标准化调查流程
-- 复用历史调查经验
-- 持续积累组织知识
+- Organizing runtime evidence
+- Standardizing investigation workflows
+- Reusing historical investigation experience
+- Continuously compounding organizational knowledge
 
-**每一次 Runtime Investigation，都让下一次调查从历史开始，而不是从零开始。**
+**Every Runtime Investigation enables the next investigation to begin with history, rather than from zero.**
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Runtime Governance Principle
