@@ -5,87 +5,83 @@ sidebar_label: Runtime Governance Philosophy
 
 # Runtime Governance Philosophy
 
-## 什么是 Runtime Governance？
+## What is Runtime Governance?
 
-Runtime Governance（运行时治理）是一套持续观察、组织运行时证据、复用历史调查经验的工程体系。
+Runtime Governance is an engineering system designed to continuously observe, organize runtime evidence, and reuse historical investigation experience.
 
-它的目标不是替代工程师，而是让每一次运行时事件（Runtime Execution Failure，REF）的调查更加快速、标准、可复用。
+Its goal is not to replace engineers, but to make the investigation of every Runtime Execution Failure (REF) faster, standardized, and reusable.
 
-Atlas 将运行时调查从一次性的工程活动，转变为持续积累的组织能力。
-
----
-
-# Atlas 的使命
-
-机器人每天都在不同环境中运行。
-
-真正困难的不是收集数据，而是在大量运行时数据中快速找到与事件相关的证据。
-
-Atlas 的使命是：
-
-> **将海量运行时数据，组织成可调查、可复用、可持续积累的工程资产。**
+Atlas transforms runtime investigation from a one-off engineering activity into a continuously accumulating organizational capability.
 
 ---
 
-# Atlas 的第一性原则
+# The Mission of Atlas
 
-Atlas 的设计遵循以下五项原则。
+Robots operate in diverse environments every day.
+
+The real challenge is not collecting data, but quickly locating event-relevant evidence within vast amounts of runtime data.
+
+The mission of Atlas is:
+
+> **To organize massive runtime data into navigable, reusable, and continuously accumulating engineering assets.**
+
+---
+
+# Atlas First Principles
+
+The design of Atlas adheres to the following five principles.
 
 ## 1. Evidence Before Opinion
 
-**先证据，后结论。**
-
-任何调查都应建立在运行时证据基础上，而不是经验猜测。
+Any investigation should be built upon runtime evidence, not empirical guesswork.
 
 ---
 
 ## 2. History Before Reinvention
 
-**先历史，再重新开始。**
+For every new REF, Historical RGA should be recalled first.
 
-每一次新的 REF，都应优先召回 Historical RGA。
-
-工程团队应从已有经验开始调查，而不是重复过去已经完成的工作。
+Engineering teams should begin investigations from existing experience, rather than repeating work that has already been completed in the past.
 
 ---
 
 ## 3. Engineers Make Decisions
 
-**Atlas 不替代工程师。**
+**Atlas does not replace engineers.**
 
-Atlas 负责：
+Atlas is responsible for:
 
-- 观察
-- 保存
-- 组织
-- 检索
-- 关联
+- Observing
+- Persisting
+- Organizing
+- Retrieving
+- Correlating
 
-最终调查结果始终由工程师确认。
+Final investigation conclusions are always confirmed by engineers.
 
 ---
 
 ## 4. Organizational Knowledge Compounds
 
-每一次调查完成后：
+After every investigation is completed:
 
-- Investigation Result（IR）
-- Lesson Learned（LL）
-- Runtime Governance Asset（RGA）
+- Investigation Result (IR)
+- Lesson Learned (LL)
+- Runtime Governance Asset (RGA)
 
-都会成为组织资产。
+All become organizational assets.
 
-下一次类似事件发生时，可以直接复用。
+The next time a similar event occurs, they can be directly reused.
 
-组织能力会随着每一次调查不断积累。
+Organizational capability compounds continuously with every investigation.
 
 ---
 
 ## 5. Standardized Investigation
 
-不同工程师应采用相同的调查流程。
+Different engineers should adopt the same investigation workflow.
 
-Atlas 将调查过程标准化，包括：
+Atlas standardizes the investigation process, including:
 
 - Runtime Dataset
 - Evidence Pack
@@ -97,13 +93,13 @@ Atlas 将调查过程标准化，包括：
 
 ---
 
-# Atlas 的角色
+# The Role of Atlas
 
-Atlas 是运行时治理基础设施。
+Atlas is Runtime Governance Infrastructure.
 
-Atlas 不负责机器人业务逻辑，也不负责算法开发。
+Atlas is not responsible for robot business logic, nor algorithm development.
 
-Atlas 位于 Sensor 与 Application 之间。
+Atlas sits between Sensors and Applications.
 
 ```text
 Sensor
@@ -119,43 +115,43 @@ ROS Topic
 Application
 ```
 
-Atlas 负责组织这一运行时边界上的证据。
+Atlas is responsible for organizing evidence along this runtime boundary.
 
 ---
 
-# Atlas 不做什么
+# What Atlas Does Not Do
 
-Atlas 不负责：
+Atlas is NOT responsible for:
 
-- Root Cause Confirmation（最终根因确认）
-- Liability Assignment（责任归属）
-- AI 自动诊断
+- Root Cause Confirmation
+- Liability Assignment
+- Automated AI Diagnosis
 - Robot Navigation
 - Motion Control
 - SLAM
-- AI Algorithm
+- AI Algorithms
 
-这些工作仍由工程团队完成。
+These tasks remain the responsibility of engineering teams.
 
 ---
 
-# Atlas 的价值
+# The Value of Atlas
 
-Atlas 带来的价值包括：
+The value Atlas delivers includes:
 
-- 更快定位运行时问题
-- 减少重复调查
-- 建立组织知识库
-- 提高跨团队协作效率
-- 将一次调查沉淀为长期资产
+- Faster runtime issue localization
+- Reduced repetitive investigation
+- Construction of organizational knowledge bases
+- Improved cross-team collaboration efficiency
+- Transformation of single investigations into long-term assets
 
-Atlas 的目标不是减少工程师，而是让工程师把更多时间投入到产品创新，而不是重复排查。
+The goal of Atlas is not to reduce headcount, but to enable engineers to focus more time on product innovation rather than repetitive troubleshooting.
 
 ---
 
 # Philosophy Summary
 
-Atlas 坚持以下原则：
+Atlas adheres to the following principles:
 
 - Evidence before Opinion
 - History before Reinvention
@@ -163,11 +159,11 @@ Atlas 坚持以下原则：
 - Organizational Knowledge Compounds
 - Standardized Investigation
 
-**每一次运行时调查，都应该成为下一次调查的起点，而不是终点。**
+**Every runtime investigation should serve as the starting point for the next investigation, not the endpoint.**
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Why Atlas
 - Runtime Governance Principle
