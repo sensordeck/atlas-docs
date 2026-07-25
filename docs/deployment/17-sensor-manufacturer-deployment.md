@@ -7,11 +7,11 @@ sidebar_label: Sensor Manufacturer Deployment
 
 ## Overview
 
-Atlas Runtime Sensor Governance™ 帮助 Sensor Manufacturer 将分散的 FAE 支持经验、现场调查案例和已知环境干扰，沉淀为可复用的 Sensor Runtime Knowledge。
+Atlas Runtime Sensor Governance™ helps Sensor Manufacturers transform scattered FAE support experience, field investigation cases, and known environmental disturbances into reusable Sensor Runtime Knowledge.
 
-Sensor Manufacturer 部署 Atlas 的重点不是建立新的认证体系。
+The focus of deploying Atlas for a Sensor Manufacturer is not to build a new certification system.
 
-核心目标是建立两类长期资产：
+The core objective is to build two types of long-term assets:
 
 ```text
 Sensor Runtime Profile
@@ -19,23 +19,23 @@ Sensor Runtime Profile
 Pre-built Sensor Historical RGA
 ```
 
-Sensor Runtime Profile 描述一款 Sensor 在不同运行环境和已知干扰下的 Runtime Behaviour、Known Sensor REF Pattern 与 Investigation Context。
+A Sensor Runtime Profile describes the Runtime Behaviour, Known Sensor REF Pattern, and Investigation Context of a Sensor across different operating environments and known disturbances.
 
-Sensor Historical RGA 保存已经完成的 Sensor Investigation、IR、LL 和可复用调查路径。
+A Sensor Historical RGA preserves completed Sensor Investigations, IR (Investigation Results), LL (Lessons Learned), and reusable investigation paths.
 
-两者共同帮助 Sensor FAE：
+Together, both help Sensor FAEs:
 
-- 更快理解 OEM 现场事件
-- 更快召回相似历史案例
-- 减少重复调查
-- 提高跨 OEM、跨场景复用能力
-- 将 FAE 经验沉淀为组织资产
+- Understand OEM field events faster
+- Recall similar historical cases faster
+- Reduce repetitive troubleshooting
+- Improve cross-OEM and cross-scenario reuse capabilities
+- Accumulate FAE experience into organizational assets
 
 ---
 
 # Deployment Objective
 
-Sensor Manufacturer 部署 Atlas 后，应形成以下能力：
+After deploying Atlas, a Sensor Manufacturer should establish the following capabilities:
 
 ```text
 Sensor Product
@@ -51,7 +51,7 @@ Sensor Product
       └── OEM Collaboration
 ```
 
-Atlas 不替代 Sensor Manufacturer 的：
+Atlas does not replace a Sensor Manufacturer's existing:
 
 - Driver Development
 - Firmware Development
@@ -59,13 +59,13 @@ Atlas 不替代 Sensor Manufacturer 的：
 - RMA Process
 - Customer Support System
 
-Atlas 将这些活动中产生的 Runtime Investigation Knowledge 组织为可召回、可复用的治理资产。
+Atlas organizes Runtime Investigation Knowledge generated from these activities into recallable, reusable governance assets.
 
 ---
 
 # Minimum Deployment Requirements
 
-Sensor Manufacturer 使用 Atlas 的最低要求包括：
+The minimum deployment requirements for a Sensor Manufacturer to use Atlas include:
 
 ```text
 Sensor Product Definition
@@ -81,15 +81,15 @@ FAE Investigation Owner
 RGA Repository
 ```
 
-不要求 Sensor Manufacturer 建立机器人级 Fleet Management。
+Sensor Manufacturers are not required to build robot-level Fleet Management.
 
-也不要求访问 OEM 的完整机器人系统。
+Nor are they required to access an OEM's complete robot system.
 
 ---
 
 # Sensor Runtime Scope
 
-Sensor Manufacturer 的治理边界应限定在 Sensor 及其直接运行时路径。
+A Sensor Manufacturer's governance boundary should be constrained to the Sensor itself and its direct runtime path.
 
 ```text
 Environment
@@ -110,21 +110,21 @@ Driver
 Sensor Runtime Output
 ```
 
-Sensor Investigation 可以参考 OEM 提供的系统证据。
+Sensor Investigation can reference system evidence provided by the OEM.
 
-但 Sensor IR 和 Sensor LL 应保持在 Sensor Scope 内。
+However, Sensor IR and Sensor LL should remain within the Sensor Scope.
 
 ---
 
 # Sensor Runtime Surface Requirements
 
-每一款纳入 Atlas 的 Sensor，应建立明确的 Runtime Surface Definition。
+An explicit Runtime Surface Definition should be established for every Sensor onboarded into Atlas.
 
 ---
 
 ## Sensor Identity Surface
 
-建议包括：
+Recommended inclusions:
 
 - Sensor Type
 - Product Model
@@ -136,15 +136,15 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 - Host Platform
 - Internal Product Identifier
 
-可使用匿名 Product Identifier。
+Anonymous Product Identifiers may be used.
 
-不要求在跨组织协作中公开设备 Serial Number。
+Publicly disclosing device Serial Numbers during cross-organizational collaboration is not required.
 
 ---
 
 ## Sensor Hardware Surface
 
-建议根据产品能力记录：
+Recommended recordings based on product capabilities:
 
 - Power State
 - Reset State
@@ -160,7 +160,7 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 
 ## Sensor Interface Surface
 
-根据 Sensor 类型接入：
+Integrate according to Sensor type:
 
 - Ethernet
 - USB
@@ -174,7 +174,7 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 - Trigger
 - Synchronization
 
-建议观察：
+Recommended observations:
 
 - Link State
 - Packet Rate
@@ -189,7 +189,7 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 
 ## Sensor Driver Surface
 
-建议包括：
+Recommended inclusions:
 
 - Driver Process State
 - Driver Start / Stop
@@ -206,7 +206,7 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 
 ## Sensor Output Surface
 
-不同 Sensor 应记录与其输出相关的 Runtime Observation。
+Different Sensors should record Runtime Observations relevant to their output.
 
 ### LiDAR
 
@@ -262,7 +262,7 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 
 ## Sensor Timing Surface
 
-建议包括：
+Recommended inclusions:
 
 - Sensor Timestamp
 - Host Timestamp
@@ -274,9 +274,9 @@ Sensor Investigation 可以参考 OEM 提供的系统证据。
 - Timestamp Jump
 - Timestamp Drift
 
-Timing Surface 用于判断数据连续性和跨流关系。
+The Timing Surface is used to evaluate data continuity and cross-stream relationships.
 
-它不用于自动确认因果。
+It is not used for automatic causality inference.
 
 ---
 
@@ -284,21 +284,21 @@ Timing Surface 用于判断数据连续性和跨流关系。
 
 ## Definition
 
-Sensor Runtime Profile 是一款 Sensor 在特定产品版本、Host 条件、部署环境和已知干扰下形成的结构化 Runtime Behaviour Profile。
+A Sensor Runtime Profile is a structured Runtime Behaviour Profile formed by a Sensor under specific product versions, Host conditions, deployment environments, and known disturbances.
 
-它不是：
+It is NOT:
 
-- Compliance Approval
-- Quality Guarantee
-- Universal Performance Claim
+- A Compliance Approval
+- A Quality Guarantee
+- A Universal Performance Claim
 
-它是 Sensor Manufacturer 已观察、已记录、可供未来 Investigation 参考的 Runtime Knowledge。
+It is Runtime Knowledge observed, recorded, and provided by the Sensor Manufacturer for future Investigation reference.
 
 ---
 
 # What a Sensor Runtime Profile Describes
 
-一个 Sensor Runtime Profile 可以描述：
+A Sensor Runtime Profile can describe:
 
 ```text
 Sensor Product
@@ -320,15 +320,15 @@ Recovery Behaviour
 Investigation References
 ```
 
-Profile 只描述已覆盖条件下的观察结果。
+A Profile only describes observation results under covered conditions.
 
-未覆盖场景不得推断。
+Inferences must not be drawn for uncovered scenarios.
 
 ---
 
 # Sensor Profile Dimensions
 
-建议按以下维度建立 Sensor Runtime Profile。
+It is recommended to build Sensor Runtime Profiles along the following dimensions.
 
 ---
 
@@ -365,15 +365,15 @@ Profile 只描述已覆盖条件下的观察结果。
 - Driver Configuration
 - Output Consumption Method
 
-Profile 不需要包含 OEM 的机密算法。
+The Profile does not need to contain proprietary OEM algorithms.
 
-只记录影响 Sensor Runtime 的 Integration Context。
+It only records Integration Context that affects Sensor Runtime.
 
 ---
 
 ## Deployment Environment Dimension
 
-例如：
+For example:
 
 - Restaurant
 - Hotel
@@ -386,13 +386,13 @@ Profile 不需要包含 OEM 的机密算法。
 - Campus
 - Logistics Yard
 
-同一款 Sensor 可以拥有多个 Environment Profile。
+The same Sensor model can possess multiple Environment Profiles.
 
 ---
 
 ## Known Disturbance Dimension
 
-例如：
+For example:
 
 - Optical Disturbance
 - Thermal Disturbance
@@ -406,13 +406,13 @@ Profile 不需要包含 OEM 的机密算法。
 
 # Known Sensor REF Investigation Context
 
-Sensor Runtime Profile 的重要组成部分，是已知 Sensor REF 的 Investigation Context。
+An important component of a Sensor Runtime Profile is the Investigation Context of Known Sensor REFs.
 
-它描述：
+It describes:
 
-> 在某种已知环境或干扰下，Sensor 曾出现什么 Runtime Pattern，以及未来调查时应从哪些证据和路径开始。
+> Under a known environment or disturbance, what Runtime Pattern did the Sensor previously exhibit, and from which evidence and paths should future investigations begin.
 
-例如：
+For example:
 
 ```text
 Deployment Environment
@@ -437,15 +437,15 @@ Known Recovery Behaviour
 Automatic recovery after environment change
 ```
 
-Known Sensor REF Context 不代表所有未来事件都具有相同原因。
+Known Sensor REF Context does not mean all future incidents share the same cause.
 
-它只提供已知调查参考。
+It merely provides a known investigation reference.
 
 ---
 
 # Profile Structure
 
-一个标准 Sensor Runtime Profile 可以包含：
+A standard Sensor Runtime Profile can contain:
 
 ```text
 Sensor Runtime Profile
@@ -469,9 +469,9 @@ Sensor Runtime Profile
 
 # Baseline Runtime Behaviour
 
-Profile 可以记录已覆盖条件下的正常运行表现。
+Profiles can record normal performance under covered conditions.
 
-例如：
+For example:
 
 - Expected Frame Rate Range
 - Expected Packet Rate Range
@@ -480,9 +480,9 @@ Profile 可以记录已覆盖条件下的正常运行表现。
 - Expected Recovery Sequence
 - Expected Internal State
 
-Baseline 不是永久不变的统一标准。
+A Baseline is not a permanently fixed, unified standard.
 
-它必须绑定：
+It must be bound to:
 
 - Product Version
 - Host Context
@@ -493,9 +493,9 @@ Baseline 不是永久不变的统一标准。
 
 # Known Sensor REF Patterns
 
-Profile 可以记录已知 Runtime Pattern。
+Profiles can record known Runtime Patterns.
 
-例如：
+For example:
 
 - Frame Interruption
 - Packet Loss
@@ -507,7 +507,7 @@ Profile 可以记录已知 Runtime Pattern。
 - Interface Enumeration Loss
 - Recovery Failure
 
-每一个 Pattern 应关联：
+Each Pattern should be associated with:
 
 - Relevant Surface
 - Environment
@@ -520,9 +520,9 @@ Profile 可以记录已知 Runtime Pattern。
 
 # Profile Coverage Boundary
 
-每个 Sensor Runtime Profile 必须明确 Coverage Boundary。
+Every Sensor Runtime Profile must define an explicit Coverage Boundary.
 
-例如：
+For example:
 
 ```text
 Covered
@@ -545,7 +545,7 @@ Not Covered
 - Unobserved host platform
 ```
 
-Atlas 不将未覆盖条件解释为正常、异常或已验证。
+Atlas does not interpret uncovered conditions as normal, anomalous, or verified.
 
 ---
 
@@ -573,55 +573,53 @@ Field Investigation Reuse
 Profile Update
 ```
 
-Profile 可以随着：
+Profiles can continuously evolve along with:
 
-- Firmware Update
-- Driver Update
-- New Host Platform
-- New Deployment Environment
-- New Historical RGA
-- New Known Disturbance
-
-持续演进。
+- Firmware Updates
+- Driver Updates
+- New Host Platforms
+- New Deployment Environments
+- New Historical RGAs
+- New Known Disturbances
 
 ---
 
 # Known Environment Coverage
 
-Sensor Manufacturer 应选择真实且高价值的场景建立 Profile。
+Sensor Manufacturers should choose realistic, high-value scenarios to build Profiles.
 
-不需要一开始覆盖所有环境。
+Covering all environments from day one is not necessary.
 
-建议优先选择：
+It is recommended to prioritize:
 
-- 主要客户部署场景
-- 高频 FAE 支持场景
-- 高退货率场景
-- 高工时调查场景
-- 安全相关场景
-- 新产品目标场景
+- Primary customer deployment scenarios
+- High-frequency FAE support scenarios
+- High RMA/return rate scenarios
+- High labor-hour investigation scenarios
+- Safety-related scenarios
+- Target scenarios for new products
 
 ---
 
 # Controlled Environment Observation
 
-Sensor Manufacturer 可以通过 Controlled Environment（CE）建立已知干扰条件下的 Runtime Profile。
+Sensor Manufacturers can establish Runtime Profiles under known disturbance conditions via Controlled Environments (CE).
 
-CE 的目标不是认证 Sensor。
+The goal of CE is not to certify the Sensor.
 
-也不是模拟完整机器人系统。
+Nor is it to simulate a complete robot system.
 
-它用于观察：
+It is used to observe:
 
-> Sensor 在已知环境干扰下会表现出怎样的 Runtime Behaviour。
+> How a Sensor's Runtime Behaviour manifests under known environmental disturbances.
 
 ---
 
 ## Optical Disturbance
 
-适用于 Camera、LiDAR 等光学 Sensor。
+Applicable to optical Sensors like Cameras and LiDARs.
 
-例如：
+For example:
 
 - Strong Sunlight
 - Low Light
@@ -638,7 +636,7 @@ CE 的目标不是认证 Sensor。
 
 ## Thermal Disturbance
 
-例如：
+For example:
 
 - High Temperature
 - Low Temperature
@@ -650,7 +648,7 @@ CE 的目标不是认证 Sensor。
 
 ## Vibration and Motion Disturbance
 
-例如：
+For example:
 
 - Mechanical Vibration
 - Shock
@@ -662,7 +660,7 @@ CE 的目标不是认证 Sensor。
 
 ## Electrical Disturbance
 
-例如：
+For example:
 
 - Voltage Drop
 - Power Ripple
@@ -676,7 +674,7 @@ CE 的目标不是认证 Sensor。
 
 ## Communication Disturbance
 
-例如：
+For example:
 
 - Ethernet Packet Loss
 - Link Interruption
@@ -691,7 +689,7 @@ CE 的目标不是认证 Sensor。
 
 ## Timing Disturbance
 
-例如：
+For example:
 
 - Timestamp Jump
 - Clock Drift
@@ -704,7 +702,7 @@ CE 的目标不是认证 Sensor。
 
 ## Host Runtime Disturbance
 
-例如：
+For example:
 
 - CPU Load
 - Memory Pressure
@@ -714,35 +712,35 @@ CE 的目标不是认证 Sensor。
 - Process Restart
 - Driver Restart
 
-这些干扰属于 Sensor Runtime Environment。
+These disturbances belong to the Sensor Runtime Environment.
 
-Profile 只记录 Sensor 及直接边界的行为。
+The Profile only records the behavior of the Sensor and its direct boundaries.
 
 ---
 
 # Pre-built Sensor Historical RGA
 
-Sensor Manufacturer 不应从空 Historical Repository 开始部署 Atlas。
+Sensor Manufacturers should not deploy Atlas starting from an empty Historical Repository.
 
-建议在正式接入 OEM 协作前，预构建一批 Sensor Historical RGA。
+It is recommended to pre-build a batch of Sensor Historical RGAs before officially connecting to OEM collaborations.
 
-Historical RGA 来自已经完成的：
+Historical RGAs stem from previously completed:
 
-- FAE Support Case
-- RMA Investigation
-- Firmware Issue
-- Driver Issue
-- Integration Case
-- Compatibility Test
-- Reliability Test
+- FAE Support Cases
+- RMA Investigations
+- Firmware Issues
+- Driver Issues
+- Integration Cases
+- Compatibility Tests
+- Reliability Tests
 - Field Failure Analysis
-- Controlled Environment Observation
+- Controlled Environment Observations
 
 ---
 
 # Why Pre-build Historical RGA?
 
-没有预构建 RGA：
+Without pre-built RGA:
 
 ```text
 New Sensor REF
@@ -751,7 +749,7 @@ New Sensor REF
 FAE Starts From Zero
 ```
 
-有预构建 RGA：
+With pre-built RGA:
 
 ```text
 New Sensor REF
@@ -766,13 +764,13 @@ Known Investigation Context
 Reusable Investigation Path
 ```
 
-Pre-built RGA 使 FAE 从第一天就能复用历史经验。
+Pre-built RGA enables FAEs to reuse historical experience from Day One.
 
 ---
 
 # Recommended Initial RGA Coverage
 
-建议首批选择：
+It is recommended to select for the first batch:
 
 ```text
 One Sensor Product
@@ -784,7 +782,7 @@ Five to Ten Historical Cases
 Two to Four Key Deployment Environments
 ```
 
-例如：
+For example:
 
 ```text
 LiDAR Model X
@@ -796,7 +794,7 @@ LiDAR Model X
 └── Driver Reconnect
 ```
 
-对应环境：
+Corresponding environments:
 
 ```text
 Warehouse
@@ -809,24 +807,24 @@ Outdoor Delivery
 
 # High-value Historical Cases
 
-优先选择以下案例：
+Prioritize selecting cases that:
 
-- 多次发生
-- 涉及多个 OEM
-- 消耗大量 FAE 工时
-- 曾升级 Firmware 或 Driver 团队
-- 已形成清晰 Investigation Path
-- 已有明确 IR 和 LL
-- 能跨场景复用
-- 能减少重复答复
+- Have occurred multiple times
+- Involve multiple OEMs
+- Consume large amounts of FAE labor hours
+- Have been escalated to Firmware or Driver teams
+- Have formed a clear Investigation Path
+- Have explicit IR and LL
+- Can be reused across scenarios
+- Can reduce repetitive answers
 
-高频案例通常比单一极端案例更快产生 ROI。
+High-frequency cases typically yield ROI faster than single, extreme cases.
 
 ---
 
 # Sensor Historical RGA Minimum Fields
 
-每一个预构建 Sensor Historical RGA 建议包含：
+Each pre-built Sensor Historical RGA is recommended to contain:
 
 ```text
 Sensor Historical RGA
@@ -850,9 +848,9 @@ Sensor Historical RGA
 └── Authorization Metadata
 ```
 
-如果历史案例没有完整原始证据，也可以建立 Non-identifiable 或 Signature-based RGA。
+If historical cases lack complete raw evidence, Non-identifiable or Signature-based RGAs can be established.
 
-至少应保留：
+At minimum, preserve:
 
 - Runtime Pattern
 - Investigation Context
@@ -864,7 +862,7 @@ Sensor Historical RGA
 
 # RGA Organization
 
-建议按以下层级组织：
+It is recommended to organize RGAs along the following hierarchy:
 
 ```text
 Sensor Product
@@ -878,7 +876,7 @@ Sensor Product
       └── Runtime Pattern
 ```
 
-例如：
+For example:
 
 ```text
 Camera Model A
@@ -900,9 +898,9 @@ Camera Model A
 
 # Relationship Between Profile and Historical RGA
 
-Sensor Runtime Profile 与 Sensor Historical RGA 不相同。
+A Sensor Runtime Profile and a Sensor Historical RGA are not the same thing.
 
-Sensor Runtime Profile 描述：
+A Sensor Runtime Profile describes:
 
 - Product Runtime Behaviour
 - Environment Context
@@ -910,7 +908,7 @@ Sensor Runtime Profile 描述：
 - Known Sensor REF Pattern
 - Coverage Boundary
 
-Sensor Historical RGA 保存：
+A Sensor Historical RGA preserves:
 
 - Completed Investigation
 - Investigation Path
@@ -919,7 +917,7 @@ Sensor Historical RGA 保存：
 - Sensor LL
 - Reuse Metadata
 
-两者关系：
+The relationship between both:
 
 ```text
 Sensor Runtime Profile
@@ -929,15 +927,15 @@ Sensor Runtime Profile
         └── References Historical RGA
 ```
 
-Profile 提供产品与环境视图。
+The Profile provides a product and environment view.
 
-Historical RGA 提供已完成调查的知识资产。
+The Historical RGA provides knowledge assets from completed investigations.
 
 ---
 
 # OEM Collaboration
 
-当 OEM Runtime Investigation 涉及 Sensor Candidate 时，OEM 可以通过 Sensor Engagement Pack 向 Sensor FAE 发起协作。
+When an OEM Runtime Investigation involves a Sensor Candidate, the OEM can initiate collaboration with the Sensor FAE through a Sensor Engagement Pack.
 
 ```text
 OEM REF Ticket
@@ -964,26 +962,26 @@ Sensor Ticket Closure
 OEM REF Closure
 ```
 
-Sensor FAE 可以同时检索：
+The Sensor FAE can simultaneously search:
 
-- Sensor Runtime Profile
-- Sensor Historical RGA
+- Sensor Runtime Profiles
+- Sensor Historical RGAs
 - Known Environment Context
-- Known CE Disturbance
+- Known CE Disturbances
 
 ---
 
 # Evidence Modes
 
-OEM 与 Sensor Manufacturer 的证据交换取决于 NDA 和授权边界。
+Evidence exchange between OEMs and Sensor Manufacturers depends on NDAs and authorization boundaries.
 
 ---
 
 ## Raw Evidence Mode
 
-适用于双方存在 NDA，并针对具体 Sensor REF 开展调查。
+Applicable when an NDA exists between both parties and investigations are conducted for specific Sensor REFs.
 
-可以共享：
+Can share:
 
 - OEM Evidence Pack
 - Raw Runtime Observation
@@ -991,22 +989,22 @@ OEM 与 Sensor Manufacturer 的证据交换取决于 NDA 和授权边界。
 - Sensor-specific Logs
 - Configuration Context
 
-Raw Evidence Mode 只服务于指定调查。
+Raw Evidence Mode serves specified investigations only.
 
-不会自动进入共享知识库。
+It does not automatically enter shared knowledge repositories.
 
 ---
 
 ## Non-identifiable Mode
 
-适用于：
+Applicable to:
 
-- 无 NDA
-- 跨 OEM 经验复用
+- Scenarios without an NDA
+- Cross-OEM experience reuse
 - Assist Vault
 - Signature-based Recall
 
-可以共享：
+Can share:
 
 - Runtime Pattern
 - Surface Signature
@@ -1014,7 +1012,7 @@ Raw Evidence Mode 只服务于指定调查。
 - Investigation Path
 - Lesson Learned
 
-不共享：
+Does NOT share:
 
 - OEM Identity
 - Customer Identity
@@ -1026,13 +1024,13 @@ Raw Evidence Mode 只服务于指定调查。
 
 # Sensor Manufacturer Infrastructure
 
-Sensor Manufacturer 可以根据现有条件选择部署方式。
+Sensor Manufacturers can choose deployment methods based on existing conditions.
 
 ---
 
 ## Existing FAE or Support Platform
 
-适用于已有：
+Applicable to environments with existing:
 
 - CRM
 - Ticketing System
@@ -1041,7 +1039,7 @@ Sensor Manufacturer 可以根据现有条件选择部署方式。
 - Internal Knowledge Base
 - Lab Server
 
-Atlas 可以通过 Reference ID 与现有系统关联。
+Atlas can link with existing systems via Reference IDs.
 
 ```text
 Existing FAE Ticket
@@ -1059,13 +1057,13 @@ Sensor Investigation
 IR / LL / RGA
 ```
 
-不要求替换现有 Support Platform。
+Replacing the existing Support Platform is not required.
 
 ---
 
 ## Internal Server Deployment
 
-适用于具有总部或实验室服务器的 Sensor Manufacturer。
+Applicable to Sensor Manufacturers with headquarters or laboratory servers.
 
 ```text
 FAE / Lab
@@ -1082,9 +1080,9 @@ Atlas Investigation Workspace
 
 ## Minimal Standalone Deployment
 
-适用于小型 Sensor Manufacturer 或试点团队。
+Applicable to small Sensor Manufacturers or pilot teams.
 
-最小组件包括：
+Minimum components include:
 
 - Investigation Workstation
 - Sensor Runtime Profile Repository
@@ -1092,7 +1090,7 @@ Atlas Investigation Workspace
 - Import / Export Tool
 - FAE Owner
 
-无需先建设复杂 Cloud。
+Building a complex Cloud beforehand is not required.
 
 ---
 
@@ -1197,19 +1195,19 @@ FAE and ROI Expansion
 
 ## Phase 1 — Product and Surface Mapping
 
-选择：
+Select:
 
 - One Sensor Product
 - One Firmware / Driver Combination
 - One Primary Interface
 
-完成 Sensor Runtime Surface Mapping。
+Complete Sensor Runtime Surface Mapping.
 
 ---
 
 ## Phase 2 — Historical Case Selection
 
-选择：
+Select:
 
 - Five to Ten High-value Cases
 - Three to Five Runtime Patterns
@@ -1219,7 +1217,7 @@ FAE and ROI Expansion
 
 ## Phase 3 — Historical RGA Pre-build
 
-将历史案例标准化为：
+Standardize historical cases into:
 
 - Runtime Pattern
 - Investigation Path
@@ -1231,24 +1229,24 @@ FAE and ROI Expansion
 
 ## Phase 4 — Known Environment Coverage
 
-补充高价值的：
+Supplement high-value:
 
-- Deployment Environment
-- CE Disturbance
-- Host Runtime Condition
-- Recovery Behaviour
+- Deployment Environments
+- CE Disturbances
+- Host Runtime Conditions
+- Recovery Behaviours
 
 ---
 
 ## Phase 5 — Sensor Runtime Profile
 
-将产品、场景、干扰、Pattern 和 Historical RGA 组织成 Sensor Runtime Profile。
+Organize product, scenario, disturbance, Pattern, and Historical RGA into a Sensor Runtime Profile.
 
 ---
 
 ## Phase 6 — OEM Collaboration Pilot
 
-选择一个 OEM 和一个真实或 Controlled REF，验证：
+Select one OEM and one real or Controlled REF to verify:
 
 - EGP Intake
 - Sensor REF Creation
@@ -1261,7 +1259,7 @@ FAE and ROI Expansion
 
 ## Phase 7 — FAE and ROI Expansion
 
-扩展到：
+Expand to:
 
 - Multiple OEMs
 - Multiple Robot Platforms
@@ -1276,7 +1274,7 @@ FAE and ROI Expansion
 
 # Maximum-value Deployment
 
-Sensor Manufacturer 获得最大 Atlas 价值，需要同时建立：
+Achieving maximum Atlas value for a Sensor Manufacturer requires simultaneous creation of:
 
 ```text
 Sensor Runtime Surface Coverage
@@ -1288,11 +1286,11 @@ Pre-built Historical RGA
 Standard FAE Investigation Workflow
 ```
 
-只有 Profile，没有 Historical RGA，FAE 仍然需要重新设计调查路径。
+Having Profiles without Historical RGA still forces FAEs to redesign investigation paths from scratch.
 
-只有 Historical RGA，没有 Profile，历史知识缺少产品、版本和环境上下文。
+Having Historical RGA without Profiles leaves historical knowledge lacking product, version, and environmental context.
 
-两者结合，才能让 Sensor Manufacturer 实现：
+Combining both allows Sensor Manufacturers to achieve:
 
 - Faster FAE Investigation
 - Cross-OEM Knowledge Reuse
@@ -1305,9 +1303,9 @@ Standard FAE Investigation Workflow
 
 # Summary
 
-Sensor Manufacturer Deployment 的核心不是生成 Passport、Certificate 或认证文件。
+The core of Sensor Manufacturer Deployment is not generating Passports, Certificates, or accreditation files.
 
-完整部署应建立：
+A complete deployment should establish:
 
 ```text
 1. Sensor Runtime Surface Coverage
@@ -1319,17 +1317,17 @@ Sensor Manufacturer Deployment 的核心不是生成 Passport、Certificate 或�
 4. Standard FAE Investigation Workflow
 ```
 
-Sensor Runtime Profile 描述一款 Sensor 在不同产品版本、Host 条件、机器人集成方式、部署场景和已知 CE 干扰下的 Runtime Behaviour、Known Sensor REF Pattern 与 Investigation Context。
+A Sensor Runtime Profile describes a Sensor's Runtime Behaviour, Known Sensor REF Pattern, and Investigation Context under different product versions, Host conditions, robot integration methods, deployment scenarios, and known CE disturbances.
 
-Sensor Historical RGA 保存已经完成的 Sensor Investigation、IR、LL 和可复用调查路径。
+A Sensor Historical RGA preserves completed Sensor Investigations, IR, LL, and reusable investigation paths.
 
-当 OEM 发起 Sensor Engagement 时，FAE 可以从 Sensor Runtime Profile 和 Historical RGA 开始调查，而不是重新收集背景、重新查找案例、重新设计排查步骤。
+When an OEM initiates a Sensor Engagement, FAEs can start investigations directly from Sensor Runtime Profiles and Historical RGAs instead of recollecting background information, re-searching cases, and redesigning troubleshooting steps from scratch.
 
-Atlas 负责组织 Sensor Runtime Knowledge、记住过去，并让每一次 FAE 调查持续服务于未来的 OEM、机器人平台和部署场景。
+Atlas is responsible for organizing Sensor Runtime Knowledge, remembering the past, and allowing every FAE investigation to continuously serve future OEMs, robot platforms, and deployment scenarios.
 
 ---
 
-# 下一步阅读
+# Next Steps
 
 - Pilot Deployment™
 - Production Deployment™
