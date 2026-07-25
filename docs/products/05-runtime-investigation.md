@@ -7,50 +7,50 @@ sidebar_label: Runtime Investigation™
 
 ## Overview
 
-Atlas Runtime Investigation™ 是一套面向机器人 Runtime Execution Failure（REF）的标准化调查与组织知识复用系统。
+Atlas Runtime Investigation™ is a standardized investigation and organizational knowledge reuse system designed for robot Runtime Execution Failure (REF).
 
-它接收来自 Runtime Sensor Governance™ 的 Evidence Pack，将运行时证据、历史调查资产、工程调查结果与关闭流程组织成一条完整链路：
+It receives Evidence Packs from Runtime Investigation™ and organizes runtime evidence, historical investigation assets, engineering investigation results, and closure processes into a complete chain:
 
-```text
-REF Intake
-    ↓
-Evidence Pack
-    ↓
-Historical RGA Recall
-    ↓
-Investigation Context
-    ↓
-Investigation Tier Candidate
-    ↓
-OEM / Sensor Investigation
-    ↓
-Investigation Result
-    ↓
-Lesson Learned
-    ↓
-Ticket Closure
-    ↓
-Assist Vault
-    ↓
-Future REF Reuse
+   ```text
+    REF Intake
+        ↓
+    Evidence Pack
+        ↓
+    Historical Runtime Governance Asset (RGA) Recall
+        ↓
+    Investigation Context
+        ↓
+    Investigation Tier Candidate
+        ↓
+    OEM / Sensor Investigation
+        ↓
+    Investigation Result
+        ↓
+    Lesson Learned
+        ↓
+    Ticket Closure
+        ↓
+    Assist Vault
+        ↓
+    Future REF Reuse
 ```
 
-Runtime Investigation™ 的目标不是替代工程师，也不是自动确认根因。
+Runtime Investigation™ is not intended to replace engineers, nor to automatically confirm root causes.
 
-它的目标是：
+Its goals are:
 
-- 让每一次调查从结构化证据开始
-- 让每一次调查优先复用历史经验
-- 让 OEM 与 Sensor Manufacturer 使用统一证据协作
-- 让每一次完成的调查成为未来可复用的组织资产
+- Every investigation starts with structured evidence
+- Every investigation prioritizes reuse of historical experience
+- OEM and Sensor Manufacturer collaborate using unified evidence
+- Every completed investigation becomes a reusable organizational asset
 
 ---
 
-# 1. 什么是 REF？
+# 1. What is REF?
 
-REF 是 Runtime Execution Failure。
+REF is Runtime Execution Failure.
 
-它指机器人在真实运行过程中出现的执行异常，例如：
+It refers to execution anomalies that occur during real-world robot operations, such as:
 
 - Unexpected Stop
 - Collision
@@ -61,21 +61,19 @@ REF 是 Runtime Execution Failure。
 - Fall
 - Manipulation Failure
 
-REF 描述的是运行时事件及其影响。
+REF describes runtime events and their impact.
 
-REF 本身不等于根因。
+REF itself is not equivalent to root cause.
 
-例如：
+For example:
 
-```text
-机器人突然停止
-```
+    The robot suddenly stopped
 
-这是一个 REF。
+This is a REF.
 
-但它可能与以下不同运行时现象相关：
+But it may be related to different runtime phenomena:
 
-- LiDAR 数据中断
+- LiDAR data interruption
 - Camera Frame Drop
 - Ethernet Link Loss
 - USB Disconnect
@@ -84,17 +82,17 @@ REF 本身不等于根因。
 - Power Event
 - Application Behaviour
 
-Atlas 不在 REF 建立时自动判断其中哪一个是根因。
+Atlas does not automatically determine which of these is the root cause when a REF is created.
 
 ---
 
-# 2. REF Intake 与 Admission
+# 2. REF Intake and Admission
 
-Runtime Investigation 从 REF Intake 开始。
+Runtime Investigation begins with REF Intake.
 
-Tier 1 根据最终用户、客服、现场人员或系统告警提供的信息建立 REF Ticket。
+Tier 1 creates a REF Ticket based on information provided by end users, customer support, field personnel, or system alerts.
 
-典型输入包括：
+Typical inputs include:
 
 - Incident Summary
 - Customer Report
@@ -108,44 +106,42 @@ Tier 1 根据最终用户、客服、现场人员或系统告警提供的信息�
 - Evidence Window ID
 - Tier 1 Action
 
-Tier 1 的职责是记录、确认和路由。
+Tier 1's responsibility is to record, confirm, and route.
 
-Tier 1 不需要：
+Tier 1 does not need to:
 
-- 确认技术根因
-- 完成工程分析
-- 判断责任归属
-- 撰写最终 IR 或 LL
+- Confirm technical root cause
+- Complete engineering analysis
+- Determine liability
+- Write final Investigation Result (IR) or Lesson Learned (LL)
 
-```text
-Customer Report
-        ↓
-Tier 1 Intake
-        ↓
-Admission Policy
-        ↓
-Route to Tier 2
-```
+    Customer Report
+            ↓
+    Tier 1 Intake
+            ↓
+    Admission Policy
+            ↓
+    Route to Tier 2
 
-Admission Policy 决定该事件是否进入正式 Runtime Investigation。
+Admission Policy determines whether the incident enters formal Runtime Investigation.
 
 ---
 
-# 3. Evidence Pack 作为统一证据入口
+# 3. Evidence Pack as the Unified Evidence Entry Point
 
-Runtime Investigation 不应直接从海量原始日志开始。
+Runtime Investigation should not start directly from massive raw logs.
 
-Atlas 使用 Evidence Pack 作为标准调查输入。
+Atlas uses Evidence Pack as the standard investigation input.
 
-Evidence Pack 可以来自：
+Evidence Packs can come from:
 
-- Tier 1 提供约莫 REF 时段后的人工切片
-- Agent 根据 Dataset Abnormal 自动生成
-- Agent 根据 Cross-stream Correlation 自动生成
-- Controlled Event
-- 已知 Runtime Trigger
+- Manual slicing by Tier 1 around the approximate REF time
+- Automatic generation by Agent based on Dataset Abnormal
+- Automatic generation by Agent based on Cross-stream Correlation
+- Controlled Events
+- Known Runtime Triggers
 
-Evidence Pack 通常包含：
+Evidence Packs typically include:
 
 - Five-Window Evidence
 - Runtime Timeline
@@ -156,79 +152,75 @@ Evidence Pack 通常包含：
 - Raw Evidence References
 - Export Manifest
 
-Evidence Pack 是调查证据包。
+Evidence Pack is an investigation evidence bundle.
 
-它不是最终调查结论。
+It is not a final investigation conclusion.
 
 ---
 
-# 4. Historical RGA Recall 历史调查案例召回
+# 4. Historical RGA Recall
 
-每一次 REF 进入调查后，Atlas 优先检索 Historical RGA，历史调查案例。
+After each REF enters investigation, Atlas prioritizes retrieving Historical RGA (historical investigation cases).
 
-RGA 是 Runtime Governance Asset。
+RGA is Runtime Governance Asset.
 
-Historical RGA 可以包含：
+Historical RGA can include:
 
-- 过去的 REF 类型
-- Runtime Pattern
-- Investigation Path
-- Excluded Path
-- Investigation Result (IR)
-- Lesson Learned (LL)
-- Closure State
-- Related Surface
+- Past REF types
+- Runtime Patterns
+- Investigation Paths
+- Excluded Paths
+- Investigation Results (IR)
+- Lessons Learned (LL)
+- Closure States
+- Related Surfaces
 - Evidence References
 - Reuse Conditions
 
-```text
-Current REF
-    +
-Current Evidence Pack
-        ↓
-Historical RGA Recall
-        ↓
-Candidate Matches
-        ↓
-Why Retrieved
-```
+    Current REF
+        +
+    Current Evidence Pack
+            ↓
+    Historical RGA Recall
+            ↓
+    Candidate Matches
+            ↓
+    Why Retrieved
 
-Atlas 支持：
+Atlas supports:
 
 - Strong Candidate
 - Partial Candidate
 - Weak Candidate
 - No Relevant Match
 
-Atlas 遵循以下原则：
+Atlas follows this principle:
 
-> 部分匹配优先于完全不召回。
+> Partial matching is prioritized over no recall at all.
 
-环境、设备或版本不同，不应成为阻止历史资产召回的唯一理由。
+Differences in environment, device, or version should not be the sole reason to block historical asset recall.
 
-每一次召回都应说明：
+Every recall should explain:
 
-```text
-why_retrieved
-```
+    why_retrieved
 
-让工程师理解：
+So engineers understand:
 
-- 哪些特征匹配
-- 哪些条件不同
-- 为什么该历史资产仍值得查看
+- Which features match
+- Which conditions differ
+- Why the historical asset is still worth reviewing
 
-Historical RGA Recall 提供调查起点，但不自动将历史结论复制到当前事件。
+Historical RGA Recall provides an investigation starting point but does not automatically copy historical conclusions to the current event.
 
 ---
 
 # 5. Investigation Context
 
-Atlas 将当前 REF、Evidence Pack 和 Historical RGA 组织成 Investigation Context。
+Atlas organizes the current REF, Evidence Pack, and Historical RGA into an Investigation Context.
 
-Investigation Context 的作用是将调查所需信息放在同一个上下文中。
+The purpose of Investigation Context is to place all investigation-required information into one shared context.
 
-它通常包括：
+It typically includes:
 
 - Current REF
 - Incident Summary
@@ -242,159 +234,153 @@ Investigation Context 的作用是将调查所需信息放在同一个上下文�
 - Candidate Investigation Path
 - Excluded Path References
 
-```text
-REF
- +
-Evidence Pack
- +
-Historical RGA
-        ↓
-Investigation Context
-```
+    REF
+     +
+    Evidence Pack
+     +
+    Historical RGA
+            ↓
+    Investigation Context
 
-Investigation Context 不应包含未经工程师确认的最终根因。
+Investigation Context should not contain final root causes that have not been confirmed by engineers.
 
-它的目标是帮助工程师快速理解：
+Its goal is to help engineers quickly understand:
 
-- 发生了什么
-- 目前有哪些证据
-- 哪些 Surface 已覆盖
-- 哪些信息仍然缺失
-- 历史上是否出现过相似情况
-- 下一步应该优先检查什么
+- What happened
+- What evidence is currently available
+- Which surfaces are covered
+- What information is still missing
+- Whether similar cases have occurred historically
+- What should be prioritized for the next step
 
 ---
 
 # 6. Investigation Tier Candidate
 
-Atlas 根据当前证据和事件范围生成 Investigation Tier Candidate。
+Atlas generates an Investigation Tier Candidate based on current evidence and event scope.
 
-它用于建议该 REF 应进入哪一级调查流程。
+It is used to suggest which investigation tier the REF should enter.
 
 ## Tier 1
 
-适用于：
+Applicable for:
 
-- 信息收集
-- 客户沟通
-- 时间确认
-- 设备识别
-- Evidence Availability 确认
-- 路由与升级
+- Information collection
+- Customer communication
+- Time confirmation
+- Device identification
+- Evidence Availability confirmation
+- Routing and escalation
 
-Tier 1 不完成深度工程调查。
+Tier 1 does not perform in-depth engineering investigation.
 
 ---
 
 ## Tier 2
 
-适用于：
+Applicable for:
 
-- Evidence Pack 审查
-- Runtime Timeline 对齐
+- Evidence Pack review
+- Runtime Timeline alignment
 - Historical RGA Recall
-- Investigation Context 建立
-- 标准 Investigation Path 执行
-- 是否需要 Tier 3 或 Sensor FAE 的判断
+- Investigation Context establishment
+- Standard Investigation Path execution
+- Determining whether Tier 3 or Sensor FAE is needed
 
 ---
 
 ## Tier 3
 
-适用于：
+Applicable for:
 
-- 跨系统复杂事件
-- 多 Runtime Surface 关联
-- 需要专项工程能力
-- 标准路径无法完成
-- 需要深入 Runtime 或产品工程分析
+- Cross-system complex events
+- Multi-Runtime Surface correlation
+- Need for specialized engineering capabilities
+- Standard paths cannot be completed
+- Need for in-depth Runtime or product engineering analysis
 
 ---
 
 ## Sensor FAE
 
-适用于：
+Applicable for:
 
 - Sensor-specific Runtime Evidence
 - Sensor Interface Investigation
 - Driver or Firmware Collaboration
 - Sensor Manufacturer Response
-- OEM 与传感器厂联合调查
+- Joint investigation between OEM and sensor manufacturer
 
-Investigation Tier Candidate 是路由建议。
+Investigation Tier Candidate is a routing suggestion.
 
-它不是责任判断，也不是根因判断。
+It is not a liability judgment nor a root cause judgment.
 
-最终层级由客户组织的 Admission Policy 和授权工程师确认。
+The final tier is confirmed by the customer organization's Admission Policy and authorized engineers.
 
 ---
 
 # 7. OEM Investigation Chain
 
-OEM 调查链通常包括 Tier 1、Tier 2 和 Tier 3。
+The OEM investigation chain typically includes Tier 1, Tier 2, and Tier 3.
 
-```text
-Tier 1 Intake
-    ↓
-Evidence Pack
-    ↓
-Historical RGA Recall
-    ↓
-Investigation Context
-    ↓
-Tier 2 Investigation
-    ↓
-Tier 3 Escalation（如需要）
-    ↓
-OEM IR
-    ↓
-OEM LL
-```
+    Tier 1 Intake
+        ↓
+    Evidence Pack
+        ↓
+    Historical RGA Recall
+        ↓
+    Investigation Context
+        ↓
+    Tier 2 Investigation
+        ↓
+    Tier 3 Escalation (if needed)
+        ↓
+    OEM IR
+        ↓
+    OEM LL
 
-OEM 工程团队可以执行：
+OEM engineering teams can perform:
 
 - Runtime Timeline Review
 - Surface Coverage Review
 - Historical RGA Comparison
-- Investigation Path
-- Excluded Path
+- Investigation Path execution
+- Excluded Path confirmation
 - Additional Evidence Request
 - Controlled Reproduction
 - Engineering Assessment
 
-Atlas 组织流程和资产。
+Atlas organizes processes and assets.
 
-工程师负责调查判断。
+Engineers are responsible for investigation judgments.
 
 ---
 
 # 8. Sensor Manufacturer Investigation Chain
 
-当 REF 涉及 Sensor Candidate时，OEM 可以生成 Sensor Engagement Pack。
+When a REF involves a sensor candidate, the OEM can generate a Sensor Engagement Pack.
 
-```text
-OEM REF
-    ↓
-Evidence Pack
-    ↓
-Investigation Context
-    ↓
-Sensor Engagement Pack (引用 OEM EP)
-    ↓
-Sensor REF Ticket
-    ↓
-Sensor Investigation
-    ↓
-Sensor IR
-    ↓
-Sensor LL
-    ↓
-Sensor Response
-    ↓
-OEM Closure
-```
+    OEM REF
+        ↓
+    Evidence Pack
+        ↓
+    Investigation Context
+        ↓
+    Sensor Engagement Pack (referencing OEM EP)
+        ↓
+    Sensor REF Ticket
+        ↓
+    Sensor Investigation
+        ↓
+    Sensor IR
+        ↓
+    Sensor LL
+        ↓
+    Sensor Response
+        ↓
+    OEM Closure
 
-Sensor Engagement Pack 可以包括：
+Sensor Engagement Pack can include:
 
 - Source OEM REF
 - Relevant Evidence Pack References
@@ -407,19 +393,19 @@ Sensor Engagement Pack 可以包括：
 - Exchange Mode
 - Data Access Boundary
 
-Sensor Manufacturer FAE 使用统一证据包开展调查，而不是依赖来回发送截图和零散日志。
+Sensor Manufacturer FAEs conduct investigations using unified evidence bundles, rather than relying on back-and-forth exchanges of screenshots and scattered logs.
 
 ---
 
-# 9. Sensor Engagement Pack 的 Exchange Mode
+# 9. Sensor Engagement Pack Exchange Modes
 
-Atlas 支持不同证据交换边界。
+Atlas supports different evidence exchange boundaries.
 
-## Mode A：Raw Evidence Reference
+## Mode A: Raw Evidence Reference
 
-适用于 OEM 授权 Sensor Manufacturer 查看指定原始证据的情况。
+Applicable when OEM authorizes Sensor Manufacturer to view specified raw evidence.
 
-可能包括：
+May include:
 
 - Raw data reference
 - Packet capture reference
@@ -429,11 +415,11 @@ Atlas 支持不同证据交换边界。
 
 ---
 
-## Mode B：Signature and Recall
+## Mode B: Signature and Recall
 
-适用于原始数据不能直接共享的情况。
+Applicable when raw data cannot be shared directly.
 
-可以只提供：
+Can provide only:
 
 - Evidence Signature
 - Runtime Metadata
@@ -442,25 +428,25 @@ Atlas 支持不同证据交换边界。
 - Historical Recall Result
 - Investigation Questions
 
-Mode B 可以支持协作，同时保护 OEM 数据边界。
+Mode B supports collaboration while protecting OEM data boundaries.
 
 ---
 
-# 10. Investigation Result（IR）
+# 10. Investigation Result (IR)
 
-IR 是 Investigation Result。
+IR is Investigation Result.
 
-IR 由获得授权的 OEM 工程师或 Sensor FAE 撰写。
+IR is authored by authorized OEM engineers or Sensor FAEs.
 
-IR 用于记录调查完成后的工程结果状态。
+IR is used to record the engineering result status after investigation completion.
 
-典型状态包括：
+Typical statuses include:
 
 - matched_*
 - candidate_*
 - not_applicable
 
-IR 可以记录：
+IR can record:
 
 - Observed Result
 - Matched Pattern
@@ -471,92 +457,88 @@ IR 可以记录：
 - Open Questions
 - Required Follow-up
 
-IR 不应自动写成：
+IR should not be automatically written as:
 
 - Root Cause Confirmed
 - Liability Assigned
 - OEM Fault
 - Sensor Fault
 
-除非客户自己的授权流程允许，并由其工程团队自行确认。
+Unless the customer's own authorization process allows it and is confirmed by their engineering team.
 
-Atlas 不自动生成最终工程结论。
+Atlas does not automatically generate final engineering conclusions.
 
 ---
 
-# 11. Lesson Learned（LL）
+# 11. Lesson Learned (LL)
 
-LL 是 Lesson Learned。
+LL is Lesson Learned.
 
-它记录本次调查中可被未来复用的工程经验。
+It records engineering experience from this investigation that can be reused in the future.
 
-LL 可以包括：
+LL can include:
 
-- 未来应优先检查的步骤
-- 已验证有效的 Investigation Path
-- 可以排除的方向
-- 需要补充的观测点
-- 部署配置建议
-- 测试或复现方法
-- 数据采集缺口
-- 未来 Admission 建议
+- Steps to prioritize in future investigations
+- Validated and effective Investigation Paths
+- Directions that can be excluded
+- Observation points that need to be supplemented
+- Deployment configuration recommendations
+- Testing or reproduction methods
+- Data collection gaps
+- Future Admission recommendations
 
-LL 应尽量写成可执行步骤，而不是模糊描述。
+LL should be written as actionable steps rather than vague descriptions.
 
-例如：
+For example:
 
-```text
-1. 确认 Ethernet physical link 状态
-2. 核对 IP 与 subnet
-3. 使用 packet capture 验证 UDP 是否到达
-4. 检查 Driver process 与 ROS node 状态
-5. 进行线缆或交换机直连对比
-```
+    1. Confirm Ethernet physical link status
+    2. Verify IP and subnet
+    3. Use packet capture to verify UDP arrival
+    4. Check Driver process and ROS node status
+    5. Perform direct cable or switch comparison
 
-LL 由工程师撰写。
+LL is authored by engineers.
 
-Atlas 负责保存、关联和未来召回。
+Atlas is responsible for saving, associating, and future recall.
 
 ---
 
 # 12. Ticket Closure
 
-REF Ticket 只有在必要调查资产完成后才能关闭。
+REF Tickets can only be closed after necessary investigation artifacts are completed.
 
-典型 Closure Gate 包括：
+Typical Closure Gates include:
 
-- REF 已建立
-- Evidence Pack 可引用
-- Investigation Context 已完成
-- Required IR 已提交
-- Required LL 已提交
-- Required OEM or Sensor Response 已完成
-- RGA 已生成或更新
-- Closure State 已记录
+- REF has been created
+- Evidence Pack is referenceable
+- Investigation Context is complete
+- Required IR has been submitted
+- Required LL has been submitted
+- Required OEM or Sensor Response has been completed
+- RGA has been generated or updated
+- Closure State has been recorded
 
-```text
-IR Complete
-    +
-LL Complete
-    +
-Required Response Complete
-        ↓
-RGA Generate / Update
-        ↓
-Ticket Closure
-```
+    IR Complete
+        +
+    LL Complete
+        +
+    Required Response Complete
+            ↓
+    RGA Generate / Update
+            ↓
+    Ticket Closure
 
-Ticket Closure 不是简单修改状态为 Closed。
+Ticket Closure is not simply changing the status to Closed.
 
-它代表本次调查已形成可供未来复用的组织资产。
+It represents that this investigation has formed organizational assets available for future reuse.
 
 ---
 
-# 13. RGA 生成与更新
+# 13. RGA Generation and Update
 
-每一次完成的 REF 调查都可以生成新的 RGA，或更新已有 RGA。
+Every completed REF investigation can generate a new RGA or update an existing RGA.
 
-RGA 可以关联：
+RGA can associate:
 
 - Source REF
 - Source Evidence Pack
@@ -570,27 +552,25 @@ RGA 可以关联：
 - Historical Pattern
 - Reuse Metadata
 
-```text
-Completed Investigation
-        ↓
-IR + LL + Evidence References
-        ↓
-RGA
-        ↓
-Assist Vault
-```
+    Completed Investigation
+            ↓
+    IR + LL + Evidence References
+            ↓
+    RGA
+            ↓
+    Assist Vault
 
-RGA 的价值不只是保存过去。
+The value of RGA is not just preserving the past.
 
-它用于未来 REF 的检索、比较和调查复用。
+It is used for future REF retrieval, comparison, and investigation reuse.
 
 ---
 
 # 14. Assist Vault
 
-Assist Vault 保存可复用的调查资产。
+Assist Vault stores reusable investigation assets.
 
-它可以包括：
+It can include:
 
 - Historical RGA
 - Investigation Path
@@ -602,9 +582,9 @@ Assist Vault 保存可复用的调查资产。
 - Evidence Signature
 - Reuse Conditions
 
-Assist Vault 不应成为原始客户数据的公共池。
+Assist Vault should not become a public pool of raw customer data.
 
-Atlas 应遵循：
+Atlas should adhere to:
 
 - Customer data ownership
 - Access control
@@ -613,29 +593,27 @@ Atlas 应遵循：
 - Export policy
 - Reuse authorization
 
-共享的核心不是客户原始数据。
+The core of sharing is not customer raw data.
 
-共享的是已经获得授权、可去标识化并可复用的调查能力。
+It is authorized, de-identified, and reusable investigation capabilities.
 
 ---
 
 # 15. Future REF Reuse
 
-当未来出现新的 REF 时，Atlas 再次检索 Assist Vault。
+When a new REF emerges in the future, Atlas retrieves from Assist Vault again.
 
-```text
-New REF
-    ↓
-New Evidence Pack
-    ↓
-Historical RGA Recall
-    ↓
-Prior IR / LL Reuse
-    ↓
-Faster Investigation
-```
+    New REF
+        ↓
+    New Evidence Pack
+        ↓
+    Historical RGA Recall
+        ↓
+    Prior IR / LL Reuse
+        ↓
+    Faster Investigation
 
-未来复用结果应保留：
+Future reuse results should retain:
 
 - Match Level
 - Why Retrieved
@@ -645,66 +623,66 @@ Faster Investigation
 - Non-reusable Conditions
 - Engineer Review Requirement
 
-Atlas 不应因为历史匹配较强，就自动将过去结论升格为当前确定结论。
+Atlas should not automatically elevate past conclusions to current confirmed conclusions simply because historical matching is strong.
 
-历史资产用于辅助调查，不替代当前证据和工程判断。
+Historical assets are for assisting investigations, not replacing current evidence and engineering judgment.
 
 ---
 
-# 16. Runtime Investigation 的主要输出
+# 16. Key Outputs of Runtime Investigation
 
-Runtime Investigation™ 主要产生以下资产：
+Runtime Investigation™ primarily produces the following assets:
 
 ## REF Ticket
 
-记录事件、客户报告、时间范围、严重度和路由状态。
+Records incident, customer report, time range, severity, and routing status.
 
 ## Historical RGA Match Result
 
-记录历史候选、匹配等级和 `why_retrieved`。
+Records historical candidates, match level, and why_retrieved.
 
 ## Investigation Context
 
-统一组织当前证据与历史资产。
+Unifies current evidence and historical assets.
 
 ## Investigation Tier Candidate
 
-提供调查层级和协作路由建议。
+Provides investigation tier and collaboration routing suggestions.
 
 ## Sensor Engagement Pack
 
-支持 OEM 与 Sensor Manufacturer 的标准化证据交换。
+Supports standardized evidence exchange between OEM and Sensor Manufacturer.
 
 ## Investigation Result
 
-记录获得授权的工程调查结果。
+Records authorized engineering investigation results.
 
 ## Lesson Learned
 
-记录未来可复用的调查经验。
+Records reusable investigation experience for the future.
 
 ## Closure Record
 
-记录调查关闭条件和最终状态。
+Records investigation closure conditions and final status.
 
 ## Runtime Governance Asset
 
-将本次调查沉淀为未来可检索的资产。
+Sinks this investigation into a retrievable asset for the future.
 
 ## Assist Vault Entry
 
-将获得授权的可复用资产存入组织知识库。
+Stores authorized reusable assets into the organizational knowledge base.
 
 ---
 
 # 17. Atlas Supports
 
-Runtime Investigation™ 支持：
+Runtime Investigation™ supports:
 
 - REF Intake
 - Admission Policy
-- Historical RGA & Assist Vault 预建
-- Evidence Pack 引用
+- Historical RGA and Assist Vault pre-establishment
+- Evidence Pack referencing
 - Historical RGA Recall
 - Partial Match Recall
 - Why Retrieved
@@ -725,101 +703,95 @@ Runtime Investigation™ 支持：
 
 # 18. Atlas Does Not Support
 
-Runtime Investigation™ 不负责：
+Runtime Investigation™ does not handle:
 
-- 自动确认 Root Cause
-- 自动确认 Causality
+- Automatic Root Cause confirmation
+- Automatic Causality confirmation
 - Liability Assignment
-- 自动判定 OEM Fault
-- 自动判定 Sensor Fault
-- 替代 Tier 2 或 Tier 3 工程师
-- 替代 Sensor FAE
-- 自动编写未经工程师确认的 IR
-- 自动编写未经工程师确认的 LL
-- 将历史结论直接复制为当前结论
+- Automatic OEM Fault determination
+- Automatic Sensor Fault determination
+- Replacing Tier 2 or Tier 3 engineers
+- Replacing Sensor FAE
+- Automatically writing IR without engineer confirmation
+- Automatically writing LL without engineer confirmation
+- Directly copying historical conclusions as current conclusions
 
-Atlas 负责：
+Atlas is responsible for:
 
-- 组织证据
-- 召回历史
-- 构建上下文
-- 标准化流程
-- 管理调查资产
-- 支持未来复用
+- Organizing evidence
+- Recalling history
+- Building context
+- Standardizing processes
+- Managing investigation assets
+- Supporting future reuse
 
 ---
 
-# 19. 与 Runtime Sensor Governance™ 的关系
+# 19. Relationship with Runtime Sensor Governance™
 
-Runtime Sensor Governance™ 负责：
+Runtime Sensor Governance™ is responsible for:
 
-```text
-Observe
-    ↓
-Persist
-    ↓
-Retain
-    ↓
-Export
-    ↓
-Evidence Pack
-    ↓
-Investigation Tier Candidate
-```
+    Observe
+        ↓
+    Persist
+        ↓
+    Retain
+        ↓
+    Export
+        ↓
+    Evidence Pack
+        ↓
+    Investigation Tier Candidate
 
-Runtime Investigation™ 负责：
+Runtime Investigation™ is responsible for:
 
-```text
-REF Intake
-    ↓
-Historical RGA Recall
-    ↓
-Investigation Context
-    ↓
-OEM / Sensor Investigation
-    ↓
-IR
-    ↓
-LL
-    ↓
-Ticket Closure
-    ↓
-RGA
-    ↓
-Assist Vault
-    ↓
-Future REF Reuse
-```
+    REF Intake
+        ↓
+    Historical RGA Recall
+        ↓
+    Investigation Context
+        ↓
+    OEM / Sensor Investigation
+        ↓
+    IR
+        ↓
+    LL
+        ↓
+    Ticket Closure
+        ↓
+    RGA
+        ↓
+    Assist Vault
+        ↓
+    Future REF Reuse
 
-前者建立运行时证据基础。
+The former builds the runtime evidence foundation.
 
-后者将证据转化为标准调查流程和可复用组织能力。
+The latter transforms evidence into standardized investigation processes and reusable organizational capabilities.
 
 ---
 
 # Summary
 
-Atlas Runtime Investigation™ 将一次 Runtime Execution Failure 从客户报告，推进到证据组织、历史召回、工程调查、IR、LL、Ticket Closure 和未来复用。
+Atlas Runtime Investigation™ advances a Runtime Execution Failure from customer report through evidence organization, historical recall, engineering investigation, IR, LL, Ticket Closure, and future reuse.
 
-它建立的核心闭环是：
+The core closed-loop it establishes is:
 
-```text
-Every REF starts from Historical RGA
-                ↓
-Engineers complete IR and LL
-                ↓
-Every completed REF becomes a reusable RGA
-                ↓
-The next REF starts from organizational memory
-```
+    Every REF starts from Historical RGA
+                    ↓
+    Engineers complete IR and LL
+                    ↓
+    Every completed REF becomes a reusable RGA
+                    ↓
+    The next REF starts from organizational memory
 
-Atlas 不替代工程师。
+Atlas does not replace engineers.
 
-Atlas 让工程师不再从无限日志和零散历史中重新开始。
+Atlas ensures engineers no longer have to start from infinite logs and scattered history.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Atlas Agent™
 - Runtime Dataset
