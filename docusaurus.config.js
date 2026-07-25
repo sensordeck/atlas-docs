@@ -3,8 +3,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Atlas Documentation',
-  tagline: 'Deterministic Sensor Infrastructure for Robotics',
+  title: 'Atlas Runtime Governance',
+  tagline: '机器人运行时治理基础设施',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -16,6 +16,8 @@ const config = {
 
   organizationName: 'sensordeck',
   projectName: 'atlas-docs',
+
+  trailingSlash: false,
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -30,74 +32,135 @@ const config = {
       'classic',
       {
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',
+          sidebarPath: './sidebars.js',
+          editUrl:
+            'https://github.com/sensordeck/atlas-docs/edit/main/',
+          showLastUpdateAuthor: false,
+          showLastUpdateTime: true,
         },
+
         blog: false,
+
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: './src/css/custom.css',
         },
       },
     ],
   ],
 
-    themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      image: 'img/SensorDeck.png',
-      colorMode: {
-        respectPrefersColorScheme: true,
+  themeConfig: {
+    image: 'img/SensorDeck.png',
+
+    colorMode: {
+      defaultMode: 'light',
+      respectPrefersColorScheme: true,
+    },
+
+    navbar: {
+      title: 'Atlas Runtime Governance',
+
+      logo: {
+        alt: 'SensorDeck',
+        src: 'img/SensorDeck.png',
       },
 
-      navbar: {
-        title: 'Atlas',
-        logo: {
-          alt: 'Atlas Logo',
-          src: 'img/SensorDeck.png',
+      items: [
+        {
+          type: 'docSidebar',
+          sidebarId: 'docs',
+          position: 'left',
+          label: '技术文档',
         },
-        items: [
-          {
-            href: 'https://github.com/sensordeck/atlas-docs',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
+        {
+          href: 'https://sensordeck.tech',
+          label: '官方网站',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/sensordeck/atlas-docs',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
 
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Documentation',
-            items: [
-              {label: 'Atlas Overview', to: '/'},
-              {label: 'Hardware Architecture', to: '/hardware-architecture'},
-              {label: 'DSIL SDK', to: '/dsil-sdk'},
-              {label: 'ROS2 Integration', to: '/ros2-integration'},
-              {label: 'Sensor Synchronization', to: '/sensor-synchronization'},
-              {label: 'Evaluation Kit Setup', to: '/evaluation-kit-setup'},
-              {label: 'OEM Integration Pilot Program', to: '/oem-integration-pilot-program'},
-              {label: 'Downloads', to: '/downloads'},
-            ],
-          },
-          {
-            title: 'Project',
-            items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/sensordeck/atlas-docs',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} SensorDeck Inc.`,
-      },
+    footer: {
+      style: 'dark',
 
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+      links: [
+        {
+          title: '文档导航',
+          items: [
+            {
+              label: '基础理论',
+              to: '/foundation/runtime-governance-philosophy',
+            },
+            {
+              label: '产品体系',
+              to: '/products/runtime-sensor-governance',
+            },
+            {
+              label: '平台架构',
+              to: '/platform/atlas-agent',
+            },
+            {
+              label: '部署指南',
+              to: '/deployment/oem-deployment',
+            },
+            {
+              label: '参考资料',
+              to: '/reference/faq',
+            },
+          ],
+        },
+
+        {
+          title: '产品体系',
+          items: [
+            {
+              label: 'Runtime Sensor Governance™',
+              to: '/products/runtime-sensor-governance',
+            },
+            {
+              label: 'Runtime Investigation™',
+              to: '/products/runtime-investigation',
+            },
+          ],
+        },
+
+        {
+          title: 'SensorDeck',
+          items: [
+            {
+              label: '官方网站',
+              href: 'https://sensordeck.tech',
+            },
+            {
+              label: 'Atlas 中文文档',
+              to: '/',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/sensordeck',
+            },
+          ],
+        },
+      ],
+
+      copyright: `© ${new Date().getFullYear()} SensorDeck Inc. All Rights Reserved.`,
+    },
+
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 3,
+    },
+
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.dracula,
+    },
+  },
 };
 
 export default config;
