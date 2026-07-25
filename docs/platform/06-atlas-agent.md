@@ -7,17 +7,17 @@ sidebar_label: Atlas Agent™
 
 ## Overview
 
-Atlas Agent™ 是部署在机器人运行环境中的 Runtime Agent。
+Atlas Agent™ is a Runtime Agent deployed directly within the robot operating environment.
 
-它负责持续执行 Runtime Observation，并根据配置策略采集、保留和导出运行时数据，为 Runtime Governance 提供统一的数据入口。
+It is responsible for continuously executing Runtime Observation and collecting, retaining, and exporting runtime data based on configured policies, serving as the unified data entry point for Runtime Governance.
 
-Atlas Agent 是 Atlas Runtime Governance™ 的现场执行组件。
+Atlas Agent is the field execution component of Atlas Runtime Governance™.
 
 ---
 
 # Runtime Architecture
 
-一个典型部署如下：
+A typical deployment is structured as follows:
 
 ```text
 Robot Runtime
@@ -37,17 +37,17 @@ Robot Runtime
 Runtime Dataset
 ```
 
-Atlas Agent 与机器人业务逻辑解耦。
+Atlas Agent is decoupled from the robot's business logic.
 
-它不会参与机器人控制流程。
+It does not participate in the robot's control loops.
 
 ---
 
 # Runtime Dataset Lifecycle
 
-Atlas Agent 维护一套统一的 Runtime Dataset 生命周期。
+Atlas Agent maintains a unified Runtime Dataset lifecycle.
 
-所有运行时数据，无论最终用于哪种调查模式，都遵循同一生命周期：
+All runtime data, regardless of the ultimate investigation mode for which it is used, follows the exact same lifecycle:
 
 ```text
 Observe
@@ -59,59 +59,59 @@ Rolling Buffer
 Time-range Export
 ```
 
-Atlas 不会针对不同调查模式维护多份 Runtime Dataset。
+Atlas does not maintain multiple copies of the Runtime Dataset for different investigation modes.
 
-无论是：
+Whether for:
 
-- Tier 1 手动指定 REF 时间范围
-- 自动 Candidate Timeline
-- Candidate Evidence Pack
-- Primary Evidence Pack
+- Tier 1 manually specified REF time ranges
+- Automatic Candidate Timelines
+- Candidate Evidence Packs
+- Primary Evidence Packs
 
-都基于同一份 Runtime Dataset。
+All are built upon the exact same Runtime Dataset.
 
 ---
 
 ## Observe
 
-Atlas Agent 持续观察 Runtime Surface，并接收运行时数据。
+Atlas Agent continuously observes the Runtime Surface and ingests runtime data.
 
-例如：
+For example:
 
 - Sensor Runtime
 - Driver Runtime
 - Linux Runtime
 - Runtime Events
 - Runtime Metadata
-- Timestamp
+- Timestamps
 - Surface Status
 
-所有观测数据进入统一的数据生命周期。
+All observed data enters the unified data lifecycle.
 
 ---
 
 ## Persist
 
-Agent 将 Runtime Observation 持续写入 Runtime Dataset。
+The Agent continuously writes Runtime Observations into the Runtime Dataset.
 
-Persist 的目标不是生成调查结果，而是确保运行时数据能够被后续调查引用。
+The goal of Persist is not to generate investigation conclusions, but to ensure runtime data can be referenced by downstream investigations.
 
 ---
 
 ## Rolling Buffer
 
-Runtime Dataset 默认采用 Rolling Buffer 管理。
+The Runtime Dataset is managed by default using a Rolling Buffer.
 
-当达到保留策略限制时，最旧的数据按照覆盖策略自动释放。
+When retention policy limits are reached, the oldest data is automatically purged according to the overwrite policy.
 
-Retention Policy 可配置，包括：
+Retention Policies are configurable, including:
 
 - `rolling_buffer_hours`
 - `max_storage_size`
 - `overwrite_policy`
 - `dataset_lock_on_ref`
 
-默认建议值：
+Default recommended values:
 
 | Policy | Default |
 |---------|---------|
@@ -119,43 +119,43 @@ Retention Policy 可配置，包括：
 | overwrite_policy | circular |
 | dataset_lock_on_ref | enabled |
 
-OEM 可根据实际部署环境调整上述策略。
+OEMs can adjust these policies based on actual deployment environments.
 
 ---
 
 ## Dataset Lock
 
-当 Runtime Execution Failure（REF）进入正式调查后，Atlas Agent 会锁定对应时间范围的数据。
+When a Runtime Execution Failure (REF) enters formal investigation, Atlas Agent locks the data corresponding to that time window.
 
-锁定期间：
+During the lock period:
 
-- 不参与 Rolling Buffer 覆盖
-- 不允许自动删除
-- 保持 Runtime Dataset 完整性
-- 直到 Evidence Pack 导出完成后解除锁定
+- It is excluded from Rolling Buffer overwrites
+- Automatic deletion is prohibited
+- Runtime Dataset integrity is preserved
+- The lock remains active until Evidence Pack export is completed
 
-Dataset Lock 仅影响对应时间段，不影响其它 Runtime Dataset 的正常循环。
+Dataset Lock applies strictly to the specified time window without affecting the normal cycling of other Runtime Datasets.
 
 ---
 
 ## Time-range Export
 
-Atlas Agent 支持按时间范围导出 Runtime Dataset。
+Atlas Agent supports exporting the Runtime Dataset by time range.
 
-导出来源可以包括：
+Export sources can include:
 
-- Tier 1 指定的 REF 时间范围
-- Candidate Timeline
-- Candidate Evidence Pack
-- Primary Evidence Pack
+- Tier 1 specified REF time slices
+- Candidate Timelines
+- Candidate Evidence Packs
+- Primary Evidence Packs
 
-所有导出均引用同一份 Runtime Dataset，不复制、不重新采集运行时数据。
+All exports reference the exact same Runtime Dataset, without duplicating or re-collecting runtime data.
 
 ---
 
 ## Architecture Principle
 
-Atlas 始终维护一份统一的 Runtime Dataset 生命周期。
+Atlas consistently maintains a single, unified Runtime Dataset lifecycle.
 
 ```text
                  Runtime Dataset
@@ -164,22 +164,23 @@ Atlas 始终维护一份统一的 Runtime Dataset 生命周期。
       │                 │                  │
       ▼                 ▼                  ▼
 Manual REF       Candidate Timeline   Candidate EP
- Time Slice           Generation         Builder
+ Time Slice         Generation          Builder
       │                 │                  │
       └─────────────────┴──────────────────┘
                         │
                         ▼
-                 Evidence Pack Export
+               Evidence Pack Export
 ```
 
-不同调查模式共享同一份 Runtime Dataset。
+Different investigation modes share the same underlying Runtime Dataset.
 
-Atlas 不会因为不同 Investigation Workflow 而创建独立的数据生命周期，也不会维护两套 Runtime Dataset。
+Atlas never creates independent data lifecycles or maintains dual Runtime Datasets for different Investigation Workflows.
+
 ---
 
 # Internal Components
 
-Atlas Agent 由多个运行模块组成。
+Atlas Agent comprises multiple operational modules:
 
 ```text
 Atlas Agent
@@ -193,229 +194,229 @@ Atlas Agent
 └── Configuration Manager
 ```
 
-每个模块负责不同职责。
+Each module manages specific responsibilities.
 
 ---
 
 # Runtime Observer
 
-Runtime Observer 持续监听 Runtime Surface。
+The Runtime Observer continuously listens to the Runtime Surface.
 
-Observer 负责：
+The Observer is responsible for receiving:
 
-- 接收 Runtime Event
-- 接收 Surface Status
-- 接收 Runtime Metadata
-- 接收 Timestamp
-- 接收 Runtime State
+- Runtime Events
+- Surface Status
+- Runtime Metadata
+- Timestamps
+- Runtime States
 
-Observer 不负责分析 Root Cause。
+The Observer is not responsible for Root Cause analysis.
 
 ---
 
 # Dataset Manager
 
-Dataset Manager 负责组织 Runtime Dataset。
+The Dataset Manager organizes the Runtime Dataset.
 
-主要职责：
+Core responsibilities:
 
-- 写入 Dataset
-- 建立统一时间轴
-- 数据分段
-- 数据索引
-- Metadata 管理
+- Writing to the Dataset
+- Establishing a unified timeline
+- Data segmentation
+- Data indexing
+- Metadata management
 
-Dataset Manager 不负责调查。
+The Dataset Manager does not conduct investigations.
 
 ---
 
 # Retention Manager
 
-Retention Manager 根据策略管理 Runtime Dataset。
+The Retention Manager manages the Runtime Dataset according to defined policies.
 
-例如：
+For example:
 
-- 最大保存容量
-- 最大保存时间
-- 循环覆盖策略
-- Export 前保留
-- Export 后删除
-- Protected Dataset
+- Maximum storage capacity
+- Maximum retention duration
+- Circular overwrite policy
+- Pre-export retention
+- Post-export deletion
+- Protected Datasets
 
-Retention Policy 可以根据 OEM 要求配置。
+Retention Policies can be configured according to OEM requirements.
 
 ---
 
 # Evidence Builder
 
-Evidence Builder 根据指定事件生成 Evidence Pack。
+The Evidence Builder generates Evidence Packs based on specified events.
 
-Evidence Builder 可以响应：
+The Evidence Builder responds to:
 
-- Manual Window Request
-- Runtime Event
-- Dataset Trigger
-- Controlled Event
+- Manual Window Requests
+- Runtime Events
+- Dataset Triggers
+- Controlled Events
 
-Evidence Builder 不决定调查层级。
+The Evidence Builder does not determine investigation tiers.
 
-它仅负责构建标准化 Evidence Pack。
+It is strictly responsible for assembling standardized Evidence Packs.
 
 ---
 
 # Export Manager
 
-Export Manager 负责导出 Runtime 数据。
+The Export Manager handles exporting runtime data.
 
-支持：
+Supports:
 
-- Runtime Dataset
-- Evidence Pack
+- Runtime Datasets
+- Evidence Packs
 - Runtime Metadata
-- Export Manifest
+- Export Manifests
 
-导出目标由客户部署策略决定。
+Export targets are governed by customer deployment policies.
 
 ---
 
 # Surface Adapter
 
-不同机器人平台拥有不同 Runtime Surface。
+Different robot platforms possess distinct Runtime Surfaces.
 
-Surface Adapter 负责：
+The Surface Adapter is responsible for:
 
 - Runtime Surface Discovery
 - Surface Registration
-- Runtime Interface
-- Data Collection Interface
+- Runtime Interfaces
+- Data Collection Interfaces
 
-Atlas 不要求所有机器人具有完全一致的数据接口。
+Atlas does not require all robots to share identical data interfaces.
 
-Surface Adapter 提供统一抽象层。
+The Surface Adapter provides a standardized abstraction layer.
 
 ---
 
 # Configuration Manager
 
-Configuration Manager 管理 Agent 配置。
+The Configuration Manager manages Agent configurations.
 
-例如：
+For example:
 
-- Observation Policy
-- Retention Policy
-- Export Policy
-- Runtime Surface
-- Sampling Policy
-- Trigger Policy
+- Observation Policies
+- Retention Policies
+- Export Policies
+- Runtime Surfaces
+- Sampling Policies
+- Trigger Policies
 
-不同机器人可拥有不同配置。
+Different robots can maintain distinct configurations.
 
 ---
 
 # Deployment Model
 
-Atlas Agent 可以部署于：
+Atlas Agent can be deployed on:
 
-- Robot SBC
-- Industrial PC
-- Edge Computer
-- Embedded Linux Platform
+- Robot SBCs
+- Industrial PCs
+- Edge Computers
+- Embedded Linux Platforms
 
-Agent 不依赖云端运行。
+The Agent does not depend on cloud connectivity to run.
 
-所有 Runtime Observation 均可在本地完成。
+All Runtime Observation can be completed locally on the device.
 
 ---
 
 # Resource Consumption
 
-Atlas Agent 设计目标：
+Atlas Agent design goals:
 
-- 长时间运行
-- 低资源占用
-- 不影响机器人实时控制
-- 可独立升级
-- 可独立停止
+- Continuous long-term execution
+- Low resource footprint
+- Zero impact on real-time robot control
+- Independently upgradeable
+- Independently stop-capable
 
-具体资源占用取决于：
+Specific resource consumption depends on:
 
-- Runtime Surface 数量
-- Dataset Policy
-- Sampling Rate
-- Export Policy
+- Number of Runtime Surfaces
+- Dataset Policies
+- Sampling Rates
+- Export Policies
 
 ---
 
 # Security Boundary
 
-Atlas Agent 默认遵循客户数据边界。
+Atlas Agent enforces customer data boundaries by default.
 
-包括：
+Including:
 
 - Customer-owned Runtime Data
 - Local Storage
-- Configurable Export
-- Access Control
-- Data Retention Policy
+- Configurable Exports
+- Access Controls
+- Data Retention Policies
 
-Atlas Agent 不要求持续连接外部服务。
+Atlas Agent does not require persistent connections to external services.
 
 ---
 
 # Failure Handling
 
-当 Agent 本身发生异常时，应尽可能：
+When the Agent itself encounters an anomaly, it should prioritize:
 
-- 保持已有 Dataset 完整
-- 保留 Export Metadata
-- 记录 Agent Runtime Event
-- 支持重新启动后继续运行
+- Preserving existing Dataset integrity
+- Retaining Export Metadata
+- Logging Agent Runtime Events
+- Resuming operation seamlessly upon reboot
 
-Agent 的异常不应影响机器人业务运行。
+Agent anomalies must never impact core robot business operations.
 
 ---
 
 # Extensibility
 
-Atlas Agent 支持扩展新的 Runtime Surface。
+Atlas Agent supports extending to new Runtime Surfaces.
 
-例如：
+For example:
 
-- Camera
+- Cameras
 - LiDAR
-- IMU
+- IMUs
 - GNSS
 - CAN
 - Ethernet
 - USB
 - GPIO
 - PPS
-- Custom Sensor
+- Custom Sensors
 
-扩展通过 Surface Adapter 完成，而无需修改 Agent 核心架构。
+Extensions are implemented through Surface Adapters without modifying the core Agent architecture.
 
 ---
 
 # Summary
 
-Atlas Agent™ 是 Atlas Runtime Governance™ 的现场执行组件。
+Atlas Agent™ is the field execution component of Atlas Runtime Governance™.
 
-它负责：
+It is responsible for:
 
 - Runtime Observation
 - Runtime Dataset Management
 - Evidence Pack Generation
 - Runtime Data Export
 
-Agent 本身不参与调查分析，也不负责 Root Cause 判断。
+The Agent itself does not engage in diagnostic analysis or Root Cause determinations.
 
-它提供统一、稳定且可扩展的 Runtime 数据基础，为后续 Runtime Investigation 提供可靠证据来源。
+It provides a unified, stable, and extensible runtime data foundation, delivering reliable evidence sources for downstream Runtime Investigations.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Runtime Surfaces
-- Runtime Datase
+- Runtime Dataset
 - Evidence Pack™
 - Historical RGA™
