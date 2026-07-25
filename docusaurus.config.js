@@ -4,7 +4,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Atlas Runtime Governance',
-  tagline: '机器人运行时治理基础设施',
+  tagline: 'Runtime Governance Infrastructure for Robotics',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -70,11 +70,11 @@ const config = {
           type: 'docSidebar',
           sidebarId: 'docs',
           position: 'left',
-          label: '技术文档',
+          label: 'Documentation',
         },
         {
           href: 'https://sensordeck.tech',
-          label: '官方网站',
+          label: 'SensorDeck.tech',
           position: 'right',
         },
         {
@@ -90,33 +90,33 @@ const config = {
 
       links: [
         {
-          title: '文档导航',
+          title: 'Navigation',
           items: [
             {
-              label: '基础理论',
+              label: 'Foundation',
               to: '/foundation/runtime-governance-philosophy',
             },
             {
-              label: '产品体系',
+              label: 'Product Portfolio',
               to: '/products/runtime-sensor-governance',
             },
             {
-              label: '平台架构',
+              label: 'Platform',
               to: '/platform/atlas-agent',
             },
             {
-              label: '部署指南',
+              label: 'Deployment',
               to: '/deployment/oem-deployment',
             },
             {
-              label: '参考资料',
+              label: 'Resource',
               to: '/reference/faq',
             },
           ],
         },
 
         {
-          title: '产品体系',
+          title: 'Product Portfolio',
           items: [
             {
               label: 'Runtime Sensor Governance™',
@@ -133,7 +133,7 @@ const config = {
           title: 'SensorDeck',
           items: [
             {
-              label: '官方网站',
+              label: 'SensorDeck.tech',
               href: 'https://sensordeck.tech',
             },
             {
