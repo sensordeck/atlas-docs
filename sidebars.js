@@ -8,10 +8,10 @@ module.exports = {
 
     {
       type: "category",
-      label: "基础理论",
+      label: "Foundation",
       link: {
         type: "generated-index",
-        title: "基础理论",
+        title: "Foundation",
       },
       items: [
         {
@@ -23,10 +23,10 @@ module.exports = {
 
     {
       type: "category",
-      label: "产品体系",
+      label: "Product Portfolio",
       link: {
         type: "generated-index",
-        title: "产品体系",
+        title: "Product Portfoli",
       },
       items: [
         {
@@ -38,10 +38,10 @@ module.exports = {
 
     {
       type: "category",
-      label: "平台架构",
+      label: "Platform",
       link: {
         type: "generated-index",
-        title: "平台架构",
+        title: "Platform",
       },
       items: [
         {
@@ -53,10 +53,10 @@ module.exports = {
 
     {
       type: "category",
-      label: "部署指南",
+      label: "Deployment",
       link: {
         type: "generated-index",
-        title: "部署指南",
+        title: "Deployment",
       },
       items: [
         {
@@ -68,10 +68,10 @@ module.exports = {
 
     {
       type: "category",
-      label: "参考资料",
+      label: "Resource",
       link: {
         type: "generated-index",
-        title: "参考资料",
+        title: "Resource",
       },
       items: [
         {
