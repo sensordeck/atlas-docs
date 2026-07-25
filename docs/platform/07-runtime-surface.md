@@ -7,25 +7,25 @@ sidebar_label: Runtime Surface™
 
 ## Overview
 
-Runtime Surface™ 是 Atlas Runtime Governance™ 中最基本的观测单元（Observation Unit）。
+Runtime Surface™ is the fundamental Observation Unit within Atlas Runtime Governance™.
 
-每一个 Runtime Surface 表示一类可以持续观察、记录和参与 Runtime Investigation 的运行时对象。
+Each Runtime Surface represents a category of runtime objects that can be continuously observed, recorded, and incorporated into Runtime Investigations.
 
-Atlas Runtime Dataset、Evidence Pack、Historical RGA、Investigation Context 均建立在 Runtime Surface 之上。
+Atlas Runtime Datasets, Evidence Packs, Historical RGAs, and Investigation Contexts are all constructed on top of Runtime Surfaces.
 
 ---
 
-# 为什么需要 Runtime Surface？
+# Why is a Runtime Surface Needed?
 
-机器人运行时异常通常不会发生在单一组件。
+Robot runtime anomalies rarely occur within a single isolated component.
 
-例如：
+For example:
 
 ```text
 LiDAR Point Cloud Lost
 ```
 
-真正参与事件的可能包括：
+The actual elements participating in this event might include:
 
 ```text
 LiDAR
@@ -36,9 +36,9 @@ Power
 Timestamp
 ```
 
-如果这些数据分别存在不同日志中，就很难建立统一调查时间线。
+If this data remains scattered across separate logs, establishing a unified investigation timeline becomes extremely difficult.
 
-Runtime Surface 提供统一观察模型，使不同来源的数据能够在同一时间轴上组织和关联。
+Runtime Surfaces provide a unified observation model that enables data from disparate sources to be organized and correlated along a single, shared timeline.
 
 ---
 
@@ -56,17 +56,17 @@ Robot Runtime
 └── Custom Surface
 ```
 
-每一种 Surface 都可以持续产生 Runtime Observation。
+Every Surface category continuously produces Runtime Observations.
 
-这些 Observation 最终进入统一 Runtime Dataset。
+These Observations ultimately feed into a unified Runtime Dataset.
 
 ---
 
 # Runtime Surface Registry
 
-所有 Runtime Surface 都注册到 Surface Registry。
+All Runtime Surfaces register with the Surface Registry.
 
-Surface Registry 定义：
+The Surface Registry defines:
 
 - Surface ID
 - Surface Type
@@ -75,12 +75,12 @@ Surface Registry 定义：
 - Collection Policy
 - Export Policy
 
-Surface Registry 使 Atlas 能够了解：
+The Surface Registry provides Atlas with clear visibility into:
 
-- 当前部署有哪些 Runtime Surface
-- 哪些 Surface 已覆盖
-- 哪些 Surface 不存在
-- 哪些 Surface 未参与本次 Evidence Pack
+- Which Runtime Surfaces are active in the current deployment
+- Which Surfaces are fully covered
+- Which Surfaces do not exist
+- Which Surfaces are not participating in the current Evidence Pack
 
 ---
 
@@ -88,9 +88,9 @@ Surface Registry 使 Atlas 能够了解：
 
 ## Sensor Surface
 
-表示物理传感器运行状态。
+Represents the physical runtime operational state of sensors.
 
-例如：
+For example:
 
 - Camera
 - LiDAR
@@ -99,7 +99,7 @@ Surface Registry 使 Atlas 能够了解：
 - Radar
 - Ultrasonic
 
-典型 Observation：
+Typical Observations:
 
 - Device availability
 - Frame continuity
@@ -110,24 +110,24 @@ Surface Registry 使 Atlas 能够了解：
 
 ## Power Surface
 
-表示运行时供电相关状态。
+Represents runtime power supply and electrical states.
 
-例如：
+For example:
 
 - Voltage
 - Power interruption
 - Brownout
 - Power recovery
 
-Power Surface 可以帮助调查供电相关异常。
+Power Surfaces aid in investigating power-related anomalies.
 
 ---
 
 ## Bus Surface
 
-表示通信总线运行状态。
+Represents the operational state of communication buses.
 
-例如：
+For example:
 
 - USB
 - Ethernet
@@ -137,7 +137,7 @@ Power Surface 可以帮助调查供电相关异常。
 - UART
 - CSI
 
-典型 Observation：
+Typical Observations:
 
 - Device connection
 - Link status
@@ -148,9 +148,9 @@ Power Surface 可以帮助调查供电相关异常。
 
 ## Linux Runtime Surface
 
-表示 Linux Runtime 状态。
+Represents the state of the underlying Linux Runtime.
 
-例如：
+For example:
 
 - Process lifecycle
 - CPU usage
@@ -158,64 +158,64 @@ Power Surface 可以帮助调查供电相关异常。
 - Disk activity
 - Kernel events
 
-这些 Observation 有助于识别运行环境异常。
+These Observations help identify environmental and OS-level runtime anomalies.
 
 ---
 
 ## Driver Surface
 
-表示驱动层运行状态。
+Represents the operational state of the driver layer.
 
-例如：
+For example:
 
 - Driver start
 - Driver exit
 - Driver restart
 - Runtime errors
 
-Driver Surface 不包含驱动源码。
+Driver Surfaces do not contain driver source code.
 
-它仅观察驱动运行行为。
+They strictly observe runtime driver behavior.
 
 ---
 
 ## ROS Runtime Surface
 
-表示 ROS Runtime 状态。
+Represents the state of the ROS Runtime.
 
-例如：
+For example:
 
 - Topic frequency
 - Topic availability
 - Node lifecycle
 - Message continuity
 
-ROS Runtime Surface 提供机器人应用层之前的重要观察点。
+ROS Runtime Surfaces provide essential observation points just below the robot application layer.
 
 ---
 
 ## Custom Surface
 
-OEM 可以扩展新的 Runtime Surface。
+OEMs can extend new Runtime Surfaces as needed.
 
-例如：
+For example:
 
 - FPGA
 - MCU
 - PLC
 - Safety Controller
 - Robot Middleware
-- Custom Runtime Component
+- Custom Runtime Components
 
-Atlas 不限制 Runtime Surface 类型。
+Atlas places no restriction on Runtime Surface types.
 
 ---
 
 # Runtime Observation
 
-每个 Runtime Surface 持续产生 Observation。
+Each Runtime Surface continuously generates Observations.
 
-典型 Observation 包括：
+Typical Observations include:
 
 - Timestamp
 - Runtime Event
@@ -224,15 +224,15 @@ Atlas 不限制 Runtime Surface 类型。
 - Availability
 - Continuity
 
-Atlas 不要求所有 Surface 产生相同数据。
+Atlas does not require every Surface to produce identical data.
 
-不同 Surface 可以拥有不同 Observation Schema。
+Different Surfaces can maintain distinct Observation Schemas.
 
 ---
 
 # Runtime Dataset
 
-所有 Runtime Observation 最终进入统一 Runtime Dataset。
+All Runtime Observations ultimately flow into a single, unified Runtime Dataset.
 
 ```text
 Runtime Surface
@@ -244,17 +244,17 @@ Runtime Observation
 Runtime Dataset
 ```
 
-Atlas 不会为不同 Runtime Surface 建立独立的数据生命周期。
+Atlas does not build independent data lifecycles for different Runtime Surfaces.
 
-所有 Surface 共用统一 Runtime Dataset。
+All Surfaces share a single Runtime Dataset.
 
 ---
 
 # Surface Correlation
 
-Runtime Investigation 可以关联多个 Runtime Surface。
+A Runtime Investigation can correlate multiple Runtime Surfaces simultaneously.
 
-例如：
+For example:
 
 ```text
 Camera Frame Drop
@@ -266,17 +266,17 @@ Camera Frame Drop
         └──────── ROS Topic Loss
 ```
 
-Atlas 可以建立 Runtime Surface 的时间关联。
+Atlas establishes temporal correlations across Runtime Surfaces.
 
-Surface Correlation 提供调查入口，但不代表因果关系。
+Surface Correlation provides diagnostic leads, but does not inherently equal causality.
 
 ---
 
 # Surface Coverage
 
-每一个 Evidence Pack 都会记录 Runtime Surface Coverage。
+Every Evidence Pack records its explicit Runtime Surface Coverage.
 
-例如：
+For example:
 
 | Runtime Surface | Coverage |
 |-----------------|----------|
@@ -288,23 +288,23 @@ Surface Correlation 提供调查入口，但不代表因果关系。
 | Power | ✗ |
 | CAN | ✗ |
 
-Surface Coverage 用于说明：
+Surface Coverage is used to clarify:
 
-- 哪些 Runtime Surface 已被观察
-- 哪些 Surface 缺失
-- 哪些 Surface 未参与本次调查
+- Which Runtime Surfaces were actively observed
+- Which Surfaces were missing
+- Which Surfaces were not included in the current investigation
 
-Surface Coverage 不用于评价调查质量。
+Surface Coverage is not used to rate investigation quality.
 
-它仅说明证据覆盖范围。
+It strictly defines the scope of evidence coverage.
 
 ---
 
-# Runtime Surface 与 Investigation
+# Runtime Surfaces and Investigations
 
-Runtime Surface 不直接参与调查。
+Runtime Surfaces do not directly conduct investigations.
 
-它提供调查所需的 Runtime Observation。
+They supply the necessary Runtime Observations for investigations.
 
 ```text
 Runtime Surface
@@ -322,36 +322,36 @@ Evidence Pack
 Runtime Investigation
 ```
 
-Surface 是调查证据来源，而不是调查结论。
+Surfaces act as the evidence source for investigations, not the investigation conclusions.
 
 ---
 
 # Design Principles
 
-Runtime Surface 遵循以下原则：
+Runtime Surfaces adhere to the following principles:
 
-- 每个 Surface 独立观察
-- 每个 Surface 可独立扩展
-- 所有 Surface 共用 Runtime Dataset
-- 所有 Surface 使用统一时间轴
-- Surface Correlation 不代表因果关系
-- Surface Coverage 不代表问题定位完成
+- Each Surface observes independently
+- Each Surface is independently extensible
+- All Surfaces share a single Runtime Dataset
+- All Surfaces utilize a unified timeline
+- Surface Correlation does not equal causality
+- Surface Coverage does not imply issue resolution
 
 ---
 
 # Summary
 
-Runtime Surface™ 定义了 Atlas 可以持续观察的运行时对象。
+Runtime Surface™ defines the runtime objects that Atlas can continuously observe.
 
-所有 Runtime Observation 最终汇聚到统一 Runtime Dataset，并作为 Evidence Pack 和 Runtime Investigation 的基础。
+All Runtime Observations converge into a unified Runtime Dataset, forming the foundation for Evidence Packs and Runtime Investigations.
 
-Runtime Surface 建立了不同运行时组件之间统一的观察模型，使调查能够围绕同一时间轴组织，而不是依赖分散日志。
+Runtime Surfaces establish a unified observation model across diverse runtime components, ensuring investigations remain organized around a single shared timeline rather than relying on fragmented, siloed logs.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
-- Runtime Datase
+- Runtime Dataset
 - Evidence Pack™
 - Historical RGA™
 - Investigation Context
