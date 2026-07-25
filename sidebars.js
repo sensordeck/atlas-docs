@@ -1,6 +1,6 @@
 module.exports = {
   tutorialSidebar: [
-    'index',
+    'intro',
     'sensor-synchronization',
     'hardware-architecture',
     'dsil-sdk',
