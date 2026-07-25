@@ -7,36 +7,36 @@ sidebar_label: Assist Vault™
 
 ## Overview
 
-Assist Vault™ 是 Atlas Runtime Governance™ 的跨组织 Runtime Investigation Knowledge Exchange。
+Assist Vault™ is the cross-organization Runtime Investigation Knowledge Exchange of Atlas Runtime Governance™.
 
-它不是 Runtime Dataset Repository。
+It is not a Runtime Dataset Repository.
 
-也不是 Historical RGA Repository。
+Nor is it a Historical RGA Repository.
 
-Assist Vault 保存的是**经过授权、可共享、不可识别（Non-identifiable）的调查知识**，帮助整个机器人行业减少重复调查，加速 Runtime Investigation。
+Assist Vault preserves **authorized, shareable, non-identifiable investigation knowledge**, helping the entire robotics industry reduce duplicate investigations and accelerate Runtime Investigation.
 
 ---
 
 # Why Assist Vault?
 
-Runtime Investigation 完成后，大量调查经验仅保留在组织内部。
+After Runtime Investigation is completed, a large amount of investigation experience remains only within the organization.
 
-例如：
+For example:
 
 - OEM Historical RGA
 - Sensor Historical RGA
 
-其它组织无法复用这些经验。
+Other organizations cannot reuse this experience.
 
-Assist Vault 提供一个可选的知识共享层。
+Assist Vault provides an optional knowledge sharing layer.
 
-只有经过授权的调查知识才会进入 Assist Vault。
+Only authorized investigation knowledge will enter Assist Vault.
 
 ---
 
 # Three Knowledge Domains
 
-Atlas Runtime Governance 维护三个独立知识域。
+Atlas Runtime Governance maintains three independent knowledge domains.
 
 ```text
 Runtime Investigation Knowledge
@@ -49,15 +49,15 @@ Runtime Investigation Knowledge
         └──────── Atlas Assist Vault
 ```
 
-三者具有不同职责。
+The three have different responsibilities.
 
 ---
 
 # OEM Historical RGA
 
-OEM Historical RGA 属于 OEM 私有知识资产。
+OEM Historical RGA is OEM's private knowledge asset.
 
-包含：
+Contains:
 
 - OEM Investigation
 - OEM IR
@@ -65,17 +65,17 @@ OEM Historical RGA 属于 OEM 私有知识资产。
 - OEM Workflow
 - OEM Runtime Experience
 
-通常包含客户项目相关内容。
+Usually contains customer project-related content.
 
-默认不共享。
+Not shared by default.
 
 ---
 
 # Sensor Historical RGA
 
-Sensor Historical RGA 属于 Sensor Manufacturer 私有知识资产。
+Sensor Historical RGA is Sensor Manufacturer's private knowledge asset.
 
-包含：
+Contains:
 
 - Sensor Investigation
 - Sensor IR
@@ -83,15 +83,15 @@ Sensor Historical RGA 属于 Sensor Manufacturer 私有知识资产。
 - Sensor Runtime Behaviour
 - Sensor Deployment Experience
 
-默认不共享。
+Not shared by default.
 
 ---
 
 # Atlas Assist Vault
 
-Assist Vault 保存经过授权后的行业调查知识。
+Assist Vault preserves authorized industry investigation knowledge.
 
-例如：
+For example:
 
 - Runtime Pattern
 - Investigation Strategy
@@ -100,9 +100,9 @@ Assist Vault 保存经过授权后的行业调查知识。
 - Runtime Behaviour
 - Best Practice
 
-Assist Vault 不保存客户身份。
+Assist Vault does not store customer identity.
 
-也不保存完整调查记录。
+Nor does it store complete investigation records.
 
 ---
 
@@ -134,23 +134,23 @@ Atlas Assist Vault
 Sensor Historical RGA
 ```
 
-Assist Vault 永远位于 OEM 与 Sensor 私有知识域之外。
+Assist Vault is always outside the private knowledge domains of OEM and Sensor.
 
 ---
 
 # Data Exchange Modes
 
-Atlas 支持两种协作模式。
+Atlas supports two collaboration modes.
 
 ## Mode A — Raw Collaboration
 
-适用于：
+Suitable for:
 
 - OEM ↔ Sensor Manufacturer
-- 双方已签署 NDA
-- 指定调查合作
+- Both parties have signed NDA
+- Designated investigation cooperation
 
-可以共享：
+Can share:
 
 - Runtime Dataset
 - Evidence Pack
@@ -170,20 +170,20 @@ Raw Runtime Evidence
 Sensor Investigation
 ```
 
-Mode A 用于一次具体 Runtime Investigation。
+Mode A is used for a specific Runtime Investigation.
 
 ---
 
 ## Mode B — Non-identifiable Collaboration
 
-适用于：
+Suitable for:
 
 - Atlas Assist Vault
-- 行业知识共享
-- 无 NDA
-- 跨客户经验复用
+- Industry knowledge sharing
+- No NDA
+- Cross-customer experience reuse
 
-共享内容包括：
+Shared content includes:
 
 - Runtime Pattern
 - Investigation Path
@@ -191,7 +191,7 @@ Mode A 用于一次具体 Runtime Investigation。
 - Investigation Strategy
 - Runtime Behaviour Pattern
 
-不会共享：
+Will not share:
 
 - Runtime Dataset
 - Customer Identity
@@ -212,13 +212,13 @@ De-identification
 Assist Vault
 ```
 
-Mode B 不共享原始运行时数据。
+Mode B does not share raw runtime data.
 
 ---
 
 # OEM ↔ Sensor Collaboration
 
-OEM 与 Sensor Manufacturer 可以采用 Raw Collaboration。
+OEM and Sensor Manufacturer can adopt Raw Collaboration.
 
 ```text
 OEM REF
@@ -244,15 +244,15 @@ Sensor Response
 OEM Closure
 ```
 
-这是一次调查协作。
+This is a single investigation collaboration.
 
-并不会自动进入 Assist Vault。
+It does not automatically enter Assist Vault.
 
 ---
 
 # OEM → Assist Vault
 
-OEM 可以选择将 Historical RGA 转换为 Assist Asset。
+OEM can choose to convert Historical RGA into Assist Assets.
 
 ```text
 OEM Historical RGA
@@ -270,13 +270,13 @@ De-identification
 Assist Vault
 ```
 
-只有经过客户授权后才能共享。
+Can only be shared after customer authorization.
 
 ---
 
 # Sensor → Assist Vault
 
-Sensor Manufacturer 同样可以贡献调查经验。
+Sensor Manufacturer can also contribute investigation experience.
 
 ```text
 Sensor Historical RGA
@@ -294,19 +294,19 @@ De-identification
 Assist Vault
 ```
 
-Sensor 不需要公开：
+Sensor does not need to disclose:
 
 - Customer Name
 - OEM Name
 - Project
 
-仅共享可复用调查知识。
+Only shares reusable investigation knowledge.
 
 ---
 
 # What Does Assist Vault Store?
 
-Assist Vault 可以包含：
+Assist Vault can contain:
 
 ```text
 Assist Asset
@@ -321,7 +321,7 @@ Assist Asset
 └── Source Authorization
 ```
 
-Assist Vault 不保存：
+Assist Vault does not store:
 
 - Runtime Dataset
 - Raw Logs
@@ -333,9 +333,9 @@ Assist Vault 不保存：
 
 # What Is Removed?
 
-进入 Assist Vault 前，会移除客户相关信息。
+Before entering Assist Vault, customer-related information is removed.
 
-例如：
+For example:
 
 - Customer Name
 - OEM Name
@@ -346,7 +346,7 @@ Assist Vault 不保存：
 - Deployment Address
 - Internal Ticket
 
-保留：
+Retained:
 
 - Runtime Behaviour
 - Investigation Experience
@@ -356,7 +356,7 @@ Assist Vault 不保存：
 
 # Historical Recall
 
-未来 Investigation 可以检索 Assist Vault。
+Future Investigation can retrieve from Assist Vault.
 
 ```text
 Current Investigation
@@ -374,68 +374,68 @@ Assist Vault Recall
 Candidate Assist Assets
 ```
 
-Assist Vault 提供：
+Assist Vault provides:
 
 - Runtime Pattern
 - Investigation Strategy
 - Lesson Learned
 
-不会提供客户数据。
+Will not provide customer data.
 
 ---
 
 # Relationship with Historical RGA
 
-Historical RGA：
+Historical RGA:
 
 - Organization-owned
 - Investigation Record
 - Private Knowledge
 - Customer-specific
 
-Assist Vault：
+Assist Vault:
 
 - Atlas-managed
 - Shared Knowledge
 - Non-identifiable
 - Cross-organization
 
-Historical RGA 可以存在。
+Historical RGA can exist.
 
-无需进入 Assist Vault。
+No need to enter Assist Vault.
 
 ---
 
 # Authorization Boundary
 
-Assist Vault 永远遵循授权原则。
+Assist Vault always follows the authorization principle.
 
-任何共享都必须经过授权。
+Any sharing must be authorized.
 
-Atlas 不自动：
+Atlas does not automatically:
 
-- 上传客户数据
-- 上传 Runtime Dataset
-- 上传 Historical RGA
-- 上传 Investigation Record
+- Upload customer data
+- Upload Runtime Dataset
+- Upload Historical RGA
+- Upload Investigation Record
 
-只有经过授权且完成去识别化后，调查知识才能进入 Assist Vault。
+Only after authorization and de-identification can investigation knowledge enter Assist Vault.
 
 ---
 
 # Design Principles
 
-Assist Vault 遵循以下原则：
+Assist Vault follows these principles:
 
-- 与 OEM Historical RGA 完全独立
-- 与 Sensor Historical RGA 完全独立
-- 不保存 Runtime Dataset
-- 不保存 Raw Logs
-- 不保存 Customer Identity
-- 支持 OEM NDA Raw Collaboration
-- 支持 Sensor NDA Raw Collaboration
-- 支持 Non-identifiable Knowledge Sharing
-- 所有共享均基于授权
+- Completely independent from OEM Historical RGA
+- Completely independent from Sensor Historical RGA
+- Does not store Runtime Dataset
+- Does not store Raw Logs
+- Does not store Customer Identity
+- Supports OEM NDA Raw Collaboration
+- Supports Sensor NDA Raw Collaboration
+- Supports Non-identifiable Knowledge Sharing
+- All sharing is authorization-based
 
 ---
 
@@ -451,14 +451,14 @@ Assist Vault 遵循以下原则：
 
 # Summary
 
-Assist Vault™ 是 Atlas Runtime Governance™ 的行业知识共享层。
+Assist Vault™ is the industry knowledge sharing layer of Atlas Runtime Governance™.
 
-OEM Historical RGA 与 Sensor Historical RGA 保持各自独立的调查知识库，用于组织内部 Runtime Investigation。双方在 NDA 场景下可以通过 Evidence Pack 和 Sensor Engagement Pack 进行 Raw Runtime Data 协作。
+OEM Historical RGA and Sensor Historical RGA maintain their respective independent investigation knowledge bases for internal Runtime Investigation within organizations. Both parties can collaborate on Raw Runtime Data through Evidence Pack and Sensor Engagement Pack in NDA scenarios.
 
-对于希望跨组织复用的调查经验，Atlas 提供 Assist Vault。经过授权与去识别化处理后，仅保留可复用的 Runtime Pattern、Investigation Path 和 Lesson Learned，使整个行业能够共享调查能力，而无需共享客户数据、原始日志或私有调查记录。
+For investigation experience that organizations wish to reuse across the industry, Atlas provides Assist Vault. After authorization and de-identification processing, only reusable Runtime Pattern, Investigation Path, and Lesson Learned are retained, enabling the entire industry to share investigation capabilities without sharing customer data, raw logs, or private investigation records.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - CTO Runtime Governance Dashboard

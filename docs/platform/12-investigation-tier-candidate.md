@@ -7,21 +7,21 @@ sidebar_label: Investigation Tier Candidate™
 
 ## Overview
 
-Investigation Tier Candidate™ 是 Atlas Runtime Governance™ 根据当前 Runtime Evidence 和 Investigation Context 提供的调查建议对象。
+Investigation Tier Candidate™ is an investigation suggestion object provided by Atlas Runtime Governance™ based on current Runtime Evidence and Investigation Context.
 
-它用于帮助工程师快速确定下一步调查方向。
+It helps engineers quickly determine the next investigation direction.
 
-Investigation Tier Candidate 不代表调查结论。
+Investigation Tier Candidate does not represent investigation conclusions.
 
-它也不决定责任归属。
+It also does not determine responsibility attribution.
 
 ---
 
 # Why Investigation Tier Candidate?
 
-复杂的 Runtime Investigation 往往存在多个可能方向。
+Complex Runtime Investigations often have multiple possible directions.
 
-例如：
+For example:
 
 - Sensor Runtime
 - Linux Runtime
@@ -30,9 +30,9 @@ Investigation Tier Candidate 不代表调查结论。
 - Driver
 - ROS Runtime
 
-如果所有方向同时展开调查，不仅效率低，而且容易遗漏关键线索。
+If all directions are investigated simultaneously, not only is it inefficient, but key clues are also easily missed.
 
-Investigation Tier Candidate 将当前证据组织为多个候选调查方向，帮助工程师合理安排调查优先级。
+Investigation Tier Candidate organizes current evidence into multiple candidate investigation directions, helping engineers rationally arrange investigation priorities.
 
 ---
 
@@ -53,15 +53,15 @@ Evidence Pack
       Investigation Tier Candidate
 ```
 
-Investigation Tier Candidate 建立在已有调查信息之上。
+Investigation Tier Candidate is built upon existing investigation information.
 
-它不产生新的 Runtime Evidence。
+It does not produce new Runtime Evidence.
 
 ---
 
 # Candidate Structure
 
-一个 Investigation Tier Candidate 可以包含：
+An Investigation Tier Candidate can include:
 
 ```text
 Investigation Tier Candidate
@@ -76,17 +76,17 @@ Investigation Tier Candidate
 └── Candidate Metadata
 ```
 
-Candidate 本身不保存 Runtime Dataset。
+Candidate itself does not store Runtime Dataset.
 
-所有运行时数据均通过引用访问。
+All runtime data is accessed through references.
 
 ---
 
 # Candidate Scope
 
-Candidate Scope 描述建议调查的范围。
+Candidate Scope describes the scope of suggested investigation.
 
-例如：
+For example:
 
 - Sensor Runtime
 - Linux Runtime
@@ -94,17 +94,17 @@ Candidate Scope 描述建议调查的范围。
 - Driver Runtime
 - Multiple Runtime Surface
 
-Scope 用于帮助调查聚焦。
+Scope is used to help focus the investigation.
 
-并不表示问题已经定位。
+It does not indicate that the problem has been located.
 
 ---
 
 # Candidate Evidence References
 
-每个 Candidate 可以引用一个或多个 Evidence Pack。
+Each Candidate can reference one or more Evidence Packs.
 
-例如：
+For example:
 
 ```text
 Candidate
@@ -113,15 +113,15 @@ Candidate
       └── Candidate Evidence Pack
 ```
 
-Candidate 不复制 Evidence。
+Candidate does not copy Evidence.
 
 ---
 
 # Candidate Historical References
 
-Candidate 可以引用 Historical Recall 结果。
+Candidate can reference Historical Recall results.
 
-例如：
+For example:
 
 ```text
 Historical RGA
@@ -131,17 +131,17 @@ Historical RGA
         └── Weak Candidate
 ```
 
-Historical RGA 用于提供调查经验。
+Historical RGA is used to provide investigation experience.
 
-并不证明当前事件与历史事件相同。
+It does not prove that the current event is the same as historical events.
 
 ---
 
 # Suggested Investigation Path
 
-Candidate 可以提供建议调查路径。
+Candidate can provide suggested investigation paths.
 
-例如：
+For example:
 
 ```text
 Review Runtime Timeline
@@ -159,15 +159,15 @@ Compare Historical Pattern
 Perform Target Investigation
 ```
 
-最终调查流程由工程师决定。
+The final investigation process is decided by engineers.
 
 ---
 
 # Suggested Investigation Tier
 
-Candidate 可以建议由哪个调查层级优先处理。
+Candidate can suggest which investigation tier should prioritize handling.
 
-例如：
+For example:
 
 | Suggested Tier | Typical Responsibility |
 |----------------|------------------------|
@@ -176,17 +176,17 @@ Candidate 可以建议由哪个调查层级优先处理。
 | Tier 3 | Advanced engineering investigation |
 | Sensor FAE | Sensor-specific investigation |
 
-Suggested Tier 仅为建议。
+Suggested Tier is only a suggestion.
 
-组织可以根据自身流程调整调查分工。
+Organizations can adjust investigation division of labor according to their own processes.
 
 ---
 
 # Multiple Candidates
 
-一次 Runtime Investigation 可以同时存在多个 Candidate。
+A Runtime Investigation can have multiple Candidates simultaneously.
 
-例如：
+For example:
 
 ```text
 Current REF
@@ -196,17 +196,17 @@ Current REF
       └── Candidate C
 ```
 
-不同 Candidate 可以对应不同调查方向。
+Different Candidates can correspond to different investigation directions.
 
-它们之间并不存在互斥关系。
+They do not have a mutually exclusive relationship.
 
 ---
 
 # Candidate Evolution
 
-随着调查推进，Candidate 可以持续调整。
+As the investigation progresses, Candidates can be continuously adjusted.
 
-例如：
+For example:
 
 ```text
 Candidate v1
@@ -228,15 +228,15 @@ Historical Recall Updated
 Candidate v3
 ```
 
-Candidate 可以随着新的证据不断完善。
+Candidates can be continuously refined with new evidence.
 
 ---
 
 # Candidate Priority
 
-Atlas 可以根据当前调查信息组织 Candidate Priority。
+Atlas can organize Candidate Priority based on current investigation information.
 
-例如：
+For example:
 
 ```text
 Priority 1
@@ -246,19 +246,19 @@ Priority 2
 Priority 3
 ```
 
-Priority 用于帮助安排调查顺序。
+Priority is used to help arrange investigation order.
 
-Priority 不表示概率。
+Priority does not represent probability.
 
-也不表示 Root Cause。
+It also does not represent Root Cause.
 
 ---
 
 # Candidate Collaboration
 
-多个调查角色可以围绕同一个 Candidate 协同工作。
+Multiple investigation roles can collaborate around the same Candidate.
 
-例如：
+For example:
 
 ```text
 Investigation Tier Candidate
@@ -268,79 +268,79 @@ Investigation Tier Candidate
             └── Sensor FAE
 ```
 
-所有参与者共享相同的 Candidate 信息。
+All participants share the same Candidate information.
 
-避免重复组织调查方向。
+Avoiding duplicate organization of investigation directions.
 
 ---
 
 # Investigation Tier Candidate vs Investigation Context
 
-Investigation Context 提供：
+Investigation Context provides:
 
-- 当前调查信息
+- Current investigation information
 - Evidence References
 - Historical References
 - Runtime Timeline
 
-Investigation Tier Candidate 提供：
+Investigation Tier Candidate provides:
 
-- 候选调查方向
-- 建议调查范围
-- 建议调查路径
-- 建议调查层级
+- Candidate investigation directions
+- Suggested investigation scope
+- Suggested investigation path
+- Suggested investigation tier
 
-Context 描述当前调查。
+Context describes the current investigation.
 
-Candidate 描述下一步调查建议。
+Candidate describes next investigation suggestions.
 
 ---
 
 # Investigation Tier Candidate vs Historical RGA
 
-Historical RGA 保存：
+Historical RGA stores:
 
-- 历史调查知识
+- Historical investigation knowledge
 - Investigation Pattern
 - Investigation Result
 - Lesson Learned
 
-Investigation Tier Candidate 保存：
+Investigation Tier Candidate stores:
 
-- 当前候选调查方向
-- 当前建议调查路径
-- 当前建议调查层级
+- Current candidate investigation directions
+- Current suggested investigation path
+- Current suggested investigation tier
 
-Historical RGA 是历史知识。
+Historical RGA is historical knowledge.
 
-Candidate 是当前调查建议。
+Candidate is current investigation suggestion.
 
 ---
 
 # Design Principles
 
-Investigation Tier Candidate 遵循以下原则：
+Investigation Tier Candidate follows these principles:
 
-- 基于当前 Runtime Evidence
-- 基于 Investigation Context
-- 可引用 Historical RGA
-- 支持多个 Candidate 并存
-- 支持持续演进
-- 不自动确认 Root Cause
-- 不自动确定责任归属
-- 不替代工程师判断
+- Based on current Runtime Evidence
+- Based on Investigation Context
+- Can reference Historical RGA
+- Supports multiple Candidates coexisting
+- Supports continuous evolution
+- Does not automatically confirm Root Cause
+- Does not automatically determine responsibility attribution
+- Does not replace engineer judgment
 
 ---
 
 # Summary
 
-Investigation Tier Candidate™ 是 Atlas Runtime Governance™ 的调查建议对象。
+Investigation Tier Candidate™ is the investigation suggestion object of Atlas Runtime Governance™.
 
-它结合当前 Runtime Evidence、Investigation Context 和 Historical RGA，为工程师组织多个候选调查方向、建议调查路径和建议调查层级，帮助团队更高效地开展 Runtime Investigation，同时始终保持调查结果由工程师最终确认。
+It combines current Runtime Evidence, Investigation Context, and Historical RGA to organize multiple candidate investigation directions, suggest investigation paths and investigation tiers for engineers, helping teams conduct Runtime Investigation more efficiently, while always keeping investigation results ultimately confirmed by engineers.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Sensor Engagement Pack™
 - Assist Vault™
