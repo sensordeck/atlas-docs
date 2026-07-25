@@ -1,9 +1,9 @@
-----
+---
 id: intro
 title: Atlas Runtime Governance
 sidebar_label: Atlas Runtime Governance
 slug: /
-description: Atlas provides robot OEMs and sensor manufacturers with sustainable, reusable runtime evidence, investigation, and organizational memory infrastructure across SKUs, platforms, and scenarios.
+description: Runtime Intelligence & Investigation Infrastructure for Robotics
 hide_title: true
 toc_min_heading_level: 2
 toc_max_heading_level: 2
