@@ -7,13 +7,13 @@ sidebar_label: Evidence Pack™
 
 ## Overview
 
-Evidence Pack™（EP）是 Atlas Runtime Governance™ 的标准运行时证据包。
+Evidence Pack™ (EP) is the standardized runtime evidence container in Atlas Runtime Governance™.
 
-Evidence Pack 并不保存新的运行时数据。
+An Evidence Pack does not store new runtime data.
 
-它是在 Runtime Dataset 的基础上，根据指定时间范围生成的一份结构化调查证据。
+Instead, it is a structured investigation evidence pack generated from the underlying Runtime Dataset based on a designated time window.
 
-Evidence Pack 是 Runtime Investigation 的统一证据输入。
+The Evidence Pack serves as the unified evidence input for Runtime Investigations.
 
 ---
 
@@ -32,15 +32,15 @@ Evidence Pack Builder
 Evidence Pack
 ```
 
-Evidence Pack 始终引用 Runtime Dataset。
+An Evidence Pack consistently references the Runtime Dataset.
 
-它不会重新采集运行时数据。
+It never re-collects runtime data.
 
 ---
 
 # Evidence Pack Components
 
-一个标准 Evidence Pack 包括：
+A standard Evidence Pack includes:
 
 ```text
 Evidence Pack
@@ -55,30 +55,30 @@ Evidence Pack
 └── Export Manifest
 ```
 
-Evidence Pack 只组织调查所需证据。
+An Evidence Pack strictly organizes the evidence required for an investigation.
 
-它不包含调查结论。
+It does not contain investigation conclusions.
 
 ---
 
 # Evidence Window
 
-Evidence Window 定义本次调查引用的时间范围。
+The Evidence Window defines the time range referenced by the investigation.
 
-Evidence Window 可以来自：
+An Evidence Window can originate from:
 
 - Manual Time Slice
 - Candidate Timeline
 - Controlled Event
 - Runtime Trigger
 
-Evidence Window 是 Evidence Pack 的基础。
+The Evidence Window forms the foundation of an Evidence Pack.
 
 ---
 
 # Five-Segment Window
 
-Atlas 使用统一的 Five-Segment Window 组织运行时证据。
+Atlas utilizes a standardized Five-Segment Window to organize runtime evidence.
 
 ```text
 Pre-Guard
@@ -96,87 +96,83 @@ Recovery
 Post-Guard
 ```
 
-Five-Segment Window 为所有 Evidence Pack 提供一致的时间结构。
+The Five-Segment Window provides a consistent temporal structure across all Evidence Packs.
 
-Window 长度可以根据策略调整。
-
-Window 结构保持一致。
+While window durations can be adjusted according to policy, the window structure remains uniform.
 
 ---
 
 ## Pre-Guard
 
-记录事件发生之前较早阶段的运行状态。
+Records operational states during the early phase leading up to the incident.
 
-主要用于观察：
+Mainly used to observe:
 
-- 是否已有弱异常
-- 是否存在长期变化趋势
-- 是否存在前置事件
+- Presence of early weak anomalies
+- Long-term trend changes
+- Antecedent events
 
 ---
 
 ## Baseline
 
-记录事件发生前的正常运行状态。
+Records normal operational states prior to the incident.
 
-Baseline 提供：
+The Baseline provides:
 
-- 正常行为参考
-- Runtime 对比基线
-- Surface 正常状态
+- References for normal behavior
+- Runtime comparison baselines
+- Normal Surface states
 
 ---
 
 ## Deviation
 
-记录异常发生阶段。
+Records the phase during which the anomaly occurred.
 
-通常包含：
+Typically contains:
 
-- Runtime Event
-- Surface Abnormality
-- Runtime Change
-- Observation Change
+- Runtime Events
+- Surface Abnormalities
+- Runtime Changes
+- Observation Changes
 
-Deviation 是调查重点。
-
-但不是唯一调查内容。
+Deviation is a primary focal point of an investigation, though not the only section investigated.
 
 ---
 
 ## Recovery
 
-记录异常后的恢复阶段。
+Records the recovery phase following an anomaly.
 
-例如：
+For example:
 
-- Driver Restart
-- Device Reconnect
+- Driver Restarts
+- Device Reconnections
 - Runtime Recovery
-- Recovery Failure
+- Recovery Failures
 
-Recovery 有助于理解事件发展过程。
+Recovery helps engineers understand the evolution of the event.
 
 ---
 
 ## Post-Guard
 
-记录恢复后的运行状态。
+Records operational states following recovery.
 
-主要用于观察：
+Mainly used to observe:
 
-- 是否恢复正常
-- 是否再次出现异常
-- 是否存在持续影响
+- Whether normal operation has resumed
+- Whether secondary anomalies occur
+- Presence of lingering side effects
 
 ---
 
 # Runtime Timeline
 
-Evidence Pack 保留统一 Runtime Timeline。
+An Evidence Pack preserves a unified Runtime Timeline.
 
-所有 Runtime Surface Observation 均按照统一时间轴组织。
+Observations across all Runtime Surfaces are organized along this single timeline.
 
 ```text
 Time
@@ -195,17 +191,17 @@ Linux Runtime
 ROS Topic
 ```
 
-Timeline 不负责解释事件。
+The Timeline is not responsible for interpreting events.
 
-它仅记录事件发生顺序。
+It strictly records the chronological sequence of events.
 
 ---
 
 # Runtime Surface Coverage
 
-Evidence Pack 会记录参与本次证据的 Runtime Surface。
+An Evidence Pack records all Runtime Surfaces participating in the current evidence window.
 
-例如：
+For example:
 
 | Runtime Surface | Included |
 |-----------------|----------|
@@ -216,51 +212,51 @@ Evidence Pack 会记录参与本次证据的 Runtime Surface。
 | ROS Topic | ✓ |
 | Power | ✗ |
 
-Surface Coverage 用于说明证据来源范围。
+Surface Coverage defines the scope of evidence sources.
 
-它不评价调查质量。
+It does not evaluate investigation quality.
 
 ---
 
 # Runtime Metadata
 
-Evidence Pack 可以引用运行时元数据。
+An Evidence Pack can reference runtime metadata.
 
-例如：
+For example:
 
 - Device Metadata
 - Runtime Metadata
-- Collection Timestamp
+- Collection Timestamps
 - Deployment Metadata
-- Runtime Configuration
+- Runtime Configurations
 
-Metadata 用于帮助理解运行环境。
+Metadata helps provide context for the runtime environment.
 
-不是调查结论。
+It does not represent investigation conclusions.
 
 ---
 
 # Event Markers
 
-Event Marker 用于标记重要运行时事件。
+Event Markers are used to highlight significant runtime events.
 
-例如：
+For example:
 
-- Runtime Trigger
-- Controlled Event
-- Device Reconnect
-- Driver Restart
-- Runtime Notification
+- Runtime Triggers
+- Controlled Events
+- Device Reconnections
+- Driver Restarts
+- Runtime Notifications
 
-Marker 用于帮助工程师浏览 Runtime Timeline。
+Markers assist engineers when scanning through the Runtime Timeline.
 
 ---
 
 # Dataset References
 
-Evidence Pack 不复制 Runtime Dataset。
+An Evidence Pack does not duplicate the Runtime Dataset.
 
-它引用 Runtime Dataset 中对应时间范围的数据。
+It references the data within the specified time range inside the Runtime Dataset.
 
 ```text
 Runtime Dataset
@@ -272,51 +268,49 @@ Referenced Time Range
 Evidence Pack
 ```
 
-Atlas 始终保持：
+Atlas strictly adheres to the rule:
 
-> Runtime Dataset 是唯一数据来源。
+> The Runtime Dataset is the sole source of truth for runtime data.
 
 ---
 
 # Integrity Information
 
-Evidence Pack 保存完整性信息。
+An Evidence Pack preserves integrity information.
 
-例如：
+For example:
 
-- Dataset Reference
-- Time Range
-- Window Policy
-- Hash
-- Manifest
+- Dataset References
+- Time Ranges
+- Window Policies
+- Hashes
+- Manifests
 
-Integrity Information 用于保证：
-
-Evidence Pack 与 Runtime Dataset 的一致性。
+Integrity Information ensures consistency between the Evidence Pack and the underlying Runtime Dataset.
 
 ---
 
 # Export Manifest
 
-Export Manifest 描述本次导出的内容。
+The Export Manifest describes the contents of the current export.
 
-例如：
+For example:
 
-- Included Runtime Surface
-- Referenced Dataset
-- Window Policy
-- Export Time
-- Export Mode
+- Included Runtime Surfaces
+- Referenced Datasets
+- Window Policies
+- Export Timestamps
+- Export Modes
 
-Manifest 不保存调查结果。
+The Manifest does not hold investigation conclusions.
 
 ---
 
 # Candidate Evidence Pack
 
-一个 Runtime Dataset 可以生成多个 Candidate Evidence Pack。
+A single Runtime Dataset can generate multiple Candidate Evidence Packs.
 
-例如：
+For example:
 
 ```text
 Runtime Dataset
@@ -330,42 +324,42 @@ Candidate Timeline
         └── EP-C04
 ```
 
-每一个 Candidate Evidence Pack：
+Every Candidate Evidence Pack:
 
-- 使用相同 EP Schema
-- 使用相同 Five-Segment Window
-- 引用相同 Runtime Dataset
-- 对应不同 Candidate Timeline
+- Uses the identical EP Schema
+- Uses the identical Five-Segment Window
+- References the identical Runtime Dataset
+- Corresponds to a distinct Candidate Timeline
 
-Candidate Evidence Pack 全部保留。
+All Candidate Evidence Packs are retained.
 
 ---
 
 # Primary Evidence Pack
 
-调查过程中，Tier 2 可以选择其中一个 Candidate Evidence Pack 作为：
+During the investigation, Tier 2 engineers can select one Candidate Evidence Pack as the:
 
 ```text
 Primary Evidence Pack
 ```
 
-Primary Evidence Pack：
+A Primary Evidence Pack:
 
-- 不重新生成 Runtime Dataset
-- 不修改 Five-Segment Window
-- 不改变 EP Schema
+- Does not re-generate the Runtime Dataset
+- Does not modify the Five-Segment Window
+- Does not alter the EP Schema
 
-仅表示本次调查主要引用的 Evidence Pack。
+It simply designates the primary Evidence Pack referenced for the investigation.
 
-其它 Candidate Evidence Pack 继续保留。
+All other Candidate Evidence Packs continue to be retained.
 
 ---
 
 # Evidence Pack Builder
 
-Evidence Pack Builder 负责根据指定时间范围生成 Evidence Pack。
+The Evidence Pack Builder is responsible for constructing an Evidence Pack based on a specified time range.
 
-Builder 输入：
+Builder Inputs:
 
 ```text
 Runtime Dataset
@@ -373,71 +367,71 @@ Runtime Dataset
 Evidence Window
 ```
 
-Builder 输出：
+Builder Output:
 
 ```text
 Evidence Pack
 ```
 
-Evidence Pack Builder 不负责：
+The Evidence Pack Builder is NOT responsible for:
 
 - Runtime Analysis
-- Root Cause
-- Investigation Result
-- Tier Decision
+- Root Cause determinations
+- Investigation Results
+- Tier Decisions
 
-它仅负责构建统一 Evidence。
+It is strictly responsible for building standardized evidence.
 
 ---
 
 # Design Principles
 
-Evidence Pack 遵循以下原则：
+Evidence Packs adhere to the following principles:
 
-- 引用 Runtime Dataset
-- 不复制 Runtime Dataset
-- 使用统一 EP Schema
-- 使用统一 Five-Segment Window
-- 支持 Manual 与 Candidate 两种生成方式
-- Candidate EP 与 Primary EP 共用同一 Builder
-- Candidate EP 全部保留
-- Primary EP 不改变其它 Candidate EP
+- Reference the Runtime Dataset
+- Do not duplicate the Runtime Dataset
+- Use a standardized EP Schema
+- Use a standardized Five-Segment Window
+- Support both Manual and Candidate generation modes
+- Candidate EPs and Primary EPs share the exact same Builder
+- All Candidate EPs are retained
+- Designating a Primary EP does not alter other Candidate EPs
 
 ---
 
 # Runtime Dataset vs Evidence Pack
 
-Runtime Dataset：
+Runtime Dataset:
 
-- 持续存在
-- 持续增长
-- Rolling Buffer 管理
-- 保存完整 Observation
+- Continuously exists
+- Continuously grows
+- Managed via Rolling Buffer
+- Retains complete raw Observations
 
-Evidence Pack：
+Evidence Pack:
 
-- 引用 Dataset
-- 围绕指定时间范围组织
-- 用于 Investigation
-- 生命周期独立于 Dataset
+- References the Dataset
+- Organized around a specific time range
+- Used directly for Investigation
+- Maintains an independent lifecycle from the Dataset
 
-Runtime Dataset 是数据基础。
+The Runtime Dataset is the data foundation.
 
-Evidence Pack 是调查证据。
+The Evidence Pack is the investigation evidence.
 
 ---
 
 # Summary
 
-Evidence Pack™ 是 Atlas Runtime Investigation 的统一证据对象。
+Evidence Pack™ is the unified evidence object for Atlas Runtime Investigations.
 
-它引用 Runtime Dataset，并使用统一 Five-Segment Window 与 EP Schema，将指定时间范围组织成标准调查证据。
+It references the Runtime Dataset and uses a standardized Five-Segment Window and EP Schema to organize a designated time window into structured investigation evidence.
 
-无论来自 Manual Time Slice 还是 Candidate Timeline，所有 Evidence Pack 都遵循相同的数据模型、构建流程和证据结构，为后续 Runtime Investigation 提供一致的调查入口。
+Whether originating from a Manual Time Slice or a Candidate Timeline, all Evidence Packs follow the exact same data model, construction pipeline, and evidence structure—delivering a consistent entry point for downstream Runtime Investigations.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Historical RGA™
 - Investigation Context™
