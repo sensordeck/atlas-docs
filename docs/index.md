@@ -1,342 +1,169 @@
----
-id: intro
-title: Atlas Runtime Governance
-sidebar_label: Atlas Runtime Governance
-slug: /
-description: Runtime Intelligence & Investigation Infrastructure for Robotics
-hide_title: true
-toc_min_heading_level: 2
-toc_max_heading_level: 2
----
+# Atlas Developer Documentation
 
-# Atlas Runtime Governance
+### Deterministic Sensor Infrastructure for Robotics
 
-**Robotic Runtime Intelligence & Investigation Infrastructure**
+**Unify your IMU, GNSS, and LiDAR data with microsecond precision. Atlas is a high-throughput sensor gateway for deterministic robotics.**
 
-Designed for robot OEMs and sensor manufacturers, Atlas continuously observes the runtime environment between sensors and SBCs. It transforms fragmented, ephemeral, and hard-to-reuse data into investigable evidence, reusable knowledge, and continuously growing organizational capabilities.
+Atlas establishes a **hardware time authority and sensor infrastructure layer** for modern robotics systems.
 
-> **From before deployment to after deployment.**  
-> **Observe. Understand. Investigate. Improve. Reuse.**
+Instead of wiring sensors directly into the robot compute platform, Atlas creates a **dedicated integration layer** that synchronizes sensors, aggregates data streams, and delivers a unified perception pipeline.
 
-Atlas does not replace ROS 2, sensor drivers, Fleet Management, ticketing systems, or existing R&D toolchains.
-
-Atlas builds the missing layer in the robotics industry:
-
-> **Runtime Sensor Governance Infrastructure™**
-
-![Atlas Runtime Governance](/img/11.png)
+Atlas allows robotics teams to treat **sensor integration as infrastructure**, eliminating repeated custom integration work across robot platforms.
 
 ---
 
-## The Real Problems Begin After Robots Enter the Real World
+## Designed for Real Robotics Systems
 
-Once deployed, robots continuously face runtime dynamics that can hardly be fully covered in R&D environments:
-
-- Diverse lighting, reflection, occlusion, temperature, vibration, and humidity conditions
-- Varying power supply quality, wiring harness states, bus loads, and communication environments
-- Combinations of different Linux, Driver, Firmware, ROS, and Host Platforms
-- Diverse Robot SKUs, Sensor SKUs, and deployment scenarios
-- Varying operational habits, maintenance conditions, and system loads across customer sites
-
-The same robot model, same sensor model, and same software stack can exhibit completely different runtime behaviors across different operational sites.
-
-What is truly expensive is not just a single runtime execution failure.
-
-What is truly expensive is:
-
-> **Every Runtime Execution Failure (REF) requires collecting logs from scratch, re-interpreting the site, re-discovering evidence, and troubleshooting all over again.**
-
-Once an investigation is completed, the lessons learned remain scattered across tickets, emails, chat logs, local PCs, and individual memory.
-
-When a similar incident occurs next time, the organization starts from square one again.
+<p align="center">
+<img src="/img/3cards.png" width="100%" alt="Atlas 3 cards" />
+</p>
 
 ---
 
-## Atlas Turns One-Off Troubleshooting into Sustainable Governance
+## 🚀 Time to Hello-World (ROS2 in Minutes)
 
-Atlas organizes runtime events into a complete evidence and knowledge chain:
+Atlas integrates into your existing ROS2 stack in minutes.
 
-```text
-Atlas Agent
-    ↓
-Observe
-    ↓
-Persist
-    ↓
-Retain
-    ↓
-Evidence Pack
-    ↓
-Historical RGA Recall
-    ↓
-OEM / Sensor Investigation
-    ↓
-IR (Investigation Result) / LL (Lesson Learned)
-    ↓
-Assist Vault (Runtime Knowledge Asset Library)
-    ↓
-Future REF Reuse
+Run two commands:
+```bash
+atlas_start
+ros2 launch atlas_dsil_bridge telemetry.launch.py
 ```
 
-Atlas does more than just help teams close a ticket.
+### What you will see
 
-Atlas ensures that every investigation generates new organizational assets and serves as the starting point for the next one.
+Within seconds, Atlas telemetry appears in ROS2:
 
----
-
-## Core Value of Atlas
-
-### Evidence-Driven, Not Driven by Opinions
-
-Atlas organizes runtime data before and after an anomaly into a unified Evidence Pack.
-
-Teams conduct investigations around a single piece of evidence with defined time windows, sources, boundaries, and integrity records, rather than arguing back and forth over different log versions.
-
-### Historical First, Never Start from Zero
-
-Every REF prioritizes recalling Historical RGA (Runtime Governance Analysis/Asset).
-
-The investigation team can refer to previously completed:
-
-- Investigation Result
-- Lesson Learned
-- Investigation Path
-- Excluded Path
-- Runtime Pattern
-- Recovery Pattern
-- Why Retrieved
-
-Historical cases do not automatically become the root-cause conclusion for current incidents, but they provide engineers with faster, bounded investigation entry points.
-
-### Cross-Team Collaboration, Unifying Investigation Context for OEMs and Sensor Vendors
-
-Atlas establishes a unified evidence and investigation context across OEM Tier 1, Tier 2, Tier 3, and Sensor FAEs.
-
-OEMs no longer send fragmented logs to sensor vendors.
-
-Sensor FAEs no longer guess what happened on site from scratch.
-
-Both sides collaborate around the exact same REF, Evidence Pack, and historical context.
-
-### Reusable Knowledge, Continuously Appreciating Engineering Experience
-
-After an investigation concludes, IR, LL, and RGA are saved in a structured manner.
-
-New investigation results can serve:
-
-- The next REF
-- The next Robot SKU
-- The next Sensor SKU
-- The next Host Platform
-- The next deployment scenario
-- The next customer project
-
-Atlas turns one-off engineering costs into sustainably reusable organizational capabilities.
-
-### Your Data, Your Control
-
-Customer raw data, Evidence Packs, and internal investigation assets remain under customer control at all times.
-
-Atlas supports private deployment, retention policies, export policies, access boundaries, and anonymized reuse.
-
-What is shared is not customer data.
-
-What is shared is authorized investigation capability and organizational experience.
+- `/atlas/status` → system health  
+- `/atlas/pps` → timing signal state  
+- `/atlas/sync_drift` → real-time synchronization error  
 
 ---
 
-## Cross-SKU, Cross-Platform, Cross-Scenario
+### What this means
 
-Atlas is not a piece of project-based glue code written for a single robot, single sensor, or single customer issue.
+**Before Atlas**
 
-Using a unified Runtime Governance Model, Atlas maintains a consistent evidence structure, investigation process, and historical asset model on top of product differences.
+• Independent sensor clocks  
+• Unpredictable timing offsets  
+• Difficult debugging  
 
-### Cross-Robot SKU
+**With Atlas**
 
-The same OEM can gradually scale to different robot models without building a new investigation system for every SKU.
-
-### Cross-Sensor SKU
-
-The same sensor vendor can manage diverse products such as LiDAR, Camera, IMU, GNSS, and Radar under a unified governance framework.
-
-### Cross-Host Platform
-
-Atlas adapts to x86, NVIDIA Jetson, ARM SBC, ROS 2, and custom customer runtime environments.
-
-### Cross-Deployment Scenario
-
-Restaurants, hotels, hospitals, shopping malls, warehouses, factories, and outdoor environments can share a unified governance framework while retaining their respective Runtime Profiles and Investigation Contexts.
-
-> **Atlas’s goal is not to add another script to every project.**
->
-> **Atlas’s goal is to empower the entire organization with a continuously scalable runtime governance infrastructure.**
+• Unified hardware time base  
+• Deterministic sensor alignment  
+• Observable synchronization state  
 
 ---
 
-## Two Product Lines, One Governance Platform
+### No integration risk
 
-### [Atlas Runtime Sensor Governance™](/products/runtime-sensor-governance)
-
-**For Sensor Manufacturers**
-
-Empowers Sensor CTOs, FAE Leads, Firmware, Driver, Validation, and Product Teams to build runtime governance capabilities across OEMs, products, and scenarios.
-
-Key value includes:
-
-- Establishing Sensor Runtime Profiles
-- Accumulating Historical Sensor RGA
-- Improving FAE investigation efficiency
-- Unifying OEM collaborative investigation materials
-- Reusing investigation experience across customers and projects
-- Turning field issues into product improvement inputs
-
-### [Atlas Runtime Investigation™](/products/runtime-investigation)
-
-**For Robot OEMs**
-
-Empowers CTOs, Engineering VPs, Tier 1, Tier 2, Tier 3, and Customer Support teams to build a standardized, operable, and measurable runtime investigation system.
-
-Key value includes:
-
-- Unifying runtime evidence
-- Shortening Investigation Time
-- Reducing repetitive Tier 3 workload
-- Increasing Historical RGA Reuse
-- Establishing an enterprise-grade Assist Vault
-- Making every REF yield long-term value
+- No driver changes required  
+- No sensor firmware modification  
+- Works with your existing ROS2 stack  
 
 ---
 
-## Why Different Roles Need Atlas
+## Core Capabilities of Atlas
 
-### CTO / Engineering VP
+### 1. Time Authority
+Atlas establishes a single hardware time authority across all connected sensors, ensuring consistent and deterministic timestamping for the entire perception stack.
 
-Atlas transforms runtime investigation from invisible engineering overhead into measurable governance capabilities.
+### 2. Unified Sensor Integration
+Atlas consolidates heterogeneous sensor interfaces and power delivery into a single structured integration layer, reducing wiring complexity and eliminating fragmented power architectures.
 
-Management can continuously track:
+### 3. System Observability & Synchronization
+Atlas exposes timing relationships, synchronization state, and sensor health through a unified telemetry layer, enabling full system observability and deterministic data alignment in ROS2 environments.
 
-- REF Trend
-- Median Time to Closure
-- Historical RGA Reuse
-- Tier 3 Involvement
-- Sensor FAE Response
-- Engineering Cost
-- Cross-SKU Expansion
-- Governance ROI
-
-### OEM Tier 1
-
-Tier 1 can process event intake and escalation using unified Intake and Evidence References, no longer relying on free-text descriptions or ad-hoc screenshots.
-
-### OEM Tier 2
-
-Tier 2 can start investigations with complete Investigation Context and Historical RGA, reducing time spent on log aggregation, time alignment, and repetitive troubleshooting.
-
-### OEM Tier 3
-
-Tier 3 engages only in the few incidents that truly require deep engineering judgment, rather than being bogged down long-term by evidence gathering and redundant analysis.
-
-### Sensor CTO / FAE Lead
-
-Sensor vendors can conduct investigations around a unified Sensor Engagement Pack, building Sensor RGA that is sustainably reusable across OEMs, SKUs, and projects.
-
-### Sensor FAE
-
-FAEs can work with explicit time windows, Runtime Surfaces, OEM Contexts, and historical investigation paths, no longer having to decipher customer sites from scratch.
+### 4. Cross-SKU Infrastructure
+Atlas provides a reusable sensor infrastructure layer that scales across robot platforms and product SKUs, eliminating repeated integration work and enabling faster product development cycles.
 
 ---
 
-## Runtime Boundaries Guarded by Atlas
+## Atlas Architecture
 
-Atlas focuses on the boundary within robotic systems that is most easily overlooked yet sees a high incidence of runtime issues:
+<p align="center">
+<img src="/img/Catalog2.png" width="65%" alt="Atlas deterministic sensor backbone architecture" />
+</p>
 
-```text
-Sensor
-    ↓
-Power / Bus / Timing
-    ↓
-Linux / Driver / Buffer / Scheduler
-    ↓
-SBC
-    ↓
-ROS Topic / Application Input
-```
+Atlas sits between the **sensor domain** and the **robot compute platform**.
 
-Atlas continuously observes and organizes:
-
-- Sensor Runtime
-- Power
-- USB / Ethernet / CAN / CSI
-- Trigger / PPS / Timing
-- Linux Runtime
-- Driver
-- Buffer / Scheduler
-- ROS Topic
-- Application Input
-
-Atlas does NOT:
-
-- Automatically confirm Root Causes
-- Automatically assign liabilities
-- Automatically generate final Investigation Results
-- Replace engineers in making final technical judgments
-
-Atlas is responsible for organizing evidence, recalling history, establishing context, and narrowing down the investigation scope.
-
-IR and LL are always completed by authorized engineers.
+Sensors connect to Atlas → Atlas synchronizes and aggregates them → the robot compute platform receives a **time-aligned, unified perception pipeline**.
 
 ---
 
-## From Pilot to Enterprise Infrastructure
+# Getting Started with Atlas
 
-Atlas is delivered through enterprise-grade customized engagements.
+Atlas documentation is structured as a step-by-step system.
 
-The typical path is:
-
-```text
-Pilot
-    ↓
-Controlled Deployment
-    ↓
-Production Readiness
-    ↓
-Cross-SKU Expansion
-    ↓
-Organization-wide Runtime Governance
-```
-
-Atlas can start from a single Robot Model, Sensor Product, or high-frequency REF scenario, and gradually expand to:
-
-- More Robot SKUs
-- More Sensor SKUs
-- More Host Platforms
-- More customer sites
-- More investigation teams
-- More comprehensive Historical RGA
-- More mature organizational governance metrics
+To fully understand how Atlas works and how to integrate it into your robotics platform, we recommend following this sequence:
 
 ---
 
-## The Ultimate Goal
+## 1. [Sensor Synchronization](./sensor-synchronization.md)
 
-The ultimate goal of Atlas is not just closing an incident faster.
+Understand the core problem Atlas solves.
 
-Atlas aims to help robotics companies and sensor manufacturers build a new organizational capability:
+Learn why independent sensor timestamps lead to inconsistent perception, SLAM instability, and difficult debugging.
 
-> **Every REF starts from history.**
->
-> **Every new case enhances future capability.**
->
-> **Every investigation makes the entire organization stronger.**
-
-Engineers continue to create new robots, sensors, and products.
-
-Atlas continuously observes runtime, organizes evidence, preserves history, and enables past engineering experience to continuously generate new value.
+👉 Defines the **problem space**
 
 ---
 
-## Learn More
+## 2. [Hardware Architecture](./hardware-architecture.md)
 
-- [Explore Atlas Runtime Sensor Governance™](/products/runtime-sensor-governance)
-- [Explore Atlas Runtime Investigation™](/products/runtime-investigation)
-- [Visit Official SensorDeck Website](https://sensordeck.tech)
+See how Atlas solves synchronization at the physical level.
+
+Atlas establishes a **sensor domain boundary** that unifies timing, power, and connectivity across all sensors.
+
+👉 Defines the **system architecture**
+
+---
+
+## 3. [DSIL SDK](./dsil-sdk.md)
+
+Understand how Atlas hardware becomes usable in software.
+
+DSIL converts hardware timing into synchronized ROS2 timestamps, structured telemetry, and system observability.
+
+👉 Defines the **infrastructure layer**
+
+---
+
+## 4. [ROS2 Integration](./ros2-integration.md)
+
+Deploy Atlas into your existing robotics stack.
+
+Atlas integrates without modifying drivers or pipelines, enabling immediate adoption.
+
+👉 Defines the **integration model**
+
+---
+
+## What You Gain
+
+By following this architecture, Atlas transforms sensor integration from:
+
+**custom engineering work → deployable infrastructure**
+
+- deterministic sensor timing  
+- unified sensor interface  
+- reduced integration complexity  
+- improved system observability  
+
+---
+
+## Next Step
+
+The best way to understand Atlas is to evaluate it in your own system.
+
+👉 Request the **[Atlas Evaluation Kit](./evaluation-kit-setup.md)**
+
+---
+
+## Integration Resources
+
+Atlas provides additional materials for evaluation and deployment:
+
+- [Integration and Deployment FAQ](./integration-faq.md)
+- [Downloads](./downloads.md)
