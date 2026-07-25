@@ -7,20 +7,18 @@ sidebar_label: Pilot to Production
 
 ## Overview
 
-Atlas Pilot to Production Deployment 是 OEM 或 Sensor Manufacturer 将 Atlas 从受控试点逐步扩展为长期 Runtime Governance Infrastructure 的项目管理框架。
+Atlas Pilot to Production Deployment is a project management framework for OEMs or Sensor Manufacturers to progressively scale Atlas from a controlled pilot into a long-term Runtime Governance Infrastructure.
 
-它不是一次性软件安装，也不是围绕单一机器人、单一 Sensor 编写的内部 Glue Code。
+It is not a one-time software installation, nor is it internal glue code written around a single robot or a single sensor.
 
-Atlas 的目标是建立一套可跨：
+The goal of Atlas is to establish a Runtime Governance Infrastructure that can be continuously reused across:
 
-- Robot SKU
-- Sensor SKU
-- SBC / Host Platform
-- Linux / ROS Environment
-- Deployment Scenario
-- OEM 与 Sensor Manufacturer
-
-持续复用的 Runtime Governance Infrastructure。
+- Robot SKUs
+- Sensor SKUs
+- SBC / Host Platforms
+- Linux / ROS Environments
+- Deployment Scenarios
+- OEMs and Sensor Manufacturers
 
 ```text
 Pilot
@@ -38,17 +36,17 @@ Multi-SKU Expansion
 Full-scale Deployment
 ```
 
-每个阶段都必须具备独立 Scope、Budget、Milestone、Acceptance Criteria 和退出机制。
+Each phase must have its own independent Scope, Budget, Milestone, Acceptance Criteria, and Exit Mechanism.
 
-Pilot 成功不代表自动进入全量部署。
+A successful Pilot does not imply automatic progression into full-scale deployment.
 
 ---
 
 # Infrastructure, Not Glue Code
 
-Atlas 不应被部署为只适用于某一款机器人的临时代码。
+Atlas should not be deployed as temporary code that only applies to a single robot model.
 
-典型 Glue Code 模式是：
+A typical Glue Code pattern is:
 
 ```text
 Robot A
@@ -62,9 +60,9 @@ One Script
 One Customer Issue
 ```
 
-当 Robot、Sensor、SBC 或 Software Version 改变时，工程团队需要重新开发和维护。
+When the Robot, Sensor, SBC, or Software Version changes, the engineering team must re-develop and re-maintain the solution.
 
-Atlas 采用基础设施模式：
+Atlas adopts an infrastructure model:
 
 ```text
 Canonical Runtime Surface
@@ -78,7 +76,7 @@ Standard Investigation Workflow
 Reusable Historical RGA
 ```
 
-具体产品差异通过以下方式接入：
+Specific product differences are integrated through:
 
 - Surface Registry
 - Runtime Adapter
@@ -86,13 +84,13 @@ Reusable Historical RGA
 - Product Profile
 - Deployment Policy
 
-Atlas Core、Evidence Schema、Investigation Chain 和 RGA Model 保持一致。
+The Atlas Core, Evidence Schema, Investigation Chain, and RGA Model remain consistent.
 
 ---
 
 # Cross-SKU and Cross-platform Architecture
 
-Atlas 应支持在统一治理模型下扩展到不同平台。
+Atlas should support scaling across different platforms under a unified governance model.
 
 ```text
 Atlas Runtime Governance Infrastructure
@@ -113,22 +111,22 @@ Atlas Runtime Governance Infrastructure
     └── Radar N
 ```
 
-跨平台不表示所有平台具有完全相同的 Runtime Surface。
+Cross-platform does not mean all platforms have identical Runtime Surfaces.
 
-它表示：
+It means:
 
-- 使用统一的 Surface Definition
-- 使用统一的 Evidence Pack Schema
-- 使用统一的 Investigation Objects
-- 使用统一的 Historical RGA Model
-- 对未覆盖 Surface 明确标记
-- 通过 Adapter 处理接口差异
+- Using a unified Surface Definition
+- Using a unified Evidence Pack Schema
+- Using unified Investigation Objects
+- Using a unified Historical RGA Model
+- Explicitly marking uncovered Surfaces
+- Handling interface differences through Adapters
 
 ---
 
 # Dual-flywheel Deployment Model
 
-Atlas 采用 OEM 与 Sensor Manufacturer 双飞轮设计。
+Atlas adopts a dual-flywheel design for OEMs and Sensor Manufacturers.
 
 ```text
 OEM Runtime Governance Flywheel
@@ -142,9 +140,9 @@ Sensor Runtime Governance Flywheel
 OEM Runtime Governance Flywheel
 ```
 
-无论最先采用 Atlas 的是 OEM 还是 Sensor Manufacturer，Atlas 都可以沿着真实调查协作链继续扩展。
+Regardless of whether the OEM or the Sensor Manufacturer adopts Atlas first, Atlas can continue to expand along the real investigation collaboration chain.
 
-最终目标是逐步建立：
+The ultimate goal is to progressively build a Sensor-to-SBC Runtime Governance Ecosystem:
 
 ```text
 Sensor
@@ -160,13 +158,11 @@ ROS / Application
 Robot Runtime
 ```
 
-这一 Sensor-to-SBC Runtime Governance Ecosystem。
-
 ---
 
 ## OEM-first Expansion
 
-当 OEM 首先采用 Atlas：
+When an OEM adopts Atlas first:
 
 ```text
 OEM Robot Deployment
@@ -187,7 +183,7 @@ Sensor FAE Investigation
 Sensor Historical RGA
 ```
 
-Atlas 可以继续协助相关 Sensor Manufacturer 建立：
+Atlas can continue to assist relevant Sensor Manufacturers in establishing:
 
 - Sensor Runtime Profile
 - Sensor Historical RGA
@@ -198,7 +194,7 @@ Atlas 可以继续协助相关 Sensor Manufacturer 建立：
 
 ## Sensor-first Expansion
 
-当 Sensor Manufacturer 首先采用 Atlas：
+When a Sensor Manufacturer adopts Atlas first:
 
 ```text
 Sensor Runtime Profile
@@ -219,32 +215,32 @@ OEM REF Investigation
 OEM Historical RGA
 ```
 
-Atlas 可以沿着 Sensor 的实际 OEM 客户与机器人平台，逐步建立完整的 Sensor-to-SBC 治理链。
+Atlas can progressively establish a complete Sensor-to-SBC governance chain along the sensor's actual OEM customers and robot platforms.
 
 ---
 
 # OEM and Sensor Deployment Differences
 
-OEM 与 Sensor Manufacturer 使用相同 Atlas Canonical Model，但项目目标不同。
+OEMs and Sensor Manufacturers use the same Atlas Canonical Model, but their project goals differ.
 
 | Item | OEM Deployment | Sensor Manufacturer Deployment |
 |---|---|---|
 | Primary Object | Robot SKU / Fleet | Sensor Product / Sensor SKU |
 | Main Investigation | Robot Runtime REF | Sensor REF / FAE Investigation |
-| Surface Scope | Sensor、Power、Bus、Linux、Driver、ROS、Robot State | Sensor、Firmware、Interface、Driver、Output、Timing |
+| Surface Scope | Sensor, Power, Bus, Linux, Driver, ROS, Robot State | Sensor, Firmware, Interface, Driver, Output, Timing |
 | Historical RGA | Multi-sensor and system cases | Sensor-only cases across OEMs and environments |
 | Main User | Tier 1 / Tier 2 / Tier 3 | FAE / Driver / Firmware / Product Team |
 | Expansion Unit | One Robot Model at a time | One Sensor Product at a time |
-| ROI Focus | Investigation time、Tier 3 involvement、fleet support cost | FAE response、cross-OEM reuse、engineering escalation |
+| ROI Focus | Investigation time, Tier 3 involvement, fleet support cost | FAE response, cross-OEM reuse, engineering escalation |
 | Collaboration | Engage Sensor Factory | Support multiple OEMs |
 
 ---
 
 # Project Governance
 
-每一个 Pilot、Controlled Deployment 和 Production Deployment 都应作为正式项目管理。
+Every Pilot, Controlled Deployment, and Production Deployment should be managed as a formal project.
 
-最低项目结构：
+Minimum project structure:
 
 ```text
 Executive Sponsor
@@ -263,78 +259,78 @@ Project Manager
         └── Atlas Project Lead
 ```
 
-小型项目中，一个人可以承担多个角色。
+In smaller projects, one individual may fulfill multiple roles.
 
-但每项责任必须有明确 Owner。
+However, each responsibility must have an explicit Owner.
 
 ---
 
 # Organizational Representative
 
-客户必须指定一名 Organizational Representative。
+The customer must designate an Organizational Representative.
 
-该角色不是普通技术联系人，而是客户组织的正式项目代表。
+This role is not a typical technical point of contact, but an official project representative of the customer organization.
 
-主要职责：
+Key responsibilities:
 
-- 确认项目范围
-- 协调跨部门资源
-- 确认客户输入
-- 批准 Change Request
-- 签署 Milestone Acceptance
-- 管理项目升级
-- 提交继续、暂停或终止决定
+- Confirm project scope
+- Coordinate cross-departmental resources
+- Confirm customer inputs
+- Approve Change Requests
+- Sign off on Milestone Acceptance
+- Manage project escalations
+- Submit decisions to proceed, pause, or terminate
 
-Atlas 不应以单一工程师的非正式意见作为组织级验收结论。
+Atlas should not rely on informal opinions from individual engineers as organizational-level acceptance conclusions.
 
 ---
 
 # OEM Project Roster
 
-OEM 项目建议包括：
+The recommended project roster for OEMs includes:
 
 | Role | Main Responsibility |
 |---|---|
-| Executive Sponsor | Budget 与部署决策 |
-| Organizational Representative | 跨部门协调与正式验收 |
-| OEM Project Manager | Schedule、Risk、Milestone |
-| Product Owner | Robot SKU 与业务场景 |
-| Runtime Engineering Lead | Agent 与 Surface 接入 |
+| Executive Sponsor | Budget and deployment decisions |
+| Organizational Representative | Cross-departmental coordination and formal acceptance |
+| OEM Project Manager | Schedule, Risk, Milestone |
+| Product Owner | Robot SKU and business scenarios |
+| Runtime Engineering Lead | Agent and Surface integration |
 | Tier 1 Representative | REF Intake |
-| Tier 2 Investigation Lead | Evidence、Recall 与调查组织 |
-| Tier 3 Engineering Representative | 复杂事件与技术边界 |
-| Fleet / Cloud Owner | 数据传输与总部接入 |
-| Sensor Coordination Owner | Sensor Factory 协作 |
-| IT / Security | 数据、权限与部署审查 |
-| Legal / Procurement | 合同、IP 与退出机制 |
+| Tier 2 Investigation Lead | Evidence, Recall, and investigation organization |
+| Tier 3 Engineering Representative | Complex events and technical boundaries |
+| Fleet / Cloud Owner | Data transmission and headquarters connection |
+| Sensor Coordination Owner | Sensor Factory collaboration |
+| IT / Security | Data, permissions, and deployment review |
+| Legal / Procurement | Contract, IP, and exit mechanism |
 
-Tier 3 不应承担 Pilot 的常规日志收集和数据整理。
+Tier 3 should not be burdened with routine log collection and data processing during the Pilot.
 
 ---
 
 # Sensor Manufacturer Project Roster
 
-Sensor Manufacturer 项目建议包括：
+The recommended project roster for Sensor Manufacturers includes:
 
 | Role | Main Responsibility |
 |---|---|
-| Executive Sponsor | Budget 与产品线决策 |
-| Organizational Representative | 正式协调与验收 |
-| Project Manager | Schedule、Scope、Risk |
-| Sensor Product Owner | Sensor SKU 与目标市场 |
+| Executive Sponsor | Budget and product line decisions |
+| Organizational Representative | Formal coordination and acceptance |
+| Project Manager | Schedule, Scope, Risk |
+| Sensor Product Owner | Sensor SKU and target market |
 | FAE Lead | Sensor REF Workflow |
 | Driver Lead | Driver Runtime Boundary |
 | Firmware Lead | Firmware Investigation |
 | Validation / Reliability Lead | Known Environment Coverage |
-| OEM Collaboration Owner | OEM 接入和 EGP |
-| IT / Security | Repository 与数据交换 |
-| Legal / Procurement | NDA、IP 与退出机制 |
+| OEM Collaboration Owner | OEM integration and EGP |
+| IT / Security | Repository and data exchange |
+| Legal / Procurement | NDA, IP, and exit mechanism |
 
 ---
 
 # Budget Structure
 
-项目预算应覆盖完整部署成本，而不仅是 Atlas License。
+The project budget should cover the total deployment cost, not just the Atlas License.
 
 ```text
 Total Project Budget
@@ -354,7 +350,7 @@ Total Project Budget
 
 ## OEM Budget Items
 
-OEM 通常需要预算：
+OEMs typically need to budget for:
 
 - Robot Runtime Surface Mapping
 - Atlas Agent Integration
@@ -370,7 +366,7 @@ OEM 通常需要预算：
 
 ## Sensor Manufacturer Budget Items
 
-Sensor Manufacturer 通常需要预算：
+Sensor Manufacturers typically need to budget for:
 
 - Sensor Runtime Surface Mapping
 - Sensor Runtime Profile Creation
@@ -386,29 +382,29 @@ Sensor Manufacturer 通常需要预算：
 
 ## Contingency Budget
 
-建议预留：
+It is recommended to reserve:
 
 ```text
 10%–20%
 ```
 
-用于已批准的：
+For approved:
 
-- Additional Adapter
-- New Surface
-- Extra Test Cycle
-- Infrastructure Change
+- Additional Adapters
+- New Surfaces
+- Extra Test Cycles
+- Infrastructure Changes
 - Approved Scope Expansion
 
-Contingency 不应被视为默认可消费预算。
+Contingency should not be treated as a default consumable budget.
 
 ---
 
 # Milestone-based Payment
 
-建议采用 Milestone Payment。
+Milestone-based payment is recommended.
 
-每一期付款应绑定：
+Each payment installment should be tied to:
 
 - Defined Deliverable
 - Acceptance Criteria
@@ -431,7 +427,7 @@ Contingency 不应被视为默认可消费预算。
 | Production Readiness Acceptance | 10% |
 | Final Handover / Full-scale Plan | 10% |
 
-实际比例可以根据项目规模调整。
+The actual percentages can be adjusted based on project size.
 
 ---
 
@@ -453,7 +449,7 @@ Contingency 不应被视为默认可消费预算。
 
 ## Start Gate
 
-项目启动前必须确认：
+Before project initiation, the following must be confirmed:
 
 - Executive Sponsor
 - Organizational Representative
@@ -469,13 +465,13 @@ Contingency 不应被视为默认可消费预算。
 
 # Stage 1 — Pilot Deployment
 
-Pilot 应限制在明确的最小范围内。
+The Pilot should be constrained to an explicitly defined minimum scope.
 
 ---
 
 ## OEM Pilot Scope
 
-建议选择：
+Recommended selection:
 
 ```text
 One Robot Model
@@ -489,7 +485,7 @@ One to Three REF Types
 Five to Ten OEM Historical Cases
 ```
 
-例如：
+For example:
 
 ```text
 Delivery Robot A
@@ -505,7 +501,7 @@ Unexpected Stop
 
 ## Sensor Manufacturer Pilot Scope
 
-建议选择：
+Recommended selection:
 
 ```text
 One Sensor Product
@@ -519,7 +515,7 @@ Three to Five Runtime Patterns
 Five to Ten Historical Cases
 ```
 
-例如：
+For example:
 
 ```text
 LiDAR X
@@ -535,41 +531,41 @@ Packet Loss / Reconnect / Timestamp Gap
 
 ## Pilot Acceptance
 
-Pilot 应验证：
+The Pilot should verify that:
 
-- Runtime Surface 可观察
-- Agent 可以 Observe、Persist、Retain、Export
-- Evidence Pack 可生成
-- Historical RGA 可召回
-- Investigation Context 可形成
-- Investigation 可以闭环
-- IR 与 LL 可以保存
-- 新 RGA 可以建立
-- ROI Baseline 可以计算
+- Runtime Surface is observable
+- Agent can Observe, Persist, Retain, Export
+- Evidence Pack can be generated
+- Historical RGA can be recalled
+- Investigation Context can be formed
+- Investigation can reach closure
+- IR and LL can be saved
+- New RGAs can be established
+- ROI Baseline can be calculated
 
 ---
 
 # Stage 2 — Controlled Deployment
 
-Controlled Deployment 是 Pilot 与 Production 之间的正式阶段。
+Controlled Deployment is the formal phase between Pilot and Production.
 
-它不是无边界扩大。
+It is not an unconstrained expansion.
 
-核心原则：
+Core principle:
 
-> 每次只扩展一个主要产品模型或一个明确的平台组合。
+> Expand only one major product model or platform combination at a time.
 
 ---
 
 ## OEM Controlled Deployment
 
-OEM 应采用：
+OEMs should adopt:
 
 ```text
 One Robot Model at a Time
 ```
 
-每一款 Robot Model 应分别确认：
+Each Robot Model should be independently confirmed for:
 
 - SBC / Host Platform
 - Linux / ROS Version
@@ -581,7 +577,7 @@ One Robot Model at a Time
 - Export Infrastructure
 - Support Roster
 
-推荐顺序：
+Recommended order:
 
 ```text
 Robot Model A
@@ -599,19 +595,19 @@ Acceptance
 Robot Model C
 ```
 
-不要一次将 Atlas 部署到所有 Fleet SKU。
+Do not deploy Atlas across all Fleet SKUs simultaneously.
 
 ---
 
 ## Sensor Controlled Deployment
 
-Sensor Manufacturer 应采用：
+Sensor Manufacturers should adopt:
 
 ```text
 One Sensor Product at a Time
 ```
 
-每款 Sensor 应分别确认：
+Each Sensor Product should be independently confirmed for:
 
 - Hardware Revision
 - Firmware Version
@@ -623,7 +619,7 @@ One Sensor Product at a Time
 - Historical RGA
 - FAE Workflow
 
-推荐顺序：
+Recommended order:
 
 ```text
 Sensor Product X
@@ -638,13 +634,13 @@ Sensor Product Y
 Acceptance
 ```
 
-同一 Sensor Product 可以逐步扩展到不同 OEM 和场景。
+The same Sensor Product can be progressively expanded to different OEMs and scenarios.
 
 ---
 
 # Controlled Deployment Gates
 
-每次扩展前必须通过以下 Gate：
+Before each expansion, the following Gates must be passed:
 
 ```text
 Surface Readiness
@@ -664,15 +660,15 @@ Operational Owner
 ROI Tracking
 ```
 
-未通过 Gate 的产品模型不进入下一阶段。
+Product models that do not pass the Gate will not proceed to the next phase.
 
 ---
 
 # Stage 3 — Production Readiness
 
-Production Readiness 评估 Atlas 是否具备长期运行条件。
+Production Readiness evaluates whether Atlas meets the conditions for long-term production operation.
 
-评估包括：
+Evaluation includes:
 
 - Runtime Stability
 - Storage and Retention
@@ -687,13 +683,13 @@ Production Readiness 评估 Atlas 是否具备长期运行条件。
 - Auditability
 - Exit Readiness
 
-Production Readiness 不代表 Atlas 对所有未来 REF 提供自动根因结论。
+Production Readiness does not mean Atlas provides automated root cause conclusions for all future REFs.
 
 ---
 
 # Stage 4 — Multi-SKU and Cross-platform Expansion
 
-完成第一款产品的 Controlled Deployment 后，可以复用 Atlas Canonical Infrastructure。
+After completing the Controlled Deployment for the first product, the Atlas Canonical Infrastructure can be reused.
 
 ```text
 Validated Atlas Core
@@ -704,13 +700,13 @@ Validated Atlas Core
         └── New Historical RGA
 ```
 
-不应为每个新 SKU 重写独立调查系统。
+An independent investigation system should not be rewritten for every new SKU.
 
 ---
 
 ## Reusable Components
 
-跨 SKU 复用的部分包括：
+Components reused across SKUs include:
 
 - Atlas Agent Core
 - Runtime Dataset Lifecycle
@@ -728,7 +724,7 @@ Validated Atlas Core
 
 ## Product-specific Components
 
-每个 SKU 需要确认：
+Components that must be confirmed for each SKU include:
 
 - Surface Registry
 - Adapter
@@ -743,7 +739,7 @@ Validated Atlas Core
 
 # Stage 5 — Full-scale Deployment
 
-Full-scale Deployment 应在多个 Controlled Deployment 成功后启动。
+Full-scale Deployment should be initiated after multiple successful Controlled Deployments.
 
 ```text
 Validated Product Models
@@ -762,7 +758,7 @@ Central Governance Operation
 
 ## OEM Full-scale Deployment
 
-可以包括：
+Can include:
 
 - Multiple Robot Models
 - Multiple Fleet Regions
@@ -777,7 +773,7 @@ Central Governance Operation
 
 ## Sensor Manufacturer Full-scale Deployment
 
-可以包括：
+Can include:
 
 - Multiple Sensor Products
 - Multiple Firmware Branches
@@ -792,7 +788,7 @@ Central Governance Operation
 
 # Dual-flywheel Operating Model
 
-Full-scale Deployment 后，两个飞轮持续互相增强。
+After Full-scale Deployment, both flywheels continuously reinforce each other.
 
 ---
 
@@ -854,15 +850,15 @@ Sensor Response
 OEM Closure and Reuse
 ```
 
-双方不需要共享完整私有 Repository。
+Neither party needs to share their complete private Repository.
 
-它们通过标准对象和授权边界协同。
+They collaborate through standard objects and authorization boundaries.
 
 ---
 
 # Change Management
 
-以下事项必须进入正式 Change Request：
+The following items must enter formal Change Requests:
 
 - New Robot Model
 - New Sensor Product
@@ -875,7 +871,7 @@ OEM Closure and Reuse
 - New Geographic Region
 - New Production SLA
 
-Change Request 应记录：
+Change Requests should record:
 
 - Scope Impact
 - Technical Impact
@@ -911,19 +907,19 @@ Change Request 应记录：
 
 ## Project-specific Deliverables
 
-以下内容的所有权或使用权必须在合同中单独定义：
+Ownership or usage rights for the following content must be separately defined in the contract:
 
-- Customer-specific Adapter
-- Customer-specific Integration
-- Deployment Configuration
+- Customer-specific Adapters
+- Customer-specific Integrations
+- Deployment Configurations
 - Custom Reporting
-- Custom Workflow Extension
+- Custom Workflow Extensions
 
 ---
 
 # Safe Exit Mechanism
 
-每个阶段都必须允许客户在可控条件下退出。
+Every stage must allow the customer to exit under controlled conditions.
 
 ```text
 Exit Decision
@@ -948,7 +944,7 @@ Confirm Data Deletion
 
 # Exit Package
 
-建议包括：
+Recommended inclusions:
 
 - Runtime Dataset Export
 - Evidence Pack Export
@@ -963,33 +959,33 @@ Confirm Data Deletion
 - Open Issue List
 - Data Deletion Confirmation
 
-建议采用开放格式：
+An open format is recommended:
 
 - JSON
 - Markdown
 - CSV
 - Documented Archive
 
-客户资产不应只能通过 Atlas UI 读取。
+Customer assets should not be readable exclusively through the Atlas UI.
 
 ---
 
 # Code Escrow
 
-Code Escrow 用于保障长期生产部署的供应商连续性。
+Code Escrow is used to ensure vendor continuity for long-term production deployments.
 
-Pilot 阶段可以先确认 Escrow 条款。
+Escrow terms can be confirmed during the Pilot phase.
 
-进入 Production 前完成正式 Escrow。
+Formal Escrow is completed prior to entering Production.
 
 ---
 
 ## Escrow Scope
 
-可以包括：
+Can include:
 
 - Contracted Atlas Release
-- Customer-specific Adapter
+- Customer-specific Adapters
 - Build Instructions
 - Dependency Manifest
 - Deployment Documentation
@@ -1000,7 +996,7 @@ Pilot 阶段可以先确认 Escrow 条款。
 
 ## Escrow Verification
 
-应验证：
+Should verify:
 
 - Archive Completeness
 - Version Match
@@ -1009,13 +1005,13 @@ Pilot 阶段可以先确认 Escrow 条款。
 - Dependency Availability
 - Deployment Instructions
 
-仅保存一个无法构建的代码压缩包不构成有效 Escrow。
+Simply saving an unbuildable code archive does not constitute valid Escrow.
 
 ---
 
 ## Escrow Release Triggers
 
-可以包括：
+Can include:
 
 - Atlas Insolvency
 - Permanent Product Discontinuation
@@ -1023,47 +1019,47 @@ Pilot 阶段可以先确认 Escrow 条款。
 - Material Breach Not Cured
 - Agreed Business Continuity Event
 
-普通项目争议不应自动触发 Escrow Release。
+Ordinary project disputes should not automatically trigger Escrow Release.
 
 ---
 
 # Termination and Payment
 
-退出责任应根据原因处理。
+Exit liabilities should be handled based on cause.
 
 ---
 
 ## Customer Convenience Termination
 
-通常支付：
+Typically pays for:
 
-- 已验收 Milestone
-- 已完成但尚处于验收期的可交付成果
-- 已批准且不可取消的成本
-- 合同约定的 Transition Cost
+- Accepted Milestones
+- Deliverables completed but still within acceptance period
+- Approved and non-cancelable costs
+- Contractually agreed Transition Costs
 
-未启动的未来 Milestone 不应自动全额收费。
+Unstarted future Milestones should not be automatically charged in full.
 
 ---
 
 ## Atlas Material Breach
 
-合同可以约定：
+Contracts may stipulate:
 
-- 暂停受影响 Milestone 付款
-- 补救期
-- 未验收款项退款
-- 强制 Exit Package
+- Suspension of impacted Milestone payments
+- Remediation period
+- Refund for unaccepted installments
+- Mandatory Exit Package
 - Transition Assistance
-- 符合条件时触发 Escrow
+- Triggering Escrow under eligible conditions
 
 ---
 
 ## Controlled Deployment Exit
 
-某款 Robot Model 或 Sensor Product 未通过验收时，可以只停止该模型扩展。
+When a specific Robot Model or Sensor Product fails acceptance, expansion for that model alone can be halted.
 
-不必自动终止已验收的其它部署。
+Previously accepted deployments for other models do not need to be automatically terminated.
 
 ```text
 Robot A — Accepted
@@ -1073,15 +1069,15 @@ Robot B — Failed Gate
 Robot C — Not Started
 ```
 
-这种模型级退出机制可以隔离扩展风险。
+This model-level exit mechanism isolates scaling risks.
 
 ---
 
 # Management Decision Gates
 
-每个阶段结束后，应进行正式管理层决策。
+Formal management decisions should occur after each phase.
 
-可选结果：
+Possible outcomes:
 
 ```text
 Approve Next Stage
@@ -1099,7 +1095,7 @@ Exit Selected Model
 Terminate Program
 ```
 
-决策依据包括：
+Decision criteria include:
 
 - Technical Acceptance
 - Budget Consumption
@@ -1115,9 +1111,9 @@ Terminate Program
 
 # ROI Tracking
 
-项目应从 Pilot 开始建立 Baseline。
+The project should establish a Baseline starting from the Pilot.
 
-建议指标：
+Recommended metrics:
 
 - Time to Evidence Pack
 - Median Investigation Time
@@ -1134,7 +1130,7 @@ Terminate Program
 
 ## OEM ROI
 
-重点观察：
+Key observations:
 
 - Robot Model REF Trend
 - Fleet Investigation Cost
@@ -1147,7 +1143,7 @@ Terminate Program
 
 ## Sensor Manufacturer ROI
 
-重点观察：
+Key observations:
 
 - FAE Investigation Time
 - Cases per Sensor Product
@@ -1160,7 +1156,7 @@ Terminate Program
 
 # Minimum Production Gate
 
-进入 Full-scale Deployment 前，至少需要：
+Before entering Full-scale Deployment, the minimum requirements are:
 
 - One or More Controlled Models Accepted
 - Stable Atlas Agent
@@ -1179,7 +1175,7 @@ Terminate Program
 
 # Summary
 
-Atlas Pilot to Production Deployment 应遵循：
+Atlas Pilot to Production Deployment should follow:
 
 ```text
 Pilot
@@ -1201,24 +1197,25 @@ Cross-SKU / Cross-platform Expansion
 Full-scale Deployment
 ```
 
-OEM 以 Robot Model 为扩展单位，建立从 Sensor、Power、Bus、Linux、Driver 到 ROS 和 Robot Runtime 的完整治理链。
+OEMs use the Robot Model as the unit of expansion, establishing a complete governance chain from Sensor, Power, Bus, Linux, Driver to ROS and Robot Runtime.
 
-Sensor Manufacturer 以 Sensor Product 为扩展单位，建立 Sensor Runtime Profile、Historical RGA 和标准 FAE Investigation Workflow，并逐步扩展到不同 OEM、机器人平台和部署场景。
+Sensor Manufacturers use the Sensor Product as the unit of expansion, establishing Sensor Runtime Profiles, Historical RGAs, and standard FAE Investigation Workflows, progressively scaling across different OEMs, robot platforms, and deployment scenarios.
 
-Atlas 的双飞轮意味着：
+The Atlas dual-flywheel means:
 
-- OEM 先采用，可以沿 Sensor Engagement 链引入 Sensor Manufacturer。
-- Sensor Manufacturer 先采用，可以沿 OEM Integration 链引入 Robot Runtime Governance。
-- 双方最终共同建立 Sensor-to-SBC Runtime Governance Ecosystem。
+- If adopted by the OEM first, Sensor Manufacturers can be introduced along the Sensor Engagement chain.
+- If adopted by the Sensor Manufacturer first, Robot Runtime Governance can be introduced along the OEM Integration chain.
+- Both parties ultimately co-build a Sensor-to-SBC Runtime Governance Ecosystem.
 
 ---
 
-# 下一步阅读
+# Next Steps
 
 - SDK
 - ROS2
 - API
 - CLI
-Atlas 不是单一项目的 Glue Code。
 
-它是一套可以跨 SKU、跨平台、跨场景和跨组织持续复用的 Runtime Governance Infrastructure。
+Atlas is not Glue Code for a single project.
+
+It is a Runtime Governance Infrastructure that can be continuously reused across SKUs, platforms, scenarios, and organizations.
