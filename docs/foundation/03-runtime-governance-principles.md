@@ -5,30 +5,30 @@ sidebar_label: Runtime Governance Principles
 
 # Runtime Governance Principles
 
-本章定义 Atlas Runtime Governance™ 的核心设计原则。
+This chapter defines the core design principles of Atlas Runtime Governance™.
 
-这些原则决定了 Atlas 如何采集证据、组织调查流程，以及构建可持续积累的运行时治理体系。
+These principles dictate how Atlas collects evidence, organizes investigation workflows, and constructs a continuously compounding runtime governance system.
 
 ---
 
-# Principle 1：Evidence First
+# Principle 1: Evidence First
 
-运行时调查必须建立在运行时证据基础上。
+Runtime investigations must be built upon runtime evidence.
 
-Atlas 优先采集和组织：
+Atlas prioritizes collecting and organizing:
 
 - Runtime Dataset
 - Runtime Timeline
 - Runtime Event
 - Evidence Pack
 
-调查应以客观证据为基础，而不是经验推测。
+Investigations should be grounded in objective evidence, rather than empirical speculation.
 
 ---
 
-# Principle 2：Standardized Investigation
+# Principle 2: Standardized Investigation
 
-每一次 Runtime Investigation 都应采用统一流程。
+Every Runtime Investigation should adopt a unified workflow.
 
 ```text
 Runtime Event
@@ -52,31 +52,31 @@ LL
 Ticket Closure
 ```
 
-统一流程能够降低团队协作成本，并提高调查效率。
+A standardized workflow lowers team collaboration costs and improves investigation efficiency.
 
 ---
 
-# Principle 3：Historical Knowledge Reuse
+# Principle 3: Historical Knowledge Reuse
 
-Atlas 将历史调查结果沉淀为 Runtime Governance Asset（RGA）。
+Atlas transforms historical investigation results into Runtime Governance Assets (RGA).
 
-新的调查开始时，应优先检索 Historical RGA。
+When a new investigation begins, Historical RGAs should be retrieved first.
 
-这样可以：
+This enables engineering teams to:
 
-- 减少重复调查
-- 复用已有经验
-- 缩短问题定位时间
+- Reduce repetitive troubleshooting
+- Reuse accumulated experience
+- Shorten issue localization time
 
-调查应从组织知识开始，而不是从零开始。
+Investigations should begin with organizational knowledge, rather than starting from scratch.
 
 ---
 
-# Principle 4：Separation of Responsibility
+# Principle 4: Separation of Responsibility
 
-Atlas 与工程团队职责明确分离。
+Responsibilities are clearly separated between Atlas and engineering teams.
 
-Atlas 负责：
+Atlas is responsible for:
 
 - Runtime Observation
 - Evidence Collection
@@ -84,38 +84,38 @@ Atlas 负责：
 - Historical Recall
 - Investigation Workflow
 
-工程团队负责：
+Engineering teams are responsible for:
 
-- 问题分析
-- 根因确认
-- 修复方案
-- 软件发布
+- Issue Analysis
+- Root Cause Confirmation
+- Fix Solutions
+- Software Releases
 
-Atlas 提供调查基础，而不是替代工程决策。
+Atlas provides the foundation for investigation, rather than replacing engineering decisions.
 
 ---
 
-# Principle 5：Continuous Knowledge Growth
+# Principle 5: Continuous Knowledge Growth
 
-调查结束并不是流程终点。
+The conclusion of an investigation is not the end of the process.
 
-每一次完成的 Investigation 都会产生：
+Every completed Investigation produces:
 
-- Investigation Result（IR）
-- Lesson Learned（LL）
+- Investigation Result (IR)
+- Lesson Learned (LL)
 - Updated RGA
 
-这些内容持续沉淀到组织知识库，供未来调查复用。
+These outputs continuously flow into the organizational knowledge repository for future reuse.
 
-组织能力会随着每一次调查不断增长。
+Organizational capability grows continuously with every investigation.
 
 ---
 
-# Principle 6：Runtime Boundary Focus
+# Principle 6: Runtime Boundary Focus
 
-Atlas 只关注运行时边界。
+Atlas focuses strictly on the runtime boundary.
 
-治理范围包括：
+The governance boundary includes:
 
 ```text
 Sensor
@@ -129,38 +129,38 @@ Driver
 ROS Topic
 ```
 
-Atlas 不负责：
+Atlas is NOT responsible for:
 
 - SLAM
 - Navigation
 - Motion Planning
-- AI Model
+- AI Models
 - Business Logic
 
-明确边界，有助于降低系统复杂度，并保持调查结果的一致性。
+Maintaining clear boundaries reduces system complexity and preserves the consistency of investigation results.
 
 ---
 
-# Principle 7：Open Integration
+# Principle 7: Open Integration
 
-Atlas 不要求替换现有开发工具。
+Atlas does not require replacing existing development tools.
 
-Atlas 可以与现有系统协同工作，例如：
+Atlas works collaboratively with existing systems, such as:
 
 - ROS2
 - Linux
 - GitHub
 - CI/CD
-- OEM Investigation System
-- Sensor Manufacturer Workflow
+- OEM Investigation Systems
+- Sensor Manufacturer Workflows
 
-Atlas 更关注运行时治理，而不是应用框架。
+Atlas concentrates on runtime governance rather than application frameworks.
 
 ---
 
 # Summary
 
-Atlas Runtime Governance 建立在以下七项原则之上：
+Atlas Runtime Governance is established upon the following seven principles:
 
 1. Evidence First
 2. Standardized Investigation
@@ -170,17 +170,17 @@ Atlas Runtime Governance 建立在以下七项原则之上：
 6. Runtime Boundary Focus
 7. Open Integration
 
-这些原则共同保证：
+Together, these principles ensure:
 
-- 调查流程标准化
-- 组织知识持续积累
-- 工程职责清晰
-- 系统边界明确
-- 能够长期支撑机器人运行时治理。
+- Standardized investigation workflows
+- Continuous accumulation of organizational knowledge
+- Clear engineering responsibilities
+- Well-defined system boundaries
+- Long-term support for robot runtime governance
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 ## Products
 - Runtime Sensor Governance™
