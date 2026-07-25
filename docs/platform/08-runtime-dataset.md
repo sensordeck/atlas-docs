@@ -7,13 +7,13 @@ sidebar_label: Runtime Dataset™
 
 ## Overview
 
-Runtime Dataset™ 是 Atlas Runtime Governance™ 的统一运行时数据集合。
+Runtime Dataset™ is the unified runtime dataset of Atlas Runtime Governance™.
 
-Atlas Agent 持续将 Runtime Observation 写入 Runtime Dataset，所有后续调查均基于这同一份 Dataset 完成。
+Atlas Agent continuously writes Runtime Observations into the Runtime Dataset, and all downstream investigations are completed based on this exact same Dataset.
 
-Runtime Dataset 不是日志文件，也不是 Evidence Pack。
+The Runtime Dataset is neither a log file nor an Evidence Pack.
 
-它是 Runtime Evidence 的原始数据基础。
+It is the raw data foundation for Runtime Evidence.
 
 ---
 
@@ -37,15 +37,15 @@ Runtime Dataset
         └──────── Primary Evidence Pack
 ```
 
-Atlas 始终维护一份 Runtime Dataset。
+Atlas consistently maintains a single Runtime Dataset.
 
-不同调查模式共享同一数据源。
+Different investigation modes share the exact same data source.
 
 ---
 
 # Runtime Dataset Lifecycle
 
-Runtime Dataset 生命周期包括：
+The Runtime Dataset lifecycle consists of:
 
 ```text
 Observe
@@ -57,17 +57,17 @@ Rolling Buffer
 Time-range Export
 ```
 
-Atlas 不会因为不同 Investigation Workflow 建立不同 Dataset。
+Atlas never constructs separate Datasets for different Investigation Workflows.
 
-整个系统始终只有一份 Runtime Dataset 生命周期。
+The entire system maintains only a single Runtime Dataset lifecycle.
 
 ---
 
 ## Observe
 
-Atlas Agent 持续观察 Runtime Surface。
+Atlas Agent continuously observes Runtime Surfaces.
 
-Observation 可以来自：
+Observations can originate from:
 
 - Sensor Runtime
 - Driver Runtime
@@ -75,36 +75,36 @@ Observation 可以来自：
 - Power
 - Bus
 - ROS Runtime
-- Custom Runtime Surface
+- Custom Runtime Surfaces
 
-所有 Observation 均进入 Runtime Dataset。
+All Observations flow into the Runtime Dataset.
 
 ---
 
 ## Persist
 
-Persist 将 Observation 持续写入 Runtime Dataset。
+Persist continuously writes Observations into the Runtime Dataset.
 
-Persist 不负责分析事件。
+Persist is not responsible for analyzing events.
 
-它负责确保 Runtime Evidence 能够被后续 Investigation 引用。
+Its responsibility is to ensure Runtime Evidence can be referenced by downstream Investigations.
 
 ---
 
 ## Rolling Buffer
 
-Runtime Dataset 默认采用 Rolling Buffer。
+By default, the Runtime Dataset uses a Rolling Buffer.
 
-超过保留范围后，最旧数据按照策略循环覆盖。
+Once data exceeds the retention window, the oldest data is automatically overwritten according to policy.
 
-Retention Policy 可配置：
+Retention Policies are configurable:
 
 - rolling_buffer_hours
 - max_storage_size
 - overwrite_policy
 - dataset_lock_on_ref
 
-默认建议：
+Default recommendations:
 
 | Policy | Default |
 |---------|----------|
@@ -112,46 +112,46 @@ Retention Policy 可配置：
 | overwrite_policy | circular |
 | dataset_lock_on_ref | enabled |
 
-OEM 可以根据部署需求调整策略。
+OEMs can adjust policies based on deployment needs.
 
 ---
 
 ## Dataset Lock
 
-当 REF 进入正式调查后，Atlas 会锁定对应时间范围。
+When an REF enters formal investigation, Atlas locks the corresponding time range.
 
-锁定期间：
+During the lock period:
 
-- 不参与 Rolling Buffer
-- 不允许覆盖
-- 保持 Runtime Evidence 完整
+- It is excluded from the Rolling Buffer
+- Overwriting is prohibited
+- Runtime Evidence integrity is preserved
 
-直到 Evidence Pack 导出完成后解除锁定。
+The lock remains active until the Evidence Pack export is completed.
 
-Dataset Lock 只影响对应时间段。
+Dataset Lock strictly affects only the designated time slice.
 
 ---
 
 ## Time-range Export
 
-Runtime Dataset 支持按时间范围导出。
+The Runtime Dataset supports exporting by time range.
 
-导出可以用于：
+Exports can be used for:
 
 - Manual Investigation
 - Candidate Investigation
 - Evidence Pack Generation
-- Historical Archive
+- Historical Archives
 
-Export 不会修改 Runtime Dataset。
+Exporting does not alter the underlying Runtime Dataset.
 
 ---
 
 # Runtime Dataset Organization
 
-Runtime Dataset 由多个 Runtime Surface Observation 组成。
+The Runtime Dataset is composed of Observations from multiple Runtime Surfaces.
 
-例如：
+For example:
 
 ```text
 Runtime Dataset
@@ -167,13 +167,13 @@ Runtime Dataset
 └── ROS Topic Observation
 ```
 
-所有 Observation 使用统一时间轴组织。
+All Observations are organized along a unified timeline.
 
 ---
 
 # Runtime Timeline
 
-Runtime Dataset 中所有 Observation 均对齐至统一 Runtime Timeline。
+All Observations in the Runtime Dataset are aligned to a single, unified Runtime Timeline.
 
 ```text
 Time
@@ -192,7 +192,7 @@ Linux Runtime
 ROS Topic
 ```
 
-统一时间轴便于：
+A unified timeline facilitates:
 
 - Cross-stream Correlation
 - Evidence Window Generation
@@ -202,7 +202,7 @@ ROS Topic
 
 # Runtime Dataset Consumption
 
-Runtime Dataset 可以被不同模块消费。
+The Runtime Dataset can be consumed by different modules.
 
 ```text
 Runtime Dataset
@@ -218,17 +218,17 @@ Runtime Dataset
         └──────── Runtime Export
 ```
 
-所有模块共享同一份 Dataset。
+All modules share the exact same Dataset.
 
-不会复制 Runtime Dataset。
+The Runtime Dataset is never duplicated.
 
 ---
 
 # Manual Time Slice
 
-当 Tier 1 已知事故约莫时间时。
+When Tier 1 knows the approximate time of an incident:
 
-Atlas 根据指定时间范围：
+Atlas operates based on the specified time range:
 
 ```text
 Approximate REF Time
@@ -240,36 +240,34 @@ Time Slice
 Evidence Pack
 ```
 
-无需重新采集数据。
+There is no need to re-collect data.
 
 ---
 
 # Candidate Timeline
 
-部分事故无法提供准确发生时间。
+Some incidents cannot be assigned an accurate occurrence time.
 
-例如：
+For example:
 
-> "机器人昨天下午曾经停过。"
+> "The robot stopped unexpectedly sometime yesterday afternoon."
 
-Atlas 可以扫描 Runtime Dataset。
+Atlas can scan the Runtime Dataset to identify Candidate Timelines worth investigating further.
 
-识别值得进一步调查的 Candidate Timeline。
+Candidate Timelines:
 
-Candidate Timeline：
-
-- 提供调查入口
-- 提供候选时间段
-- 不确认 Root Cause
-- 不确认因果关系
+- Provide diagnostic leads
+- Offer candidate time windows
+- Do NOT confirm Root Cause
+- Do NOT confirm causality
 
 ---
 
 # Candidate Evidence Pack
 
-每一个 Candidate Timeline 都可以生成对应 Candidate Evidence Pack。
+Every Candidate Timeline can generate a corresponding Candidate Evidence Pack.
 
-例如：
+For example:
 
 ```text
 Candidate Timeline
@@ -280,102 +278,102 @@ Candidate Timeline
         └── EP-C04
 ```
 
-Candidate Evidence Pack 全部保留。
+All Candidate Evidence Packs are retained.
 
-Tier 2 工程师可进一步：
+Tier 2 engineers can then:
 
 - Review
 - Compare
 - Merge
 - Select Primary Evidence Pack
 
-Atlas 不自动删除 Candidate Evidence Pack。
+Atlas does not automatically delete Candidate Evidence Packs.
 
 ---
 
 # Primary Evidence Pack
 
-调查过程中，Tier 2 可以选择：
+During the investigation process, Tier 2 can select:
 
 ```text
 Primary Evidence Pack
 ```
 
-作为正式 Investigation Evidence。
+As the formal Investigation Evidence.
 
-Primary Evidence Pack：
+Primary Evidence Packs:
 
-- 引用 Runtime Dataset
-- 使用 Five-Segment Window
-- 保留完整 Runtime Timeline
+- Reference the Runtime Dataset
+- Utilize a Five-Segment Window
+- Retain the complete Runtime Timeline
 
-Primary Evidence Pack 不影响 Candidate Evidence Pack 的保存。
+Primary Evidence Packs do not impact the retention of Candidate Evidence Packs.
 
 ---
 
 # Runtime Dataset Principles
 
-Runtime Dataset 遵循以下原则：
+The Runtime Dataset adheres to the following principles:
 
-- 全系统只有一份 Runtime Dataset
-- 所有调查共享同一 Dataset
-- Dataset 生命周期统一
-- Runtime Observation 不重复采集
-- Candidate Timeline 不改变 Dataset
-- Evidence Pack 引用 Dataset
-- Export 不复制 Dataset
+- Only one Runtime Dataset exists across the entire system
+- All investigations share the exact same Dataset
+- Dataset lifecycle is unified
+- Runtime Observations are never re-collected
+- Candidate Timelines do not alter the Dataset
+- Evidence Packs reference the Dataset
+- Exporting does not duplicate the Dataset
 
 ---
 
 # Runtime Dataset vs Evidence Pack
 
-Runtime Dataset：
+Runtime Dataset:
 
-- 持续存在
-- 持续增长
-- Rolling Buffer 管理
-- 保存完整 Runtime Observation
+- Continuously exists
+- Continuously grows
+- Managed by Rolling Buffer
+- Retains complete Runtime Observations
 
-Evidence Pack：
+Evidence Pack:
 
-- 针对单一 REF
-- 基于 Runtime Dataset 生成
-- 使用 Five-Segment Window
-- 用于 Runtime Investigation
+- Targets a single REF
+- Generated from the Runtime Dataset
+- Uses a Five-Segment Window
+- Used for Runtime Investigation
 
-Evidence Pack 来源于 Runtime Dataset。
+Evidence Packs originate from the Runtime Dataset.
 
-Runtime Dataset 不等于 Evidence Pack。
+The Runtime Dataset is not equal to an Evidence Pack.
 
 ---
 
 # Runtime Dataset Boundary
 
-Runtime Dataset 仅保存运行时数据。
+The Runtime Dataset strictly stores runtime data.
 
-它不包含：
+It does NOT contain:
 
-- Root Cause
-- Investigation Result
-- Lesson Learned
-- Historical RGA
-- Investigation Context
+- Root Causes
+- Investigation Results
+- Lessons Learned
+- Historical RGAs
+- Investigation Contexts
 
-这些调查资产属于 Runtime Investigation™。
+These investigation assets belong to Runtime Investigation™.
 
 ---
 
 # Summary
 
-Runtime Dataset™ 是 Atlas Runtime Governance™ 唯一的运行时数据基础。
+Runtime Dataset™ is the sole runtime data foundation of Atlas Runtime Governance™.
 
-Atlas Agent 持续将 Runtime Observation 写入 Runtime Dataset，并通过统一生命周期管理数据保留、锁定与导出。
+Atlas Agent continuously writes Runtime Observations into the Runtime Dataset and manages data retention, locking, and exporting through a unified lifecycle.
 
-所有 Investigation Workflow，包括 Manual Time Slice、Candidate Timeline、Candidate Evidence Pack 和 Primary Evidence Pack，均共享同一份 Runtime Dataset，而不会建立独立的数据生命周期。
+All Investigation Workflows—including Manual Time Slices, Candidate Timelines, Candidate Evidence Packs, and Primary Evidence Packs—share the exact same Runtime Dataset without creating independent data lifecycles.
 
 ---
 
-# 下一步阅读
+# Next Reading
 
 - Evidence Pack™
 - Historical RGA™
