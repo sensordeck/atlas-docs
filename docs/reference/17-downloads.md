@@ -1,181 +1,181 @@
 ---
-title: 下载
-sidebar_label: 下载
+title: Downloads
+sidebar_label: Downloads
 ---
 
-# 下载
+# Downloads
 
-## 概述
+## Overview
 
-Atlas Runtime Governance™ 通过企业部署项目交付，而非公开软件下载。
+Atlas Runtime Governance™ is delivered through enterprise deployment projects rather than public software downloads.
 
-每次客户部署均根据以下内容进行定制：
+Each customer deployment is customized based on:
 
-- 产品范围
-- 运行时表面覆盖范围
-- 部署环境
-- 调查工作流
-- 集成需求
+- Product scope
+- Runtime Surface coverage
+- Deployment environment
+- Investigation workflows
+- Integration requirements
 
-可交付成果取决于项目范围和商业协议。
+Deliverables are defined by the project scope and commercial agreement.
 
 ---
 
-# 典型可交付成果
+# Typical Deliverables
 
-标准 Atlas 部署可能包括以下可交付成果。
+A standard Atlas deployment may include the following deliverables.
 
-## 运行时组件
+## Runtime Components
 
 - Atlas Agent
-- 运行时适配器
-- 运行时表面配置
-- 运行时数据集策略
-- 导出配置
+- Runtime Adapters
+- Runtime Surface Configuration
+- Runtime Dataset Policies
+- Export Configuration
 
 ---
 
-## 调查组件
+## Investigation Components
 
-- 证据包
-- 历史 RGA 仓库
-- 调查工作流
-- 调查上下文
-- 调查等级候选
-- Sensor Engagement Pack
-- Assist Vault（可选）
-
----
-
-## 文档
-
-典型文档包括：
-
-- 部署指南
-- 运行时表面映射
-- 调查工作流
-- 操作指南
-- 管理员指南
-- 培训材料
+- Evidence Packs
+- Historical RGA Repository
+- Investigation Workflows
+- Investigation Context
+- Investigation Tier Candidates
+- Sensor Engagement Pack™
+- Assist Vault™ (Optional)
 
 ---
 
-## 配置
+## Documentation
 
-项目特定配置可能包括：
+Typical documentation includes:
 
-- 运行时表面注册表
-- 适配器配置
-- 运行时策略
-- 保留策略
-- 导出策略
-- 授权策略
-
----
-
-# 项目可交付成果
-
-根据项目的不同，Atlas 可能提供：
-
-- 安装包
-- 部署包
-- 配置包
-- 历史 RGA 初始化包
-- 运行时画像包
-- 试点验收报告
-- 生产就绪报告
-
-可交付成果在项目工作说明书（SOW）中定义。
+- Deployment Guide
+- Runtime Surface Mapping Guide
+- Investigation Workflow Guide
+- Operations Guide
+- Administrator Guide
+- Training Materials
 
 ---
 
-# 软件更新
+## Configuration
 
-软件更新根据客户支持协议提供。
+Project-specific configuration may include:
 
-更新可能包括：
-
-- 缺陷修复
-- 性能改进
-- 新运行时表面支持
-- 调查工作流改进
-- 新运行时画像模板
-
-项目特定的定制化内容另行管理。
+- Runtime Surface Registry
+- Adapter Configuration
+- Runtime Policies
+- Retention Policies
+- Export Policies
+- Authorization Policies
 
 ---
 
-# 文档更新
+# Project Deliverables
 
-文档随主要产品版本一起更新。
+Depending on the project, Atlas may provide:
 
-客户可能收到：
+- Software Installation Package
+- Deployment Package
+- Configuration Package
+- Historical RGA Initialization Package
+- Runtime Profile Package
+- Pilot Acceptance Report
+- Production Readiness Report
 
-- 更新后的部署指南
-- 更新后的运行时表面定义
-- 更新后的调查工作流
-- 更新后的运行时画像模板
-- 更新后的历史 RGA 模板
-
----
-
-# 培训材料
-
-培训材料可能包括：
-
-- 部署培训
-- 调查工作流培训
-- 一级/二级操作指南
-- 传感器 FAE 协作指南
-- 管理员指南
-
-培训范围取决于部署项目。
+Project deliverables are defined in the Statement of Work (SOW).
 
 ---
 
-# 示例资产
+# Software Updates
 
-项目示例可能包括：
+Software updates are provided according to the customer's support agreement.
 
-- 示例证据包
-- 示例历史 RGA
-- 示例运行时画像
-- 示例调查上下文
-- 示例 Sensor Engagement Pack
+Updates may include:
 
-这些示例仅供演示和培训用途。
+- Bug fixes
+- Performance improvements
+- Support for new Runtime Surfaces
+- Investigation workflow enhancements
+- New Runtime Profile templates
 
----
-
-# 客户可交付成果
-
-项目完成时，客户通常收到：
-
-- 已批准的软件版本
-- 项目文档
-- 配置文件
-- 运行时画像
-- 历史 RGA 仓库
-- 调查模板
-- 验收报告
-
-客户特定的可交付成果在商业协议中定义。
+Project-specific customizations are managed separately.
 
 ---
 
-# 支持
+# Documentation Updates
 
-Atlas 作为企业解决方案交付。
+Documentation is updated alongside major product releases.
 
-如果您对以下内容感兴趣：
+Customers may receive:
 
-- 试点部署
-- OEM 部署
-- 传感器厂商部署
-- 运行时治理咨询
-- 集成服务
-- 生产部署
+- Updated Deployment Guides
+- Updated Runtime Surface Definitions
+- Updated Investigation Workflows
+- Updated Runtime Profile Templates
+- Updated Historical RGA Templates
 
-请联系 SensorDeck。
+---
 
-项目范围、可交付成果和支持计划将根据您的部署需求进行定义。
+# Training Materials
+
+Training materials may include:
+
+- Deployment Training
+- Investigation Workflow Training
+- Tier 1 / Tier 2 Operations Guide
+- Sensor FAE Collaboration Guide
+- Administrator Guide
+
+The scope of training depends on the deployment project.
+
+---
+
+# Sample Assets
+
+Project samples may include:
+
+- Sample Evidence Packs
+- Sample Historical RGA
+- Sample Runtime Profiles
+- Sample Investigation Context
+- Sample Sensor Engagement Packs
+
+These samples are provided for demonstration and training purposes only.
+
+---
+
+# Customer Deliverables
+
+Upon project completion, customers typically receive:
+
+- Approved Software Release
+- Project Documentation
+- Configuration Files
+- Runtime Profiles
+- Historical RGA Repository
+- Investigation Templates
+- Acceptance Report
+
+Customer-specific deliverables are defined in the commercial agreement.
+
+---
+
+# Support
+
+Atlas is delivered as an enterprise solution.
+
+If you are interested in:
+
+- Pilot Deployment
+- OEM Deployment
+- Sensor Manufacturer Deployment
+- Runtime Governance Consulting
+- Integration Services
+- Production Deployment
+
+please contact SensorDeck.
+
+Project scope, deliverables, and support plans will be defined according to your deployment requirements.
