@@ -1,351 +1,349 @@
 ---
-title: 常见问题解答
-sidebar_label: 常见问题
+title: Frequently Asked Questions
+sidebar_label: FAQ
 ---
 
-# 常见问题解答
+# Frequently Asked Questions
 
-## Atlas 是另一个日志系统吗？
+## Is Atlas another log management system?
 
-不是。
+No.
 
-Atlas 不是日志采集平台。
+Atlas is not a log collection platform.
 
-Atlas 为机器人提供运行时治理，包括：
+Atlas provides runtime governance for robots, including:
 
-- 运行时观测
-- 证据组织
-- 运行时调查
-- 历史知识复用
-- 跨组织协作
+- Runtime observation
+- Evidence organization
+- Runtime investigation
+- Historical knowledge reuse
+- Cross-organizational collaboration
 
-日志可能成为运行时证据的来源之一，但 Atlas 并非设计用于替代现有日志系统。
-
----
-
-## Atlas 会替代车队管理系统吗？
-
-不会。
-
-Atlas 不替代车队管理系统。
-
-车队管理系统关注：
-
-- 设备管理
-- OTA 升级
-- 远程监控
-- 任务调度
-- 机器人运营
-
-Atlas 关注：
-
-- 运行时调查
-- 证据包
-- 历史 RGA
-- 调查工作流
-- 运行时治理
-
-两者是互补关系。
+Logs may serve as one source of runtime evidence, but Atlas is not designed to replace existing log management systems.
 
 ---
 
-## Atlas 会替代工单系统吗？
+## Does Atlas replace a fleet management system?
 
-不会。
+No.
 
-Atlas 不替代 Jira 或 ServiceNow 等工单平台。
+Atlas does not replace fleet management platforms.
 
-Atlas 可以与现有工单工作流集成。
+Fleet management systems focus on:
 
-其职责始于运行时执行失败（REF）被报告之后。
+- Device management
+- OTA updates
+- Remote monitoring
+- Task scheduling
+- Robot operations
 
----
+Atlas focuses on:
 
-## Atlas 会自动判定根本原因吗？
+- Runtime investigations
+- Evidence Packs
+- Historical RGA
+- Investigation workflows
+- Runtime governance
 
-不会。
-
-Atlas 不会自动判定：
-
-- 根本原因
-- 责任归属
-- 产品缺陷
-- 客户过失
-
-Atlas 负责组织运行时证据和调查上下文。
-
-工程团队仍对技术结论负责。
+The two systems are complementary.
 
 ---
 
-## Atlas 支持 AI 辅助调查吗？
+## Does Atlas replace a ticketing system?
 
-Atlas 可以为 AI 辅助分析提供结构化的运行时证据。
+No.
 
-但 Atlas 不强制依赖 AI。
+Atlas does not replace ticketing platforms such as Jira or ServiceNow.
 
-所有运行时调查工作流保持确定性和可审查性。
+Atlas integrates with existing ticketing workflows.
 
----
-
-## Atlas 支持哪些机器人？
-
-Atlas 是平台无关的。
-
-它可以部署在不同的：
-
-- 机器人平台
-- SBC 平台
-- Linux 环境
-- 基于 ROS 的系统
-- 自定义机器人软件
-
-部署基于运行时表面映射，而非特定的机器人架构。
+Its responsibility begins after a Runtime Execution Failure (REF) has been reported.
 
 ---
 
-## Atlas 支持哪些传感器？
+## Does Atlas automatically determine the root cause?
 
-Atlas 是传感器无关的。
+No.
 
-典型的集成包括：
+Atlas does not automatically determine:
 
-- 相机
-- 激光雷达
-- IMU
+- Root cause
+- Liability
+- Product defects
+- Customer fault
+
+Atlas organizes runtime evidence and investigation context.
+
+Engineering teams remain responsible for technical conclusions.
+
+---
+
+## Does Atlas support AI-assisted investigations?
+
+Yes.
+
+Atlas provides structured runtime evidence that can be used by AI-assisted analysis.
+
+However, Atlas does not depend on AI.
+
+All runtime investigation workflows remain deterministic and fully reviewable.
+
+---
+
+## What types of robots does Atlas support?
+
+Atlas is platform-independent.
+
+It can be deployed across different:
+
+- Robot platforms
+- SBC platforms
+- Linux environments
+- ROS-based systems
+- Custom robot software
+
+Deployment is based on runtime surface mapping rather than any specific robot architecture.
+
+---
+
+## What sensors does Atlas support?
+
+Atlas is sensor-agnostic.
+
+Typical integrations include:
+
+- Cameras
+- LiDAR
+- IMUs
 - GNSS
-- 雷达
-- 编码器
+- Radar
+- Encoders
 
-其他传感器可通过运行时表面映射进行集成。
-
----
-
-## Atlas 需要 ROS 吗？
-
-不需要。
-
-ROS 是可选的。
-
-Atlas 可以在有或无 ROS 的系统上观测运行时表面。
+Additional sensors can be integrated through runtime surface mapping.
 
 ---
 
-## Atlas 需要云连接吗？
+## Does Atlas require ROS?
 
-不需要。
+No.
 
-Atlas 支持多种部署模式。
+ROS is optional.
 
-示例包括：
-
-- 在线云部署
-- 总部服务器
-- 本地网络
-- 离线部署
-- 手动导出
-- 对接后上传
-
-不要求持续联网。
+Atlas can observe runtime surfaces on systems with or without ROS.
 
 ---
 
-## Atlas 需要替换我们现有的基础设施吗？
+## Does Atlas require a cloud connection?
 
-不需要。
+No.
 
-Atlas 设计为与现有基础设施集成。
+Atlas supports multiple deployment models, including:
 
-它可以与以下系统共存：
+- Cloud deployment
+- Headquarters servers
+- On-premises networks
+- Offline deployment
+- Manual export
+- Dock-and-upload workflows
 
-- 车队管理系统
-- 云平台
-- 工单系统
-- 对象存储
-- 现有监控平台
-
-无需大规模替换项目。
-
----
-
-## Atlas 可以适配多种机器人型号吗？
-
-可以。
-
-Atlas 设计为运行时治理基础设施，而非针对特定项目的集成。
-
-单一部署可以逐步扩展至多种：
-
-- 机器人型号
-- 传感器产品
-- 部署环境
-- SBC 平台
+Continuous Internet connectivity is not required.
 
 ---
 
-## Atlas 可以适配多家传感器厂商吗？
+## Does Atlas require us to replace our existing infrastructure?
 
-可以。
+No.
 
-OEM 运行时调查可以通过 Sensor Engagement Pack™ 与不同传感器厂商协作。
+Atlas is designed to integrate with existing infrastructure.
 
-每家传感器厂商维护自己的：
+It coexists with:
 
-- 运行时画像
-- 历史 RGA
-- 调查工作流
+- Fleet management platforms
+- Cloud platforms
+- Ticketing systems
+- Object storage
+- Existing monitoring platforms
 
-Atlas 提供协作框架。
-
----
-
-## 什么是传感器运行时画像？
-
-传感器运行时画像描述了传感器在已知部署环境和已知运行时扰动下的行为表现。
-
-它不是：
-
-- 证书
-- 护照
-- 合规文件
-
-它是可复用的运行时调查知识。
+No large-scale infrastructure replacement is required.
 
 ---
 
-## 什么是历史 RGA？
+## Can Atlas support multiple robot models?
 
-Historical Runtime Governance Asset™（历史 RGA）存储可复用的调查知识。
+Yes.
 
-典型内容包括：
+Atlas is designed as runtime governance infrastructure rather than a project-specific integration.
 
-- 运行时模式
-- 调查路径
-- 调查结果（IR）
-- 经验总结（LL）
-- 运行时表面引用
+A single deployment can gradually expand to support multiple:
 
-历史 RGA 帮助未来的调查从以往经验出发，而非从零开始。
-
----
-
-## 什么是证据包？
-
-证据包是从运行时数据集生成的标准化运行时证据包。
-
-它关联特定的运行时执行失败（REF），并为运行时调查提供结构化证据。
-
-证据包不是日志归档。
+- Robot models
+- Sensor products
+- Deployment environments
+- SBC platforms
 
 ---
 
-## Atlas 会永久存储所有运行时数据吗？
+## Can Atlas work with multiple sensor manufacturers?
 
-不会。
+Yes.
 
-Atlas 遵循可配置的保留策略。
+OEM runtime investigations can collaborate with different sensor manufacturers through the Sensor Engagement Pack™.
 
-典型部署使用：
+Each sensor manufacturer maintains its own:
 
-- 滚动缓冲区
-- 保留策略
-- REF 时的数据集锁定
-- 时间范围导出
+- Runtime Profiles
+- Historical RGA
+- Investigation workflows
 
-客户控制自己的保留策略。
-
----
-
-## 运行时数据归谁所有？
-
-客户拥有自己的运行时数据。
-
-OEM 保留以下所有权：
-
-- 运行时数据集
-- 证据包
-- 历史 RGA
-
-传感器厂商保留以下所有权：
-
-- 传感器历史 RGA
-- 传感器运行时画像
-
-Atlas 不主张对客户运行时数据的所有权。
+Atlas provides the collaboration framework.
 
 ---
 
-## Atlas 可以在公司之间共享客户数据吗？
+## What is a Sensor Runtime Profile?
 
-不可以。
+A Sensor Runtime Profile describes how a sensor behaves under known deployment environments and known runtime disturbances.
 
-Atlas 从不自动共享客户运行时数据。
+It is not:
 
-跨组织协作始终遵循客户授权。
+- A certificate
+- A passport
+- A compliance document
 
-对于行业范围内的知识复用，Atlas 通过 Assist Vault™ 支持非标识性共享。
-
----
-
-## Atlas 是 SaaS 平台吗？
-
-不一定是。
-
-Atlas 支持多种部署模式。
-
-示例包括：
-
-- 客户本地部署
-- 私有云
-- 客户控制的基础设施
-- 混合部署
-
-部署取决于客户需求。
+It is reusable runtime investigation knowledge.
 
 ---
 
-## Atlas 是开源项目吗？
+## What is Historical RGA?
 
-不是。
+Historical Runtime Governance Asset™ (Historical RGA) stores reusable investigation knowledge.
 
-Atlas 是 SensorDeck 开发的商业运行时治理基础设施。
+Typical contents include:
 
-客户部署通过专业集成和定制化项目交付。
+- Runtime patterns
+- Investigation paths
+- Investigation Results (IR)
+- Lessons Learned (LL)
+- Runtime Surface references
 
----
-
-## Atlas 仅针对单一机器人项目设计吗？
-
-不是。
-
-Atlas 设计为可复用的运行时治理基础设施。
-
-它支持扩展至：
-
-- 多种机器人 SKU
-- 多种传感器产品
-- 多种部署环境
-- 多个客户
-
-而无需重新设计运行时调查框架。
+Historical RGA enables future investigations to begin with accumulated knowledge rather than from scratch.
 
 ---
 
-## Atlas 通常如何部署？
+## What is an Evidence Pack?
 
-部署通常遵循四个阶段：
+An Evidence Pack is a standardized package of runtime evidence generated from a Runtime Dataset.
+
+It is associated with a specific Runtime Execution Failure (REF) and provides structured evidence for runtime investigations.
+
+An Evidence Pack is not a log archive.
+
+---
+
+## Does Atlas permanently store all runtime data?
+
+No.
+
+Atlas follows configurable retention policies.
+
+Typical deployments use:
+
+- Rolling buffers
+- Retention policies
+- Dataset locking upon REF
+- Time-range exports
+
+Customers control their own data retention policies.
+
+---
+
+## Who owns the runtime data?
+
+Customers own their runtime data.
+
+OEMs retain ownership of:
+
+- Runtime Datasets
+- Evidence Packs
+- Historical RGA
+
+Sensor manufacturers retain ownership of:
+
+- Sensor Historical RGA
+- Sensor Runtime Profiles
+
+Atlas does not claim ownership of customer runtime data.
+
+---
+
+## Can Atlas share customer data across organizations?
+
+No.
+
+Atlas never automatically shares customer runtime data.
+
+Cross-organizational collaboration always requires customer authorization.
+
+For industry-wide knowledge reuse, Atlas supports anonymized knowledge sharing through Assist Vault™.
+
+---
+
+## Is Atlas a SaaS platform?
+
+Not necessarily.
+
+Atlas supports multiple deployment models, including:
+
+- On-premises deployment
+- Private cloud
+- Customer-controlled infrastructure
+- Hybrid deployment
+
+Deployment depends on customer requirements.
+
+---
+
+## Is Atlas open source?
+
+No.
+
+Atlas is a commercial runtime governance infrastructure developed by SensorDeck.
+
+Customer deployments are delivered through professional integration and customized implementation projects.
+
+---
+
+## Is Atlas designed for only one robot project?
+
+No.
+
+Atlas is designed as reusable runtime governance infrastructure.
+
+It can scale across:
+
+- Multiple robot SKUs
+- Multiple sensor products
+- Multiple deployment environments
+- Multiple customers
+
+without redesigning the runtime investigation framework.
+
+---
+
+## How is Atlas typically deployed?
+
+Deployment typically follows four stages:
 
 ```text
-试点
+Pilot
 
 ↓
 
-受控部署
+Controlled Deployment
 
 ↓
 
-生产就绪
+Production Ready
 
 ↓
 
-全面部署
+Full Deployment
