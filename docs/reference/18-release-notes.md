@@ -1,196 +1,196 @@
 ---
-title: 发布说明
-sidebar_label: 发布说明
+title: Release Notes
+sidebar_label: Release Notes
 ---
 
-# 发布说明
+# Release Notes
 
-本页汇总了 Atlas Runtime Governance™ 的主要版本发布说明。
+This page summarizes the major releases of Atlas Runtime Governance™.
 
-发布说明描述产品演进、新功能、兼容性和重要变更。
+Release Notes describe product evolution, new capabilities, compatibility, and significant changes.
 
-项目特定的定制化内容另行记录，不包含在公开发布说明中。
+Project-specific customizations are documented separately and are not included in the public release notes.
 
 ---
 
-# 版本规则
+# Versioning
 
-Atlas 采用语义化版本控制。
+Atlas follows Semantic Versioning.
 
 ```text
-主版本号.次版本号.补丁版本号
+Major.Minor.Patch
 ```
 
-示例：
+Example:
 
 ```text
 v1.0.0
 ```
 
-其中：
+Where:
 
-- **主版本号** — 架构或兼容性变更
-- **次版本号** — 新功能和能力
-- **补丁版本号** — 缺陷修复和维护改进
+- **Major** — Architectural or compatibility changes
+- **Minor** — New features and capabilities
+- **Patch** — Bug fixes and maintenance improvements
 
 ---
 
-# 当前版本
+# Current Release
 
 ## Atlas Runtime Governance™
 
-### 版本
+### Version
 
 ```text
 v1.0.0
 ```
 
-### 状态
+### Status
 
-生产就绪
+Production Ready
 
-### 发布日期
+### Release
 
-首次公开发布
-
----
-
-# 亮点
-
-版本 1.0 引入了首个完整的机器人运行时治理平台。
-
-主要功能包括：
-
-- 运行时数据集生命周期
-- 运行时表面框架
-- 运行时观测
-- 运行时证据包
-- 运行时执行失败（REF）
-- 历史运行时治理资产（历史 RGA）
-- 调查上下文
-- 调查等级候选
-- Sensor Engagement Pack
-- Assist Vault
-- 运行时治理指标
-- 试点到生产部署框架
+Initial Public Release
 
 ---
 
-# 运行时治理
+# Highlights
 
-新功能：
+Version 1.0 introduces the first complete Runtime Governance platform for robotics.
 
-- 标准化运行时表面模型
-- 运行时数据集保留
-- 滚动缓冲区
-- 数据集锁定
-- 运行时导出
-- 运行时观测管道
+Key capabilities include:
 
----
-
-# 调查工作流
-
-引入：
-
-- 运行时执行失败（REF）
-- 证据包
-- 历史 RGA 召回
-- 调查上下文
-- 调查等级候选
-- 调查结果（IR）
-- 经验总结（LL）
-
-Atlas 标准化运行时调查工作流，但不判定根本原因或责任归属。
+- Runtime Dataset lifecycle
+- Runtime Surface framework
+- Runtime observation
+- Runtime Evidence Packs
+- Runtime Execution Failure (REF)
+- Historical Runtime Governance Assets (Historical RGA)
+- Investigation Context
+- Investigation Tier Candidates
+- Sensor Engagement Pack™
+- Assist Vault™
+- Runtime Governance Metrics
+- Pilot-to-Production deployment framework
 
 ---
 
-# OEM 运行时治理
+# Runtime Governance
 
-引入：
+New capabilities include:
 
-- 一级运行时受理
-- 二级运行时调查
-- 三级工程支持
-- 历史知识复用
-- 运行时治理看板
-- REF 生命周期
-
----
-
-# 传感器运行时治理
-
-引入：
-
-- 传感器运行时画像
-- 传感器历史 RGA
-- 传感器 REF 工作流
-- 传感器 FAE 调查
-- Sensor Engagement Pack
-- OEM 协作工作流
+- Standardized Runtime Surface model
+- Runtime Dataset retention
+- Rolling buffer
+- Dataset locking
+- Runtime export
+- Runtime observation pipeline
 
 ---
 
-# Assist Vault
+# Investigation Workflow
 
-引入：
+Introduces:
 
-- 非标识性知识共享
-- 运行时模式复用
-- 调查策略复用
-- 历史知识贡献
+- Runtime Execution Failure (REF)
+- Evidence Packs
+- Historical RGA recall
+- Investigation Context
+- Investigation Tier Candidates
+- Investigation Results (IR)
+- Lessons Learned (LL)
 
-Assist Vault 共享调查知识，而非客户运行时数据。
-
----
-
-# 部署框架
-
-引入：
-
-- 试点部署
-- 受控部署
-- 生产就绪
-- 全面部署
-- 跨 SKU 扩展
-- 跨平台扩展
+Atlas standardizes the runtime investigation workflow but does not determine root cause or assign liability.
 
 ---
 
-# 架构
+# OEM Runtime Governance
 
-Atlas v1.0 建立了统一的运行时治理架构。
+Introduces:
+
+- Tier 1 Runtime Intake
+- Tier 2 Runtime Investigation
+- Tier 3 Engineering Support
+- Historical knowledge reuse
+- Runtime Governance Dashboard
+- REF lifecycle management
+
+---
+
+# Sensor Runtime Governance
+
+Introduces:
+
+- Sensor Runtime Profiles
+- Sensor Historical RGA
+- Sensor REF workflows
+- Sensor FAE investigations
+- Sensor Engagement Pack™
+- OEM collaboration workflows
+
+---
+
+# Assist Vault™
+
+Introduces:
+
+- Anonymized knowledge sharing
+- Runtime pattern reuse
+- Investigation strategy reuse
+- Historical knowledge contributions
+
+Assist Vault shares investigation knowledge—not customer runtime data.
+
+---
+
+# Deployment Framework
+
+Introduces:
+
+- Pilot Deployment
+- Controlled Deployment
+- Production Ready
+- Full Deployment
+- Cross-SKU expansion
+- Cross-platform expansion
+
+---
+
+# Architecture
+
+Atlas v1.0 establishes a unified Runtime Governance architecture.
 
 ```text
-运行时表面
+Runtime Surfaces
 
 ↓
 
-运行时观测
+Runtime Observation
 
 ↓
 
-运行时数据集
+Runtime Dataset
 
 ↓
 
-证据包
+Evidence Pack
 
 ↓
 
-运行时执行失败
+Runtime Execution Failure
 
 ↓
 
-历史 RGA 召回
+Historical RGA Recall
 
 ↓
 
-调查上下文
+Investigation Context
 
 ↓
 
-调查
+Investigation
 
 ↓
 
@@ -198,161 +198,161 @@ IR / LL
 
 ↓
 
-历史 RGA
+Historical RGA
 
 ↓
 
-未来调查复用
+Future Investigation Reuse
 ```
 
 ---
 
-# 支持的部署模式
+# Supported Deployment Models
 
-Atlas 支持：
+Atlas supports:
 
-- 本地部署
-- 私有云
-- 客户管理的基础设施
-- 混合部署
+- On-premises deployment
+- Private cloud
+- Customer-managed infrastructure
+- Hybrid deployment
 
-部署架构取决于项目需求。
+Deployment architecture depends on project requirements.
 
 ---
 
-# 兼容性
+# Compatibility
 
-Atlas 设计为与现有机器人系统集成。
+Atlas is designed to integrate with existing robotic systems.
 
-典型集成包括：
+Typical integrations include:
 
 - Linux
-- 基于 ROS 的系统
-- 自定义运行时平台
-- 车队管理平台
-- 企业工单系统
+- ROS-based systems
+- Custom runtime platforms
+- Fleet management platforms
+- Enterprise ticketing systems
 
 ---
 
-# 已知限制
+# Known Limitations
 
-Atlas 明确**不**：
+Atlas explicitly does **not**:
 
-- 自动判定根本原因
-- 划分责任归属
-- 替代车队管理系统
-- 替代工单系统
-- 替代传感器驱动
-- 替代机器人应用
-- 替代安全认证
+- Automatically determine root cause
+- Assign liability
+- Replace fleet management systems
+- Replace ticketing systems
+- Replace sensor drivers
+- Replace robot applications
+- Replace safety certification
 
-Atlas 专注于运行时治理。
-
----
-
-# 升级说明
-
-升级至未来版本的项目应查阅：
-
-- 发布说明
-- 迁移指南
-- 兼容性说明
-- 配置变更
-
-项目特定的适配器可能需要额外验证。
+Atlas is focused exclusively on runtime governance.
 
 ---
 
-# 支持生命周期
+# Upgrade Notes
 
-每个生产版本根据客户支持协议获得维护。
+Projects upgrading to future releases should review:
 
-支持可能包括：
+- Release Notes
+- Migration Guide
+- Compatibility Notes
+- Configuration Changes
 
-- 缺陷修复
-- 安全更新
-- 性能改进
-- 运行时表面扩展
-- 调查工作流改进
-
----
-
-# 文档
-
-每个主要版本可能包含以下更新：
-
-- 基础
-- 产品
-- 平台
-- 调查
-- 部署
-- 参考
-
-客户应在生产升级前查阅更新后的文档。
+Project-specific adapters may require additional validation.
 
 ---
 
-# 未来路线图
+# Support Lifecycle
 
-未来版本可能包括：
+Each production release is maintained according to the customer's support agreement.
 
-- 额外运行时表面模板
-- 扩展的传感器运行时画像
-- 额外调查模板
-- 增强的运行时治理指标
-- 额外的部署自动化
+Support may include:
 
-未来路线图项目可能发生变化。
+- Bug fixes
+- Security updates
+- Performance improvements
+- Runtime Surface extensions
+- Investigation workflow enhancements
 
 ---
 
-# 变更日志
+# Documentation
+
+Each major release may include updates to:
+
+- Foundation
+- Products
+- Platform
+- Investigation
+- Deployment
+- Reference
+
+Customers should review the updated documentation before upgrading production deployments.
+
+---
+
+# Roadmap
+
+Future releases may include:
+
+- Additional Runtime Surface templates
+- Expanded Sensor Runtime Profiles
+- Additional investigation templates
+- Enhanced Runtime Governance metrics
+- Additional deployment automation
+
+Roadmap items are subject to change.
+
+---
+
+# Changelog
 
 ## v1.0.0
 
-### 新增
+### Added
 
-- Atlas Runtime Governance 架构
-- 运行时数据集生命周期
-- 运行时表面框架
-- 运行时观测管道
-- 运行时证据包
-- 运行时执行失败工作流
-- 历史运行时治理资产（历史 RGA）
-- 调查上下文
-- 调查等级候选
-- 传感器运行时画像
-- Sensor Engagement Pack
-- Assist Vault
-- 试点到生产部署框架
-- 运行时治理指标
-- 跨 SKU 部署模型
-- 跨平台部署模型
+- Atlas Runtime Governance architecture
+- Runtime Dataset lifecycle
+- Runtime Surface framework
+- Runtime observation pipeline
+- Runtime Evidence Packs
+- Runtime Execution Failure workflow
+- Historical Runtime Governance Assets (Historical RGA)
+- Investigation Context
+- Investigation Tier Candidates
+- Sensor Runtime Profiles
+- Sensor Engagement Pack™
+- Assist Vault™
+- Pilot-to-Production deployment framework
+- Runtime Governance Metrics
+- Cross-SKU deployment model
+- Cross-platform deployment model
 
-### 变更
+### Changed
 
-- 首次商业发布。
+- Initial commercial release.
 
-### 弃用
+### Deprecated
 
-无。
+None.
 
-### 移除
+### Removed
 
-无。
+None.
 
 ---
 
-# 企业支持
+# Enterprise Support
 
-Atlas 通过企业部署项目交付。
+Atlas is delivered through enterprise deployment projects.
 
-项目特定版本可能包括：
+Project-specific releases may include:
 
-- 客户特定适配器
-- 运行时表面扩展
-- 集成包
-- 调查工作流定制
-- 部署配置
+- Customer-specific adapters
+- Runtime Surface extensions
+- Integration packages
+- Customized investigation workflows
+- Deployment configurations
 
-这些定制化内容与标准产品发布说明分开记录。
+These customizations are documented separately from the standard product release notes.
